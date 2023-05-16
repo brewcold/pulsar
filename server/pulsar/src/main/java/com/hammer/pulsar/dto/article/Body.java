@@ -1,6 +1,6 @@
 package com.hammer.pulsar.dto.article;
 
-import com.hammer.pulsar.dto.common.Routine;
+import com.hammer.pulsar.dto.routine.Routine;
 
 // 게시글의 내용 부분을 저장하는 DTO 클래스
 public class Body {
