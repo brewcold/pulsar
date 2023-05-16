@@ -12,9 +12,9 @@
   "requirePragma": false,
   "semi": true,
   "singleAttributePerLine": false,
-  "singleQuote": false,
-  "tabWidth": 2,
+  "singleQuote": true,
   "trailingComma": "es5",
   "useTabs": false,
+  "tabWidth": 2,
   "vueIndentScriptAndStyle": false
 }
