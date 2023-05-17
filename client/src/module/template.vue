@@ -6,6 +6,7 @@
 </template>
 
 <style scoped>
+@import "../assets/root.css";
 /* 
 Global CSS Import
 */
@@ -13,10 +14,10 @@ Global CSS Import
 
 <script>
 export default {
-  name: 'template',
+  name: "template",
   components: {},
   created() {
-    //fetch
+    //axios
   },
 };
 </script>
