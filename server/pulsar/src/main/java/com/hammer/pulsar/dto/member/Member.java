@@ -6,6 +6,8 @@ import java.util.List;
 
 // 회원정보를 보여주기 위한 DTO 클래스
 public class Member {
+    // 회원 고유번호
+    private int memberId;
     // 이메일
     private String email;
     // 패스워드
@@ -21,6 +23,14 @@ public class Member {
     public Member() {}
 
     // Getters, Setters
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -65,7 +75,8 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "email='" + email + '\'' +
+                "memberId=" + memberId +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", profileImg='" + profileImg + '\'' +

@@ -7,8 +7,8 @@ import java.util.List;
 // DB에 저장된 회원정보를 수정하기 위한 DTO 클래스
 public class MemberModifyRequest {
 
-    // 이메일
-    private String email;
+    // 회원 고유번호
+    private int memberId;
     // 패스워드
     private String password;
     // 닉네임
@@ -17,12 +17,14 @@ public class MemberModifyRequest {
     private String profileImg;
 
     // 기본 생성자
-    public String getEmail() {
-        return email;
+    public MemberModifyRequest() {}
+
+    public int getMemberId() {
+        return memberId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
     }
 
     public String getPassword() {
@@ -53,7 +55,7 @@ public class MemberModifyRequest {
     @Override
     public String toString() {
         return "MemberModifyRequest{" +
-                "email='" + email + '\'' +
+                "memberId='" + memberId + '\'' +
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", profileImg='" + profileImg + '\'' +

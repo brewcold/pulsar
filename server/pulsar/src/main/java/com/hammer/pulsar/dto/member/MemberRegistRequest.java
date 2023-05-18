@@ -14,6 +14,14 @@ public class MemberRegistRequest {
     // 기본 생성자
     public MemberRegistRequest() {}
 
+    // MemberRegistForm, profileImg을 인자로 받는 생성자
+    public MemberRegistRequest(MemberRegistForm form, String profileImg) {
+        this.email = form.getEmail();
+        this.password = form.getPassword();
+        this.nickname = form.getNickname();
+        this.profileImg = profileImg;
+    }
+
     // Getters, Setters
     public String getEmail() {
         return email;

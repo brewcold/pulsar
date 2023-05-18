@@ -6,8 +6,8 @@ import java.util.List;
 
 // DB에 저장된 회원 정보를 수정하기 위해 사용자가 입력한 값을 담고있는 DTO 클래스
 public class MemberModifyForm {
-    // 이메일
-    private String email;
+    // 회원 고유번호
+    private int memberId;
     // 패스워드
     private String password;
     // 닉네임
@@ -18,15 +18,15 @@ public class MemberModifyForm {
     // 기본 생성자
     public MemberModifyForm() {}
 
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
     // Getters, Setters
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -55,7 +55,7 @@ public class MemberModifyForm {
     @Override
     public String toString() {
         return "MemberModifyForm{" +
-                "email='" + email + '\'' +
+                "memberId=" + memberId +
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", selectedTag=" + selectedTag +
