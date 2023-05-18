@@ -1,20 +1,16 @@
-<!--라우팅과 -->
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+  <div id="app"></div>
 </template>
 
 <style scoped>
-@import "../assets/root.css";
-/* 
-Global CSS Import
-*/
+@import url('../assets/css/init.css');
+@import url('../assets/css/root.css');
+@import url('../assets/css/typography.css');
 </style>
 
 <script>
 export default {
-  name: "template",
+  name: '',
   components: {},
   created() {
     //axios
