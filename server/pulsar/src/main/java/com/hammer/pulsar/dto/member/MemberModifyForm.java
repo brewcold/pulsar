@@ -1,26 +1,22 @@
 package com.hammer.pulsar.dto.member;
 
 import com.hammer.pulsar.dto.common.Tag;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-// 회원가입 요청 시 사용자가 입력한 정보를 저장하는 DTO 클래스
-public class MemberRegistRequest {
-
+// DB에 저장된 회원 정보를 수정하기 위해 사용자가 입력한 값을 담고있는 DTO 클래스
+public class MemberModifyForm {
     // 이메일
     private String email;
     // 패스워드
     private String password;
     // 닉네임
     private String nickname;
-    // 프로필 이미지
-    private MultipartFile profileImg;
-    // 선택한 고민 태그
+    // 선택한 태그 목록
     private List<Tag> selectedTag;
 
     // 기본 생성자
-    public MemberRegistRequest() {}
+    public MemberModifyForm() {}
 
     // Getters, Setters
     public String getEmail() {
@@ -47,14 +43,6 @@ public class MemberRegistRequest {
         this.nickname = nickname;
     }
 
-    public MultipartFile getProfileImg() {
-        return profileImg;
-    }
-
-    public void setProfileImg(MultipartFile profileImg) {
-        this.profileImg = profileImg;
-    }
-
     public List<Tag> getSelectedTag() {
         return selectedTag;
     }
@@ -66,11 +54,10 @@ public class MemberRegistRequest {
     // toString
     @Override
     public String toString() {
-        return "MemberRegistRequest{" +
+        return "MemberModifyForm{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
-                ", profileImg=" + profileImg +
                 ", selectedTag=" + selectedTag +
                 '}';
     }
