@@ -2,7 +2,7 @@ package com.hammer.pulsar.service;
 
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.member.Member;
-import com.hammer.pulsar.dto.member.MemberModifyRequest;
+import com.hammer.pulsar.dto.member.MemberModifyForm;
 import com.hammer.pulsar.dto.member.MemberRegistForm;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,7 +17,7 @@ public interface MemberService {
     public Member getMemberInfo(int memberId);
 
     // 회원 정보 수정 로직
-    public void modifyMemberInfo(MemberModifyRequest request);
+    public String modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile);
 
     // 회원 탈퇴 로직
     public void quitMember(int memberId);

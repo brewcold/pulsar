@@ -1,6 +1,7 @@
 package com.hammer.pulsar.dao;
 
 import com.hammer.pulsar.dto.member.Member;
+import com.hammer.pulsar.dto.member.MemberModifyRequest;
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.member.MemberRegistRequest;
 
@@ -22,7 +23,7 @@ public interface MemberDao {
     public MemberProfile selectProfileByMemberId(int memberId);
 
     // 회원 정보 수정을 위한 메서드
-    public int updateMember(MemberRegistRequest request);
+    public int updateMember(MemberModifyRequest request);
 
     // 회원 탈퇴를 위한 메서드
     public int deleteMember(int memberId);

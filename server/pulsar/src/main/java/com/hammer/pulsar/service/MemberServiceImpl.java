@@ -3,10 +3,8 @@ package com.hammer.pulsar.service;
 import com.hammer.pulsar.dao.*;
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.common.ConcernRegistRequest;
-import com.hammer.pulsar.dto.member.Member;
-import com.hammer.pulsar.dto.member.MemberModifyRequest;
-import com.hammer.pulsar.dto.member.MemberRegistForm;
-import com.hammer.pulsar.dto.member.MemberRegistRequest;
+import com.hammer.pulsar.dto.common.Tag;
+import com.hammer.pulsar.dto.member.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +50,6 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void registMember(MemberRegistForm form, MultipartFile imgFile) {
         // 이메일, 닉네임 중복 검사를 서버 측에서 한 번 더 진행하기
-        if(!checkIsValidForm(form)) return;
 
         // 프로필 이미지를 저장하기
         String profileImg = fileManagementService.uploadMemberProfileImg(imgFile);
@@ -68,18 +65,25 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
-     * Form에 저장된 이메일과 닉네임의 유효성 검사를 진행하는 메서드
+     * 입력한 이메일의 유효성 검사를 진행하는 메서드
      *
-     * @param form
-     * @return 유효한 폼이면 true, 중복된 값이 하나라도 있다면 false
+     * @param email
+     * @return 유효한 이메일이면 true, 중복된 이메일이면 false
      */
-    private boolean checkIsValidForm(MemberRegistForm form) {
+    private boolean isValidEmail(String email) {
         // 이메일 중복 검사
-        if(memberDao.findEmail(form.getEmail())) return false;
-        // 닉네임 중복 검사
-        if(memberDao.findNickname(form.getNickname())) return false;
+        return memberDao.findEmail(email);
+    }
 
-        return true;
+    /**
+     * 입력한 닉네임의 유효성 검사를 진행하는 메서드
+     *
+     * @param nickname
+     * @return 유효한 닉네임이면 true, 중복된 닉네임이면 false
+     */
+    private boolean isValidNickname(String nickname) {
+        // 이메일 중복 검사
+        return memberDao.findNickname(nickname);
     }
 
     /**
@@ -93,9 +97,77 @@ public class MemberServiceImpl implements MemberService {
         return memberDao.selectMemberByMemberId(memberId);
     }
 
+    /**
+     * 회원정보 수정 메서드
+     * - 회원 정보 변경 폼의 값들 중 테이블에서 수정해야 할 항목들을 MemberModifyRequest에 저장한다.
+     * - 수정사항이 적용되어야 할 테이블에 맞게 수정 요청을 보낸다.
+     * - 회원 정보를 변경한 후의 닉네임을 반환한다.
+     *
+     * @param form
+     */
     @Override
-    public void modifyMemberInfo(MemberModifyRequest request) {
+    public String modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile) {
+        // DB에 저장된 기존 회원정보를 조회한다.
+        Member saved = memberDao.selectMemberByMemberId(form.getMemberId());
+        // 기존의 값과 변경된 사항들을 저장한 MemberModifyRequest를 생성한다.
+        MemberModifyRequest request = selectModified(form, saved);
 
+        if(request == null) return saved.getNickname();
+
+        // 테이블에 저장된 정보를 요청사항에 맞게 수정한다.
+        String profileImg = fileManagementService.uploadMemberProfileImg(imgFile);
+        if(profileImg != null) request.setProfileImg(profileImg);
+
+        // 회원 테이블의 정보를 수정한다.
+        memberDao.updateMember(request);
+
+        // 태그 목록을 수정한다.
+        modifyTagList(form.getSelectedTag(), saved.getMemberId());
+
+        // 수정 작업 후의 회원의 닉네임을 반환한다.
+        return request.getNickname() == null ?
+                saved.getNickname() :
+                request.getNickname();
+    }
+
+    /**
+     * 사용자로부터 전달받은 값과 DB에 저장된 값들을 비교해 변경이 일어난 값들만 반환한다.
+     * 변경하려는 닉네임이 중복일 경우 null을 반환한다.
+     *
+     * @param form
+     * @param saved
+     * @return
+     */
+    private MemberModifyRequest selectModified(MemberModifyForm form, Member saved) {
+        MemberModifyRequest modified = new MemberModifyRequest();
+
+        String newPassword = form.getPassword();
+        String newNickname = form.getNickname();
+
+        // 비밀번호가 변경되었다면 변경된 비밀번호를 modified에 저장
+        if(!newPassword.equals(saved.getPassword())) modified.setPassword(newPassword);
+        // 닉네임이 변경되었다면 중복 검사 후 modified에 저장
+        if(!newNickname.equals(saved.getNickname())) {
+            // 중복된 닉네임이면 null 반환 -> 예외 던지도록 변경 필요할 듯
+            if(!isValidNickname(newNickname)) return null;
+
+            modified.setNickname(newNickname);
+        }
+
+        return modified;
+    }
+
+    /**
+     * 기존의 태그와 새롭게 전달받은 태그를 비교하여 변경사항들을 DB에 업데이트한다.
+     *
+     * @param newTags
+     */
+    private void modifyTagList(List<Tag> newTags, int memberId) {
+        // 현재 회원이 선택한 고민 태그 목록들을 모두 불러온다.
+
+        // 기존의 고민과 새로운 고민 태그 목록을 비교한다.
+
+        // 새로운 고민들은 DB에 추가하고, 기존 태그 목록에만 존재하는 값은 DB에서 삭제한다.
     }
 
     /**
