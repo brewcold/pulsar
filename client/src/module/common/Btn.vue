@@ -8,23 +8,18 @@
 @import '../assets/root.css';
 
 button {
+  background-color: var(--color);
 }
 </style>
 
 <script>
 export default {
   name: 'Btn',
-  data() {
-    return {
-      value: String,
-      color: String,
-    };
-  },
+  props: { color: String, value: String },
   computed: {
     styles() {
       return {
-        color: this.color,
-        value: this.value,
+        '--color': this.color,
       };
     },
   },

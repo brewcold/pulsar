@@ -1,21 +1,24 @@
 <template>
   <div id="app">
-    <!--v-show로 이 부분에서 조건부로 라우팅해야 할 것 같습니다-->
-    <!--어떤 페이지에는 다른 레이아웃이 적용되어야 합니다-->
+    <!--v-if를 사용한 Router-view 조건부 렌더링-->
 
-    <the-layout v-if="$route.path !== '/'">
+    <empty-layout v-if="$route.path === '/'">
       <router-view />
-    </the-layout>
-    <router-view v-else />
+    </empty-layout>
+    <full-layout v-else>
+      <router-view />
+    </full-layout>
   </div>
 </template>
 
 <script>
-import TheLayout from './components/layout/TheLayout.vue';
+import FullLayout from './components/Layout/FullLayout.vue';
+import EmptyLayout from './components/Layout/EmptyLayout.vue';
 export default {
   name: 'HomeView',
   components: {
-    TheLayout,
+    FullLayout,
+    EmptyLayout,
   },
   created() {
     //fetch

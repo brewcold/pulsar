@@ -1,9 +1,7 @@
-<!--특정 페이지에는 헤더와 내비게이션이 없어야 합니다.-->
-<!--레이아웃 페이지는 라우트와 함께 전체 사이트 골격을 잡습니다.-->
+<!--레이아웃 페이지는 전체 사이트 골격을 잡습니다.-->
 <template>
   <div>
-    <about-btn />
-    <about-content />
+    <about-container />
     <div id="container">
       <the-header />
       <the-nav />
@@ -14,12 +12,11 @@
 <script>
 import TheHeader from '../Header/TheHeader.vue';
 import TheNav from '../Nav/TheNav.vue';
-import AboutBtn from './AboutBtn.vue';
-import AboutContent from './AboutContent.vue';
+import AboutContainer from '../About/AboutContainer.vue';
 
 export default {
-  name: 'TheLayout',
-  components: { TheHeader, TheNav, AboutBtn, AboutContent },
+  name: 'FullLayout',
+  components: { TheHeader, TheNav, AboutContainer },
 };
 </script>
 
