@@ -1,19 +1,19 @@
 package com.hammer.pulsar.dto.routine;
 
-import java.util.Arrays;
 import java.util.List;
 
 // 루틴의 시간 정보를 저장하고 있는 DTO 클래스
 public class RoutineTime {
-    // 반복 주기
+    // 시간 정보
+    // 반복 주기 (0~30의 정수)
     private int repeatPeriod;
-    // 반복 단위
+    // 반복 단위 (day, week, month)
     private String repeatUnit;
-    // 요일
+    // 요일 (mon, tue, wed, thu, fri, sat, sun)
     private List<String> repeatDay;
-    // 시작 시간
-    // {시(24시), 분}
-    private int[] startTime;
+    // 시작 시간 : 시(24시), 분
+    private int startHour;
+    private int startMin;
 
     // 기본 생성자
     public RoutineTime() {}
@@ -43,12 +43,20 @@ public class RoutineTime {
         this.repeatDay = repeatDay;
     }
 
-    public int[] getStartTime() {
-        return startTime;
+    public int getStartHour() {
+        return startHour;
     }
 
-    public void setStartTime(int[] startTime) {
-        this.startTime = startTime;
+    public void setStartHour(int startHour) {
+        this.startHour = startHour;
+    }
+
+    public int getStartMin() {
+        return startMin;
+    }
+
+    public void setStartMin(int startMin) {
+        this.startMin = startMin;
     }
 
     // toString
@@ -58,7 +66,8 @@ public class RoutineTime {
                 "repeatPeriod=" + repeatPeriod +
                 ", repeatUnit='" + repeatUnit + '\'' +
                 ", repeatDay=" + repeatDay +
-                ", startTime=" + Arrays.toString(startTime) +
+                ", startHour=" + startHour +
+                ", startMin=" + startMin +
                 '}';
     }
 
