@@ -2,6 +2,7 @@
 <!--Container이 flex로서 안의 버튼을 정가운데에 위치시킵니다. (hover 때문에 사이즈가 바뀌어도)-->
 <template>
   <div id="aboutBtn_container">
+    <!--버튼을 누르면 상위 컴포넌트로 emit합니다.-->
     <button id="aboutBtn" @click="showContent">?</button>
   </div>
 </template>
@@ -11,8 +12,8 @@ export default {
   name: 'AboutBtn',
   methods: {
     showContent() {
+      //show-content event가 발생했다고 상위컴포넌트에 보고합니다
       this.$emit('show-content');
-      console.log('emit');
     },
   },
 };

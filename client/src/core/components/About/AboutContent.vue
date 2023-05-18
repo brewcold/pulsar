@@ -1,5 +1,6 @@
 <!-- AboutBtn에서 emit한 상태에 따라, class명이 바뀌면서 토글됩니다. -->
 <template>
+  <!--class attribute의 show를 바인딩해 사용합니다.-->
   <article id="about_content_container" :class="{ show: show }">
     <div id="about_content_content">
       <h1>PULSAR</h1>
@@ -37,6 +38,10 @@ export default {
   left: 50%;
   transform: translateX(-50%);
   padding-top: 2rem;
+}
+h1,
+p {
+  opacity: 0.85;
 }
 .show {
   display: block !important;
