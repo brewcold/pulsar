@@ -2,6 +2,7 @@ package com.hammer.pulsar.service;
 
 import com.hammer.pulsar.dao.*;
 import com.hammer.pulsar.dto.article.ArticlePreview;
+import com.hammer.pulsar.dto.article.CommentedArticle;
 import com.hammer.pulsar.dto.common.ConcernRegistRequest;
 import com.hammer.pulsar.dto.common.Tag;
 import com.hammer.pulsar.dto.member.*;
@@ -180,19 +181,37 @@ public class MemberServiceImpl implements MemberService {
         memberDao.deleteMember(memberId);
     }
 
+    /**
+     * 선택한 회원이 작성한 모든 게시글을 조회하는 메서드
+     *
+     * @param memberId
+     * @return
+     */
     @Override
     public List<ArticlePreview> getAllWritten(int memberId) {
-        return null;
+        return articleDao.selectArticleByMemberId(memberId);
     }
 
+    /**
+     * 선택한 회원이 추천한 모든 게시글 목록을 조회하는 메서드
+     *
+     * @param memberId
+     * @return
+     */
     @Override
     public List<ArticlePreview> getAllLiked(int memberId) {
-        return null;
+        return likeDao.selectLikedByMemberId(memberId);
     }
 
+    /**
+     * 선택한 회원이 작성한 모든 댓글과 해당 댓글이 작성된 게시글을 모두 조회하는 메서드
+     *
+     * @param memberId
+     * @return
+     */
     @Override
-    public List<ArticlePreview> getAllCommented(int memberId) {
-        return null;
+    public List<CommentedArticle> getAllCommented(int memberId) {
+        return commentDao.selectCommentsByMemberId(memberId);
     }
 
 }

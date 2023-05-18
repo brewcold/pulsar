@@ -1,6 +1,7 @@
 package com.hammer.pulsar.service;
 
 import com.hammer.pulsar.dto.article.ArticlePreview;
+import com.hammer.pulsar.dto.article.CommentedArticle;
 import com.hammer.pulsar.dto.member.Member;
 import com.hammer.pulsar.dto.member.MemberModifyForm;
 import com.hammer.pulsar.dto.member.MemberRegistForm;
@@ -29,6 +30,6 @@ public interface MemberService {
     public List<ArticlePreview> getAllLiked(int memberId);
 
     // 회원이 쓴 댓글과 해당 게시글 목록 조회 로직
-    public List<ArticlePreview> getAllCommented(int memberId);
+    public List<CommentedArticle> getAllCommented(int memberId);
 
 }
