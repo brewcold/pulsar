@@ -2,15 +2,18 @@
 <!--Container이 flex로서 안의 버튼을 정가운데에 위치시킵니다. (hover 때문에 사이즈가 바뀌어도)-->
 <template>
   <div id="aboutBtn_container">
-    <button id="aboutBtn">?</button>
+    <button id="aboutBtn" @click="showContent">?</button>
   </div>
 </template>
 
 <script>
 export default {
   name: 'AboutBtn',
-  data() {
-    return {};
+  methods: {
+    showContent() {
+      this.$emit('show-content');
+      console.log('emit');
+    },
   },
 };
 </script>
@@ -29,6 +32,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 99;
 }
 
 #aboutBtn {
@@ -40,7 +44,6 @@ export default {
   height: 3rem;
   width: 3rem;
   font-size: 1.25rem;
-  z-index: 99;
 }
 
 #aboutBtn:hover {
@@ -54,7 +57,7 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
-  #about {
+  #aboutBtn_container {
     display: none;
   }
 }

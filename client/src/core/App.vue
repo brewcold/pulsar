@@ -1,19 +1,24 @@
 <template>
   <div id="app">
     <!--v-if를 사용한 Router-view 조건부 렌더링-->
-    <the-layout v-if="$route.path !== '/'">
+
+    <empty-layout v-if="$route.path === '/'">
       <router-view />
-    </the-layout>
-    <router-view v-else />
+    </empty-layout>
+    <full-layout v-else>
+      <router-view />
+    </full-layout>
   </div>
 </template>
 
 <script>
-import TheLayout from './components/Layout/TheLayout.vue';
+import FullLayout from './components/Layout/FullLayout.vue';
+import EmptyLayout from './components/Layout/EmptyLayout.vue';
 export default {
   name: 'HomeView',
   components: {
-    TheLayout,
+    FullLayout,
+    EmptyLayout,
   },
   created() {
     //fetch
