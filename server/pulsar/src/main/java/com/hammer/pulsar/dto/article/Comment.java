@@ -6,10 +6,8 @@ public class Comment {
     private int commentNo;
     // 게시글 번호
     private int articleNo;
-    // 작성자 회원번호
-    private int writerNo;
-    // 작성자 닉네임
-    private String writerNickname;
+    // 작성자 정보
+    private Writer writerInfo;
     // 댓글 내용
     private String content;
     // 댓글 작성일
@@ -35,20 +33,12 @@ public class Comment {
         this.articleNo = articleNo;
     }
 
-    public int getWriterNo() {
-        return writerNo;
+    public Writer getWriterInfo() {
+        return writerInfo;
     }
 
-    public void setWriterNo(int writerNo) {
-        this.writerNo = writerNo;
-    }
-
-    public String getWriterNickname() {
-        return writerNickname;
-    }
-
-    public void setWriterNickname(String writerNickname) {
-        this.writerNickname = writerNickname;
+    public void setWriterInfo(Writer writerInfo) {
+        this.writerInfo = writerInfo;
     }
 
     public String getContent() {
@@ -73,8 +63,7 @@ public class Comment {
         return "Comment{" +
                 "commentNo=" + commentNo +
                 ", articleNo=" + articleNo +
-                ", writerNo=" + writerNo +
-                ", writerNickname='" + writerNickname + '\'' +
+                ", writerInfo=" + writerInfo +
                 ", content='" + content + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 '}';
