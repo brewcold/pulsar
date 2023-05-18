@@ -9,12 +9,8 @@ import java.util.List;
 public class Article {
     // 게시글 제목
     private String title;
-    // 작성자 번호
-    private String writerNo;
-    // 작성자 닉네임
-    private String writerNickname;
-    // 작성자 프로필 이미지
-    private String writerProfileImg;
+    // 작성자 정보
+    private Writer writerInfo;
     // 게시글 본문
     private Body body;
     // 게시글 태그 목록
@@ -36,28 +32,12 @@ public class Article {
         this.title = title;
     }
 
-    public String getWriterNo() {
-        return writerNo;
+    public Writer getWriterInfo() {
+        return writerInfo;
     }
 
-    public void setWriterNo(String writerNo) {
-        this.writerNo = writerNo;
-    }
-
-    public String getWriterNickname() {
-        return writerNickname;
-    }
-
-    public void setWriterNickname(String writerNickname) {
-        this.writerNickname = writerNickname;
-    }
-
-    public String getWriterProfileImg() {
-        return writerProfileImg;
-    }
-
-    public void setWriterProfileImg(String writerProfileImg) {
-        this.writerProfileImg = writerProfileImg;
+    public void setWriterInfo(Writer writerInfo) {
+        this.writerInfo = writerInfo;
     }
 
     public Body getBody() {
@@ -97,9 +77,7 @@ public class Article {
     public String toString() {
         return "Article{" +
                 "title='" + title + '\'' +
-                ", writerNo='" + writerNo + '\'' +
-                ", writerNickname='" + writerNickname + '\'' +
-                ", writerProfileImg='" + writerProfileImg + '\'' +
+                ", writerInfo=" + writerInfo +
                 ", body=" + body +
                 ", tagList=" + tagList +
                 ", createdAt='" + createdAt + '\'' +

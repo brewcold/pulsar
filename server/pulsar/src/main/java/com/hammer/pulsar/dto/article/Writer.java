@@ -7,7 +7,7 @@ public class Writer {
     // 작성자 닉네임
     private String writerNickname;
     // 작성자 프로필 이미지
-    private String writerProfile;
+    private String writerProfileImg;
 
     // 기본 생성자
     public Writer() {}
@@ -29,12 +29,12 @@ public class Writer {
         this.writerNickname = writerNickname;
     }
 
-    public String getWriterProfile() {
-        return writerProfile;
+    public String getWriterProfileImg() {
+        return writerProfileImg;
     }
 
-    public void setWriterProfile(String writerProfile) {
-        this.writerProfile = writerProfile;
+    public void setWriterProfileImg(String writerProfileImg) {
+        this.writerProfileImg = writerProfileImg;
     }
 
     // toString
@@ -43,7 +43,7 @@ public class Writer {
         return "Writer{" +
                 "writerNo=" + writerNo +
                 ", writerNickname='" + writerNickname + '\'' +
-                ", writerProfile='" + writerProfile + '\'' +
+                ", writerProfileImg='" + writerProfileImg + '\'' +
                 '}';
     }
 
