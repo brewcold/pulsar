@@ -1,20 +1,22 @@
 package com.hammer.pulsar.dto.member;
 
-// DB에 새로운 회원 정보를 추가하기 위한 정보를 담고 있는 DTO 클래스
-public class MemberRegistRequest {
+import com.hammer.pulsar.dto.common.Tag;
+
+import java.util.List;
+
+// DB에 저장된 회원정보를 수정하기 위한 DTO 클래스
+public class MemberModifyRequest {
+
     // 이메일
     private String email;
     // 패스워드
     private String password;
     // 닉네임
     private String nickname;
-    // DB에 저장된 프로필 이미지 경로
+    // DB에 저장한 프로필 이미지 경로
     private String profileImg;
 
     // 기본 생성자
-    public MemberRegistRequest() {}
-
-    // Getters, Setters
     public String getEmail() {
         return email;
     }
@@ -50,7 +52,7 @@ public class MemberRegistRequest {
     // toString
     @Override
     public String toString() {
-        return "MemberRegistRequest{" +
+        return "MemberModifyRequest{" +
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +

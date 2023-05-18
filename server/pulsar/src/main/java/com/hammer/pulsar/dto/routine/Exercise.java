@@ -1,7 +1,9 @@
 package com.hammer.pulsar.dto.routine;
 
-// 운동 정보를 저장하고 있는 DTO 클래스
+// API 응답으로 보낼 운동 정보를 저장하고 있는 DTO 클래스
 public class Exercise {
+    // 운동 세부 계획 번호
+    private int exerciseNo;
     // 운동 이름
     private String exerciseName;
     // 운동 횟수
@@ -15,6 +17,14 @@ public class Exercise {
     public Exercise() {}
 
     // Getters, Setters
+    public int getExerciseNo() {
+        return exerciseNo;
+    }
+
+    public void setExerciseNo(int exerciseNo) {
+        this.exerciseNo = exerciseNo;
+    }
+
     public String getExerciseName() {
         return exerciseName;
     }
@@ -51,7 +61,8 @@ public class Exercise {
     @Override
     public String toString() {
         return "Exercise{" +
-                "exerciseName='" + exerciseName + '\'' +
+                "exerciseNo=" + exerciseNo +
+                ", exerciseName='" + exerciseName + '\'' +
                 ", count=" + count +
                 ", duration=" + duration +
                 ", order=" + order +

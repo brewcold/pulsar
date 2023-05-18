@@ -2,35 +2,34 @@ package com.hammer.pulsar.dto.routine;
 
 import java.util.List;
 
-// 루틴 정보를 담고 있는 DTO 클래스
-// 루틴 API에서 주고받을 정보
-public class Routine {
+// 이미 작성된 루틴의 내용을 수정할 때 사용하는 DTO 클래스
+public class RoutineModifyForm {
     // 루틴 번호
-    private int routineNo;
+    private int routineId;
     // 루틴 이름
-    private int routineTitle;
-    // 시간 정보
+    private String routineTitle;
+    // 루틴 시간 정보
     private RoutineTime time;
-    // 루틴에 포함된 운동 정보
+    // 루틴 세부 운동 계획 정보
     private List<Exercise> exerciseList;
 
     // 기본 생성자
-    public Routine() {}
+    public RoutineModifyForm() {}
 
     // Getters, Setters
-    public int getRoutineNo() {
-        return routineNo;
+    public int getRoutineId() {
+        return routineId;
     }
 
-    public void setRoutineNo(int routineNo) {
-        this.routineNo = routineNo;
+    public void setRoutineId(int routineId) {
+        this.routineId = routineId;
     }
 
-    public int getRoutineTitle() {
+    public String getRoutineTitle() {
         return routineTitle;
     }
 
-    public void setRoutineTitle(int routineTitle) {
+    public void setRoutineTitle(String routineTitle) {
         this.routineTitle = routineTitle;
     }
 
@@ -53,9 +52,9 @@ public class Routine {
     // toString
     @Override
     public String toString() {
-        return "Routine{" +
-                "routineNo=" + routineNo +
-                ", routineTitle=" + routineTitle +
+        return "RoutineModifyForm{" +
+                "routineId=" + routineId +
+                ", routineTitle='" + routineTitle + '\'' +
                 ", time=" + time +
                 ", exerciseList=" + exerciseList +
                 '}';
