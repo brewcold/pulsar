@@ -98,9 +98,14 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    /**
+     * 회원탈퇴 메서드
+     *
+     * @param memberId
+     */
     @Override
     public void quitMember(int memberId) {
-
+        memberDao.deleteMember(memberId);
     }
 
     @Override
