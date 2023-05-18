@@ -7,6 +7,7 @@ import com.hammer.pulsar.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class MemberRestController {
 
     // 회원가입 요청 API
     @PostMapping("/signup")
-    public ResponseEntity<Void> registMember(MemberRegistRequest request) {
+    public ResponseEntity<Void> registMember(MemberRegistRequest request, MultipartFile file) {
         return null;
     }
 
