@@ -82,9 +82,15 @@ public class MemberServiceImpl implements MemberService {
         return true;
     }
 
+    /**
+     * 선택한 회원의 세부 정보를 조회하는 메서드
+     *
+     * @param memberId
+     * @return
+     */
     @Override
     public Member getMemberInfo(int memberId) {
-        return null;
+        return memberDao.selectMemberByMemberId(memberId);
     }
 
     @Override
