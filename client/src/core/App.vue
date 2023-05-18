@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import TheLayout from './components/layout/TheLayout.vue';
+import TheLayout from './components/Layout/TheLayout.vue';
 export default {
   name: 'HomeView',
   components: {
