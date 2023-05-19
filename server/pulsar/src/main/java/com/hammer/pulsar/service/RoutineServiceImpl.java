@@ -78,18 +78,4 @@ public class RoutineServiceImpl implements RoutineService {
         routineDao.deleteRoutine(routineId);
     }
 
-    @Override
-    public void addNewPlan(NotDetermined exercise) {
-
-    }
-
-    @Override
-    public void modifyPlan(NotDetermined exercise) {
-
-    }
-
-    @Override
-    public void removePlan(NotDetermined exercise) {
-
-    }
 }

@@ -28,13 +28,4 @@ public interface RoutineService {
     // 선택한 루틴을 삭제하는 로직
     public void removeRoutine(int routineId);
 
-    // 루틴에 운동 계획을 추가하는 로직
-    public void addNewPlan(NotDetermined exercise);
-
-    // 루틴의 운동 계획을 수정하는 로직
-    public void modifyPlan(NotDetermined exercise);
-
-    // 루틴의 운동 계획을 삭제하는 로직
-    public void removePlan(NotDetermined exercise);
-
 }
