@@ -45,9 +45,14 @@ public class ArticleServiceImpl implements ArticleService {
         return articleId;
     }
 
+    /**
+     * 게시글 목록을 모두 조회하는 메서드
+     *
+     * @return
+     */
     @Override
     public List<ArticlePreview> getAllArticles() {
-        return null;
+        return articleDao.selectArticles();
     }
 
     @Override
