@@ -71,8 +71,13 @@ public class ArticleServiceImpl implements ArticleService {
 
     }
 
+    /**
+     * 게시글을 삭제하는 메서드
+     *
+     * @param articleId
+     */
     @Override
     public void removeArticle(int articleId) {
-
+        articleDao.deleteArticle(articleId);
     }
 }
