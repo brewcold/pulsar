@@ -1,4 +1,4 @@
-package com.hammer.pulsar.dto.article;
+package com.hammer.pulsar.dto.common;
 
 // 게시글 정보에 담을 회원 정보 DTO 클래스
 public class Writer {

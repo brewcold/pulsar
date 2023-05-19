@@ -1,4 +1,4 @@
-package com.hammer.pulsar.dto.article;
+package com.hammer.pulsar.dto.interaction;
 
 // 게시글에 대한 회원의 추천 여부, 총 추천수를 저장할 DTO 클래스
 public class Like {

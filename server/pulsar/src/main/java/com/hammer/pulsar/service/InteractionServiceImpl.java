@@ -1,22 +1,24 @@
 package com.hammer.pulsar.service;
 
 import com.hammer.pulsar.dao.ArticleDao;
+import com.hammer.pulsar.dao.CommentDao;
 import com.hammer.pulsar.dao.LikeDao;
-import com.hammer.pulsar.dto.NotDetermined;
-import com.hammer.pulsar.dto.article.Comment;
-import com.hammer.pulsar.dto.article.Like;
-import com.hammer.pulsar.dto.article.LikeRequest;
+import com.hammer.pulsar.dto.interaction.Comment;
+import com.hammer.pulsar.dto.interaction.CommentWriteRequest;
+import com.hammer.pulsar.dto.interaction.Like;
+import com.hammer.pulsar.dto.interaction.LikeRequest;
 
 import java.util.List;
 
 public class InteractionServiceImpl implements InteractionService {
     private LikeDao likeDao;
     private ArticleDao articleDao;
+    private CommentDao commentDao;
 
     /**
      * 게시글의 총 추천수와 회원의 추천 여부를 반환하는 메서드
      *
-     * @param articleId
+     * @param request
      * @return
      */
     @Override
@@ -73,18 +75,41 @@ public class InteractionServiceImpl implements InteractionService {
         }
     }
 
+    /**
+     * 게시글에 작성된 모든 댓글을 반환하는 메서드
+     *
+     * @param articleId
+     * @return
+     */
     @Override
     public List<Comment> getAllComments(int articleId) {
-        return null;
+        return commentDao.selectCommentsByArticleId(articleId);
     }
 
+    /**
+     * 게시글에 새로운 댓글을 작성하는 메서드
+     *
+     * @param request
+     * @return 작성 후의 댓글 목록을 반환한다.
+     */
     @Override
-    public List<Comment> writeComment(NotDetermined request) {
-        return null;
+    public List<Comment> writeComment(CommentWriteRequest request) {
+        commentDao.insertComment(request);
+
+        return commentDao.selectCommentsByArticleId(request.getArticleId());
     }
 
+    /**
+     * 게시글의 댓글을 삭제하는 메서드
+     *
+     * @param articleId
+     * @param commentId
+     * @return 삭제 후의 댓글 목록을 반환한다.
+     */
     @Override
-    public List<Comment> removeComment(int commentId) {
-        return null;
+    public List<Comment> removeComment(int articleId, int commentId) {
+        commentDao.deleteComment(commentId);
+
+        return commentDao.selectCommentsByArticleId(articleId);
     }
 }

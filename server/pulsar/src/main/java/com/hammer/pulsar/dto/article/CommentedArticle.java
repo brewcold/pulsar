@@ -1,5 +1,7 @@
 package com.hammer.pulsar.dto.article;
 
+import com.hammer.pulsar.dto.interaction.Comment;
+
 // 내 활동내역 - 내가 쓴 댓글 API에서 사용할 DTO 클래스
 // 회원이 작성한 댓글과 해당 게시글의 미리보기를 캡슐화
 public class CommentedArticle {

@@ -1,4 +1,4 @@
-package com.hammer.pulsar.dto.article;
+package com.hammer.pulsar.dto.interaction;
 
 // DB에 추천 요청을 하기 위한 DTO 클래스
 public class LikeRequest {

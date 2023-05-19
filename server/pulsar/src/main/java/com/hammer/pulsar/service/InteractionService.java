@@ -1,9 +1,9 @@
 package com.hammer.pulsar.service;
 
-import com.hammer.pulsar.dto.NotDetermined;
-import com.hammer.pulsar.dto.article.Comment;
-import com.hammer.pulsar.dto.article.Like;
-import com.hammer.pulsar.dto.article.LikeRequest;
+import com.hammer.pulsar.dto.interaction.Comment;
+import com.hammer.pulsar.dto.interaction.CommentWriteRequest;
+import com.hammer.pulsar.dto.interaction.Like;
+import com.hammer.pulsar.dto.interaction.LikeRequest;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ public interface InteractionService {
     public List<Comment> getAllComments(int articleId);
 
     // 해당 게시글에 댓글을 작성하는 로직
-    public List<Comment> writeComment(NotDetermined request);
+    public List<Comment> writeComment(CommentWriteRequest request);
 
     // 댓글을 삭제하는 로직
-    public List<Comment> removeComment(int commentId);
+    public List<Comment> removeComment(int articleId, int commentId);
 
 }

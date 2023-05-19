@@ -1,6 +1,7 @@
 package com.hammer.pulsar.dto.article;
 
 import com.hammer.pulsar.dto.common.Tag;
+import com.hammer.pulsar.dto.common.Writer;
 
 import java.util.List;
 

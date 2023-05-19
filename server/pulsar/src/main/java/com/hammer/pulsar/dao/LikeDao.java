@@ -1,7 +1,7 @@
 package com.hammer.pulsar.dao;
 
 import com.hammer.pulsar.dto.article.ArticlePreview;
-import com.hammer.pulsar.dto.article.LikeRequest;
+import com.hammer.pulsar.dto.interaction.LikeRequest;
 
 import java.util.List;
 
