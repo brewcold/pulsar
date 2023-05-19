@@ -9,14 +9,14 @@
       <span>
         {{
           time
-            ? time?.repeatPeriod +
-              time?.repeatUnit +
+            ? time.repeatPeriod +
+              time.repeatUnit +
               '마다 ' +
-              time?.repeatDay +
+              time.repeatDay +
               '요일 ' +
-              time?.startHour +
+              time.startHour +
               '시 ' +
-              time?.startMin +
+              time.startMin +
               '분에 시작'
             : '정보를 가져오는 데 실패했어요.'
         }}
