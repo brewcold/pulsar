@@ -68,9 +68,14 @@ public class RoutineServiceImpl implements RoutineService {
 
     }
 
+    /**
+     * 선택한 루틴을 삭제하는 메서드
+     *
+     * @param routineId
+     */
     @Override
     public void removeRoutine(int routineId) {
-
+        routineDao.deleteRoutine(routineId);
     }
 
     @Override
