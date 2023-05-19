@@ -14,6 +14,9 @@ public interface RoutineDao {
     // 회원의 루틴 목록을 조회하는 메서드
     public List<Routine> selectRoutinesByMemberId(int memberId);
 
+    // 선택한 루틴의 상세 정보를 조회하는 메서드
+    public Routine selectRoutineByRoutineId(int routineId);
+
     // 루틴 작성자의 프로필을 조회하는 메서드
     public MemberProfile selectProfileByRoutineId(int routineId);
 

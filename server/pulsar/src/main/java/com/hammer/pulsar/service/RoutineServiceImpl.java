@@ -52,9 +52,15 @@ public class RoutineServiceImpl implements RoutineService {
         return routineDao.selectRoutinesByMemberId(memberId);
     }
 
+    /**
+     * 선택한 루틴의 상세 정보를 조회하는 메서드
+     *
+     * @param routineId
+     * @return
+     */
     @Override
     public Routine getRoutineDetail(int routineId) {
-        return null;
+        return routineDao.selectRoutineByRoutineId(routineId);
     }
 
     @Override
