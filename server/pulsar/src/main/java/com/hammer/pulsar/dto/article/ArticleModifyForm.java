@@ -6,6 +6,8 @@ import java.util.List;
 
 // 게시글 수정을 위해 사용자가 입력한 정보들을 저장하고 있는 DTO 클래스
 public class ArticleModifyForm {
+    // 게시글 번호
+    private int articleId;
     // 게시글 제목
     private String title;
     // 게시글 본문
@@ -17,6 +19,15 @@ public class ArticleModifyForm {
     public ArticleModifyForm() {}
 
     // Getters, Setters
+
+    public int getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -45,7 +56,8 @@ public class ArticleModifyForm {
     @Override
     public String toString() {
         return "ArticleModifyForm{" +
-                "title='" + title + '\'' +
+                "articleId=" + articleId +
+                ", title='" + title + '\'' +
                 ", body=" + body +
                 ", tagList=" + tagList +
                 '}';

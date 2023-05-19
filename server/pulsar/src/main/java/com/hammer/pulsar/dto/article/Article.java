@@ -8,6 +8,8 @@ import java.util.List;
 // 게시글 상세보기를 위한 DTO 클래스
 // DAO에서 받은 값들을 서비스 계층에서 조립하여 저장하는 객체
 public class Article {
+    // 게시글 번호
+    private int articleId;
     // 게시글 제목
     private String title;
     // 작성자 정보
@@ -25,6 +27,14 @@ public class Article {
     public Article() {}
 
     // Getters, Setters
+    public int getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -77,7 +87,8 @@ public class Article {
     @Override
     public String toString() {
         return "Article{" +
-                "title='" + title + '\'' +
+                "articleId=" + articleId +
+                ", title='" + title + '\'' +
                 ", writerInfo=" + writerInfo +
                 ", body=" + body +
                 ", tagList=" + tagList +
