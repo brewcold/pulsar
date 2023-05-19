@@ -2,6 +2,7 @@ package com.hammer.pulsar.service;
 
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.Article;
+import com.hammer.pulsar.dto.article.ArticleModifyForm;
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.ArticleWriteForm;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +22,7 @@ public interface ArticleService {
     public Article getArticle(int articleId);
 
     // 선택한 게시글을 수정하는 로직
-    public void modifyArticle(NotDetermined request);
+    public void modifyArticle(ArticleModifyForm form, MultipartFile[] appendedImgFiles);
 
     // 선택한 게시글을 삭제하는 로직
     public void removeArticle(int articleId);

@@ -1,5 +1,6 @@
 package com.hammer.pulsar.dao;
 
+import com.hammer.pulsar.dto.article.ArticleTagUpdateRequest;
 import com.hammer.pulsar.dto.common.Tag;
 
 import java.util.List;
@@ -10,6 +11,9 @@ public interface ArticleTagDao {
     public List<Tag> selectTagByArticleId(int articleId);
 
     // 선택한 게시글에 태그를 추가하는 메서드
-    public void insertArticleTags(List<Integer> tagsId);
+    public void insertArticleTags(ArticleTagUpdateRequest request);
+
+    // 선택한 게시글에 태그를 삭제하는 메서드
+    public void deleteArticleTags(ArticleTagUpdateRequest request);
 
 }
