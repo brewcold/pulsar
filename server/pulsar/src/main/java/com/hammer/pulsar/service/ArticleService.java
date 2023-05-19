@@ -20,9 +20,6 @@ public interface ArticleService {
     // 선택한 게시글의 상세 정보를 보여주는 로직
     public Article getArticle(int articleId);
 
-    // 검색 조건에 일치하는 게시글 목록을 보여주는 로직
-    public List<ArticlePreview> searchArticles(NotDetermined searchCondition);
-
     // 선택한 게시글을 수정하는 로직
     public void modifyArticle(NotDetermined request);
 

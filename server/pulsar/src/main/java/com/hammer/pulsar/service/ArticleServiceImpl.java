@@ -56,7 +56,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
-     * 게시글 세부정보를 조회하는 메서드
+     * 게시글 세부 정보를 조회하는 메서드
      *
      * @param articleId
      * @return
@@ -64,11 +64,6 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getArticle(int articleId) {
         return articleDao.selectArticleByArticleId(articleId);
-    }
-
-    @Override
-    public List<ArticlePreview> searchArticles(NotDetermined searchCondition) {
-        return null;
     }
 
     @Override
