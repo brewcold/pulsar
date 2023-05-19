@@ -3,6 +3,8 @@ package com.hammer.pulsar.service;
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.routine.Routine;
+import com.hammer.pulsar.dto.routine.RoutineRegistForm;
+import com.hammer.pulsar.dto.routine.RoutineRegistRequest;
 
 import java.util.List;
 
@@ -12,7 +14,7 @@ public interface RoutineService {
     public MemberProfile getMemberProfile(int routineId);
 
     // 루틴을 추가하는 로직
-    public int addNewRoutine(NotDetermined routine);
+    public int addNewRoutine(RoutineRegistForm form, int memberId);
 
     // 회원의 루틴을 조회하는 로직
     public List<Routine> getAllRoutines(int memberId);
