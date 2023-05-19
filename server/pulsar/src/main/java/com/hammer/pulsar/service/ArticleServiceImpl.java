@@ -55,9 +55,15 @@ public class ArticleServiceImpl implements ArticleService {
         return articleDao.selectArticles();
     }
 
+    /**
+     * 게시글 세부정보를 조회하는 메서드
+     *
+     * @param articleId
+     * @return
+     */
     @Override
     public Article getArticle(int articleId) {
-        return null;
+        return articleDao.selectArticleByArticleId(articleId);
     }
 
     @Override
