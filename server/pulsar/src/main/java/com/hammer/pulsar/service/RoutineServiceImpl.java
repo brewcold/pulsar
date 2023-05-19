@@ -40,10 +40,16 @@ public class RoutineServiceImpl implements RoutineService {
 
         return routineDao.insertRoutine(request);
     }
-    
+
+    /**
+     * 회원의 모든 루틴 목록을 조회하는 메서드
+     *
+     * @param memberId
+     * @return
+     */
     @Override
     public List<Routine> getAllRoutines(int memberId) {
-        return null;
+        return routineDao.selectRoutinesByMemberId(memberId);
     }
 
     @Override
