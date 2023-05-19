@@ -1,4 +1,6 @@
-package com.hammer.pulsar.dto.article;
+package com.hammer.pulsar.dto.interaction;
+
+import com.hammer.pulsar.dto.common.Writer;
 
 // 게시글에 작성된 댓글 정보를 저장할 DTO 클래스
 public class Comment {

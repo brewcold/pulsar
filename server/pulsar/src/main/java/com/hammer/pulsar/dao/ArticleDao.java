@@ -26,4 +26,11 @@ public interface ArticleDao {
 
     // 선택한 게시글을 삭제하는 메서드
     public int deleteArticle(int articleId);
+
+    // 선택한 게시글의 추천수를 1 증가시키는 메서드
+    public void addLikes(int articleId);
+
+    // 선택한 게시글의 추천수를 1 감소시키는 메서드
+    public void subtractLikes(int articleId);
+
 }
