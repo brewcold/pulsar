@@ -2,9 +2,10 @@ package com.hammer.pulsar.controller;
 
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.ArticlePreview;
-import com.hammer.pulsar.dto.member.MemberRegistRequest;
+import com.hammer.pulsar.dto.member.MemberRegistForm;
 import com.hammer.pulsar.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,8 +28,11 @@ public class MemberRestController {
 
     // 회원가입 요청 API
     @PostMapping("/signup")
-    public ResponseEntity<Void> registMember(MemberRegistRequest request, MultipartFile file) {
-        return null;
+    public ResponseEntity<Void> registMember(MemberRegistForm form, MultipartFile imgFile) {
+        memberService.registMember(form, imgFile);
+
+        // 회원가입을 문제없이 완료하면 201 응답
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     // 이메일 중복 검사 요청 API
