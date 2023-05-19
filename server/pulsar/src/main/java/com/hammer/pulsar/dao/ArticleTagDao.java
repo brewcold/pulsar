@@ -9,4 +9,7 @@ public interface ArticleTagDao {
     // 선택된 게시글의 태그 목록을 불러오기 위한 메서드
     public List<Tag> selectTagByArticleId(int articleId);
 
+    // 선택한 게시글에 태그를 추가하는 메서드
+    public void insertArticleTags(List<Integer> tagsId);
+
 }

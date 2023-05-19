@@ -3,6 +3,8 @@ package com.hammer.pulsar.service;
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.Article;
 import com.hammer.pulsar.dto.article.ArticlePreview;
+import com.hammer.pulsar.dto.article.ArticleWriteForm;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
 // 게시판, 글 상세보기: static 관련 로직
 public interface ArticleService {
     // 게시글을 작성하는 로직
-    public int writeArticle(NotDetermined request);
+    public int writeArticle(ArticleWriteForm form, MultipartFile[] imgFiles, int memberId);
 
     // 게시판에 등록된 글 목록을 보여주는 로직
     public List<ArticlePreview> getAllArticles();
