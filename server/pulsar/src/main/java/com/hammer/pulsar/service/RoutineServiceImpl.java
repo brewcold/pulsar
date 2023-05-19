@@ -5,9 +5,7 @@ import com.hammer.pulsar.dao.MemberDao;
 import com.hammer.pulsar.dao.RoutineDao;
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.member.MemberProfile;
-import com.hammer.pulsar.dto.routine.Routine;
-import com.hammer.pulsar.dto.routine.RoutineRegistForm;
-import com.hammer.pulsar.dto.routine.RoutineRegistRequest;
+import com.hammer.pulsar.dto.routine.*;
 
 import java.util.List;
 
@@ -63,9 +61,15 @@ public class RoutineServiceImpl implements RoutineService {
         return routineDao.selectRoutineByRoutineId(routineId);
     }
 
+    /**
+     * 선택한 루틴 정보를 수정하는 메서드
+     *
+     * @param routine
+     */
     @Override
-    public void modifyRoutineInfo(NotDetermined routine) {
-
+    public void modifyRoutineInfo(RoutineModifyForm form) {
+        
+        routineDao.updateRoutine(new RoutineModifyRequest(form));
     }
 
     /**

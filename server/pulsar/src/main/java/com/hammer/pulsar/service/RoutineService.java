@@ -1,10 +1,9 @@
 package com.hammer.pulsar.service;
 
-import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.routine.Routine;
+import com.hammer.pulsar.dto.routine.RoutineModifyForm;
 import com.hammer.pulsar.dto.routine.RoutineRegistForm;
-import com.hammer.pulsar.dto.routine.RoutineRegistRequest;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public interface RoutineService {
     public Routine getRoutineDetail(int routineId);
 
     // 선택한 루틴을 수정하는 로직
-    public void modifyRoutineInfo(NotDetermined routine);
+    public void modifyRoutineInfo(RoutineModifyForm form);
 
     // 선택한 루틴을 삭제하는 로직
     public void removeRoutine(int routineId);

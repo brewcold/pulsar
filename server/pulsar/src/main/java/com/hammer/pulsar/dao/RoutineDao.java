@@ -2,6 +2,7 @@ package com.hammer.pulsar.dao;
 
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.routine.Routine;
+import com.hammer.pulsar.dto.routine.RoutineModifyRequest;
 import com.hammer.pulsar.dto.routine.RoutineRegistRequest;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public interface RoutineDao {
     public MemberProfile selectProfileByRoutineId(int routineId);
 
     // 회원의 루틴을 수정하는 메서드
-    public int updateRoutine(Routine routine);
+    public void updateRoutine(RoutineModifyRequest request);
 
     // 회원의 루틴을 삭제하는 메서드
-    public int deleteRoutine(int routineId);
+    public void deleteRoutine(int routineId);
 }
