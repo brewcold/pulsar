@@ -96,6 +96,28 @@ public class MemberServiceImpl implements MemberService {
     }
 
     /**
+     * 회원가입 폼에서 AJAX로 이메일 중복 검사를 진행할 때 호출할 메서드
+     *
+     * @param email
+     * @return
+     */
+    @Override
+    public boolean checkDuplicateEmail(String email) {
+        return isValidEmail(email);
+    }
+
+    /**
+     * 회원가입 폼에서 AJAX로 닉네임 중복 검사를 진행할 때 호출할 메서드
+     *
+     * @param nickname
+     * @return
+     */
+    @Override
+    public boolean checkDuplicateNickname(String nickname) {
+        return isValidNickname(nickname);
+    }
+
+    /**
      * 선택한 회원의 세부 정보를 조회하는 메서드
      *
      * @param memberId

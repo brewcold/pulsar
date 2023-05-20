@@ -14,6 +14,12 @@ public interface MemberService {
     // 회원 가입 로직
     public void registMember(MemberRegistForm form, MultipartFile imgFile);
 
+    // 이메일 중복 검사 로직
+    public boolean checkDuplicateEmail(String email);
+
+    // 닉네임 중복 검사 로직
+    public boolean checkDuplicateNickname(String nickname);
+
     // 선택한 회원의 정보 조회 로직
     public Member getMemberInfo(int memberId);
 
