@@ -12,14 +12,14 @@ import java.util.List;
 // 루틴 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
 @RequestMapping("/routines")
-public class RoutineController {
+public class RoutineRestController {
 
     // 루틴 관련 서비스 로직을 처리할 클래스
     private final RoutineService routineService;
 
     // 컨트롤러의 생성자
     @Autowired
-    public RoutineController(RoutineService routineService) {
+    public RoutineRestController(RoutineService routineService) {
         this.routineService = routineService;
     }
 
