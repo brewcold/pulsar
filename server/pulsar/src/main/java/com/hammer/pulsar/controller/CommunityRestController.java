@@ -2,6 +2,7 @@ package com.hammer.pulsar.controller;
 
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.Article;
+import com.hammer.pulsar.dto.article.ArticleModifyForm;
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.ArticleWriteForm;
 import com.hammer.pulsar.service.ArticleService;
@@ -62,9 +63,12 @@ public class CommunityRestController {
     }
 
     // 글 수정하기 API
-    @PutMapping()
-    public ResponseEntity<Void> modifyArticle(NotDetermined request) {
-        return null;
+    @PutMapping("/{articleId}")
+    public ResponseEntity<Void> modifyArticle(@PathVariable int articleId, ArticleModifyForm form,
+                                              MultipartFile[] imgFiles) {
+        articleService.modifyArticle(form, imgFiles);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 글 삭제하기 API
