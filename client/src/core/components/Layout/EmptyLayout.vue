@@ -2,7 +2,9 @@
 <template>
   <div>
     <about-container />
-    <div id="container" />
+    <div id="container">
+      <router-view />
+    </div>
   </div>
 </template>
 
