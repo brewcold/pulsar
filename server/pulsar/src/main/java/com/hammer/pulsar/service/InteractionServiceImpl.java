@@ -7,13 +7,24 @@ import com.hammer.pulsar.dto.interaction.Comment;
 import com.hammer.pulsar.dto.interaction.CommentWriteRequest;
 import com.hammer.pulsar.dto.interaction.Like;
 import com.hammer.pulsar.dto.interaction.LikeRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// 실제 로직이 구현된 InteractionService 인터페이스의 구현체 클래스
+@Service
 public class InteractionServiceImpl implements InteractionService {
-    private LikeDao likeDao;
-    private ArticleDao articleDao;
-    private CommentDao commentDao;
+    private final LikeDao likeDao;
+    private final ArticleDao articleDao;
+    private final CommentDao commentDao;
+
+    @Autowired
+    public InteractionServiceImpl(LikeDao likeDao, ArticleDao articleDao, CommentDao commentDao) {
+        this.likeDao = likeDao;
+        this.articleDao = articleDao;
+        this.commentDao = commentDao;
+    }
 
     /**
      * 게시글의 총 추천수와 회원의 추천 여부를 반환하는 메서드
