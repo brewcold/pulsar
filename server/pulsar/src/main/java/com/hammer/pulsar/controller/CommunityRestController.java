@@ -5,6 +5,7 @@ import com.hammer.pulsar.dto.article.Article;
 import com.hammer.pulsar.dto.article.ArticleModifyForm;
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.ArticleWriteForm;
+import com.hammer.pulsar.dto.interaction.Comment;
 import com.hammer.pulsar.dto.interaction.Like;
 import com.hammer.pulsar.dto.interaction.LikeRequest;
 import com.hammer.pulsar.service.ArticleService;
@@ -81,6 +82,7 @@ public class CommunityRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // 추천 수 가져오기 API
     @GetMapping("/{articleId}/active/like")
     public ResponseEntity<Like> showLikes(@PathVariable int articleId, HttpServletRequest request) {
         // 로그인 한 회원의 아이디를 불러오기
@@ -98,6 +100,7 @@ public class CommunityRestController {
         return new ResponseEntity<>(likes, HttpStatus.OK);
     }
 
+    // 추천하기 API
     @PostMapping("/{articleId}/active/like")
     public ResponseEntity<Like> toggleLIkeStatus(@PathVariable int articleId, HttpServletRequest request) {
         // 로그인한 회원의 아이디를 불러오기
@@ -113,6 +116,14 @@ public class CommunityRestController {
         Like likes = interactionService.toggleLike(likeRequest);
 
         return new ResponseEntity<>(likes, HttpStatus.OK);
+    }
+
+    // 댓글 가져오기 API
+    @GetMapping("/{articleId}/active/comment")
+    public ResponseEntity<List<Comment>> getAllComments(@PathVariable int articleId) {
+        List<Comment> comments = interactionService.getAllComments(articleId);
+
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
 }
