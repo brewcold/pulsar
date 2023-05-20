@@ -1,16 +1,17 @@
-import Landing from '../Landing.vue';
-import Login from '../components/Login.vue';
-import Signup from '../components/Signup.vue';
+import LandingContainer from '../LandingContainer.vue';
+import LoginContainer from '../components/LoginContainer.vue';
+import SignUp from '../components/SignUp.vue';
 
 export default [
   {
     path: '/',
     name: 'landing', //랜딩 페이지 (로그인, 로그아웃, 회원가입)
-    component: Landing,
+    component: LandingContainer,
     children: [
+      { path: '', component: LoginContainer },
       {
-        path: 'signin', //회원가입 폼
-        component: Signup,
+        path: 'signup', //회원가입 폼
+        component: SignUp,
       },
     ],
   },
