@@ -2,6 +2,7 @@ package com.hammer.pulsar.controller;
 
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.routine.Routine;
+import com.hammer.pulsar.dto.routine.RoutineModifyForm;
 import com.hammer.pulsar.dto.routine.RoutineRegistForm;
 import com.hammer.pulsar.service.RoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +56,13 @@ public class RoutineRestController {
         return new ResponseEntity<>(routineNo, HttpStatus.CREATED);
     }
 
-    // routineNo을 REQ에 포함하고 URI를 /routine 으로 변경하는 것이 깔끔해 보입니다.
     // 루틴 수정 API
     @PutMapping("/routine/{routineId}")
-    public ResponseEntity<Void> modifyRoutineInfo(@PathVariable int routineId, NotDetermined request) {
-        return null;
+    public ResponseEntity<Void> modifyRoutineInfo(@PathVariable int routineId, RoutineModifyForm form) {
+        form.setRoutineId(routineId);
+        routineService.modifyRoutineInfo(form);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 루틴 삭제 API
