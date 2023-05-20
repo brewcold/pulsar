@@ -1,9 +1,8 @@
-import Statistics from '../Statistics.vue';
+import StatisticsContainer from '../StatisticsContainer.vue';
 
 export default [
   {
     path: '/statistics',
-    name: 'statistics',
-    component: Statistics,
+    component: StatisticsContainer,
   },
 ];

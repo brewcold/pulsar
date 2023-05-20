@@ -1,4 +1,4 @@
-import Routines from '../Routines.vue';
+import RoutinesContainer from '../RoutinesContainer.vue';
 import RoutineDetail from '../components/RoutineDetail.vue';
 import RoutineModify from '../components/RoutineModify.vue';
 import RoutineWrite from '../components/RoutineWrite.vue';
@@ -6,7 +6,7 @@ import RoutineWrite from '../components/RoutineWrite.vue';
 export default [
   {
     path: '/routines', //루틴 관리
-    component: Routines,
+    component: RoutinesContainer,
     children: [
       {
         path: ':id', //routines/:id (루틴 상세보기)

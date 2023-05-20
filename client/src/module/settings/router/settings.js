@@ -1,12 +1,11 @@
-import Settings from '../Settings.vue';
+import SettingsContainer from '../SettingsContainer.vue';
 import Edit from '../components/Edit.vue';
 import Quit from '../components/Edit.vue';
 
 export default [
   {
     path: '/settings', //계정 관리 및 설정
-    name: 'settings',
-    component: Settings,
+    component: SettingsContainer,
     children: [
       {
         path: 'edit', //회원정보 수정 페이지
