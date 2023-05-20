@@ -73,23 +73,4 @@ public class RoutineRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // URI를 routine/plan 으로 변경하는 것도 깔끔할 것 같습니다.
-    // 운동 계획 작성 API
-    @PostMapping("/routine/{routineId}")
-    public ResponseEntity<Void> addNewPlan(@PathVariable int routineId) {
-        return null;
-    }
-
-    // 운동 계획 수정 API
-    @PutMapping("/routine/{routineId}/{exerciseId}")
-    public ResponseEntity<Void> modifyPlan(@PathVariable int routineId, @PathVariable int exerciseId) {
-        return null;
-    }
-
-    // 운동 계획 삭제 API
-    @DeleteMapping("/routine/{routineId}/{exerciseId}")
-    public ResponseEntity<Void> removePlan(@PathVariable int routineId, @PathVariable int exerciseId) {
-        return null;
-    }
-
 }
