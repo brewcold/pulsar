@@ -3,13 +3,16 @@ package com.hammer.pulsar.controller;
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.Article;
 import com.hammer.pulsar.dto.article.ArticlePreview;
+import com.hammer.pulsar.dto.article.ArticleWriteForm;
 import com.hammer.pulsar.service.ArticleService;
 import com.hammer.pulsar.service.InteractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 // 커뮤니티 관련 API 요청을 처리할 REST 컨트롤러
@@ -46,8 +49,16 @@ public class CommunityRestController {
 
     // 글 작성하기 API
     @PostMapping()
-    public ResponseEntity<Integer> writeArticle(NotDetermined request) {
-        return null;
+    public ResponseEntity<Integer> writeArticle(ArticleWriteForm form, MultipartFile[] imgFiles,
+                                                HttpServletRequest request) {
+        // 로그인 회원의 고유번호
+        // TODO: 회원번호를 가져온 것은 임시코드이므로 로그인 구현시 수정할 것
+        int memberId = (Integer) request.getSession().getAttribute("memberId");
+
+        int articleNo = articleService.writeArticle(form, imgFiles, memberId);
+
+        // TODO: OK보다 CREATED가 어울린다면 변경
+        return new ResponseEntity<>(articleNo, HttpStatus.OK);
     }
 
     // 글 수정하기 API
