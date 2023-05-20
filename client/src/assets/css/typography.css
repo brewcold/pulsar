@@ -1,7 +1,7 @@
 @import url(./root.css);
 @font-face {
   font-family: h1;
-  src: url('../fonts/koverwatch.ttf');
+  src: url('../fonts/koverwatch.woff');
 }
 @font-face {
   font-family: bd;
