@@ -30,9 +30,18 @@ AUTH_INSTANCE.defaults.withCredentials = true;
 //withCredentials를 설정합니다. 프론트 단에서 인증정보를 담는 경우 이 설정이 없으면
 //CORS 에러가 발생합니다 (server에서 allow 어쩌고 하는 것처럼...)
 
-//instance를 가지고 api call부분을 담당하는 함수를 생성합니다.
-//첫 번째 파라미터부터 URI, HTTP 메서드, 서버로 보낼 데이터, 보안 타입을 받고
-//해당 타입에 따라 데이터 혹은 에러 메시지를 반환합니다.
+/**
+ * ### 실질적으로 API CALL을 통해 결과값을 리턴하는 함수입니다.
+ * 파라미터로 `URI`, `method`, `data`, `authType`을 받습니다.
+ * authType 및 HTTP method에 따라 `axios` 인스턴스를 생성,
+ * 요청을 보내 결과값을 받습니다. `method`에 아무것도 입력하지 않을 경우 `get`,
+ * `authType`은 `normal`로 각각 기본값이 적용됩니다.
+ * @param {string} URI
+ * @param {'get'|'post'|'put'|'delete'} method
+ * @param {Object} data
+ * @param {'normal'|'auth'} authType
+ * @returns `Promise<Object>`
+ */
 const call = async (URI, method = 'get', data, authType = 'normal') => {
   //bearer auth가 필요하면 authType에 문자열 'auth'를 입력하면 됩니다.
   const instance =
@@ -41,8 +50,8 @@ const call = async (URI, method = 'get', data, authType = 'normal') => {
   try {
     let result;
     if (method === 'get') result = await instance.get(URI);
-    if (method === 'post') result = await instance.post(URI);
-    if (method === 'put') result = await instance.put(URI);
+    if (method === 'post') result = await instance.post(URI, data);
+    if (method === 'put') result = await instance.put(URI, data);
     if (method === 'delete') result = await instance.delete(URI);
     //promise 객체
     return result.data;
