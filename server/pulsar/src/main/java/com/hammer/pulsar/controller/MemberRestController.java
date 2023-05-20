@@ -91,7 +91,9 @@ public class MemberRestController {
     // 회원 탈퇴 API
     @PostMapping("/{memberId}/quit")
     public ResponseEntity<Void> quitMember(@PathVariable int memberId) {
-        return null;
+        memberService.quitMember(memberId);
+        
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 내 활동내역 보기 - 북마크한 글 API
