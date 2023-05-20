@@ -4,6 +4,7 @@ import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.routine.Routine;
 import com.hammer.pulsar.service.RoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,9 @@ public class RoutineRestController {
     // 루틴 리스트 요청 API
     @GetMapping("/{memberId}")
     public ResponseEntity<List<Routine>> showAllRoutines(@PathVariable int memberId) {
-        return null;
+        List<Routine> allRoutine = routineService.getAllRoutines(memberId);
+
+        return new ResponseEntity<>(allRoutine, HttpStatus.OK);
     }
 
     // 루틴 상세보기 요청 API
