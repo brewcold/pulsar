@@ -7,10 +7,12 @@ import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.routine.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 // 실제 로직이 구현된 RoutineService 인터페이스의 구현체 클래스
+@Service
 public class RoutineServiceImpl implements RoutineService {
     private final MemberDao memberDao;
     private final RoutineDao routineDao;
