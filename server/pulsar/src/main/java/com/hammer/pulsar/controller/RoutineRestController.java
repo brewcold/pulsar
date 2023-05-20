@@ -2,12 +2,14 @@ package com.hammer.pulsar.controller;
 
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.routine.Routine;
+import com.hammer.pulsar.dto.routine.RoutineRegistForm;
 import com.hammer.pulsar.service.RoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 // 루틴 관련 API 요청을 처리할 REST 컨트롤러
@@ -42,8 +44,15 @@ public class RoutineRestController {
 
     // 루틴 작성 API
     @PostMapping("/routine")
-    public ResponseEntity<Integer> addNewRoutine(NotDetermined request) {
-        return null;
+    public ResponseEntity<Integer> addNewRoutine(RoutineRegistForm form, HttpServletRequest request) {
+        // 로그인 회원의 고유번호
+        // TODO: 회원번호를 가져온 것은 임시코드이므로 로그인 구현시 수정할 것
+        int memberId = (Integer) request.getSession().getAttribute("memberId");
+
+        int routineNo = routineService.addNewRoutine(form, memberId);
+
+        // 작성한 루틴의 고유 번호를 응답으로 보낸다.
+        return new ResponseEntity<>(routineNo, HttpStatus.CREATED);
     }
 
     // routineNo을 REQ에 포함하고 URI를 /routine 으로 변경하는 것이 깔끔해 보입니다.
