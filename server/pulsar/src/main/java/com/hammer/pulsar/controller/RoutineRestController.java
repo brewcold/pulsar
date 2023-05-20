@@ -35,7 +35,9 @@ public class RoutineRestController {
     // 루틴 상세보기 요청 API
     @GetMapping("/routine/{routineId}")
     public ResponseEntity<Routine> showRoutine(@PathVariable int routineId) {
-        return null;
+        Routine routine = routineService.getRoutineDetail(routineId);
+
+        return new ResponseEntity<>(routine, HttpStatus.OK);
     }
 
     // 루틴 작성 API
