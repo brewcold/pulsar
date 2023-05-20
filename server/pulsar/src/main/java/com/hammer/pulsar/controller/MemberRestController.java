@@ -1,7 +1,7 @@
 package com.hammer.pulsar.controller;
 
-import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.ArticlePreview;
+import com.hammer.pulsar.dto.article.CommentedArticle;
 import com.hammer.pulsar.dto.member.Member;
 import com.hammer.pulsar.dto.member.MemberModifyForm;
 import com.hammer.pulsar.dto.member.MemberRegistForm;
@@ -99,19 +99,25 @@ public class MemberRestController {
     // 내 활동내역 보기 - 작성한 글 API
     @GetMapping("/{memberId}/history/myarticle")
     public ResponseEntity<List<ArticlePreview>> showWritten(@PathVariable int memberId) {
-        return null;
+        List<ArticlePreview> myArticles = memberService.getAllWritten(memberId);
+
+        return new ResponseEntity<>(myArticles, HttpStatus.OK);
     }
 
     // 내 활동내역 보기 - 추천한 글 API
     @GetMapping("/{memberId}/history/recommended")
     public ResponseEntity<List<ArticlePreview>> showLiked(@PathVariable int memberId) {
-        return null;
+        List<ArticlePreview> myLiked = memberService.getAllLiked(memberId);
+
+        return new ResponseEntity<>(myLiked, HttpStatus.OK);
     }
 
     // 내 활동내역 보기 - 댓글 작성한 글 API
     @GetMapping("/{memberId}/history/comment")
-    public ResponseEntity<List<NotDetermined>> showCommented(@PathVariable int memberId) {
-        return null;
+    public ResponseEntity<List<CommentedArticle>> showCommented(@PathVariable int memberId) {
+        List<CommentedArticle> myComments = memberService.getAllCommented(memberId);
+
+        return new ResponseEntity<>(myComments, HttpStatus.OK);
     }
 
 }
