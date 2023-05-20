@@ -6,6 +6,7 @@ import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.service.ArticleService;
 import com.hammer.pulsar.service.InteractionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +31,9 @@ public class CommunityRestController {
     // 게시글 목록 조회 API
     @GetMapping()
     public ResponseEntity<List<ArticlePreview>> showAllArticles() {
-        return null;
+        List<ArticlePreview> articleList = articleService.getAllArticles();
+
+        return new ResponseEntity<>(articleList, HttpStatus.OK);
     }
 
     // 글 상세보기 API
