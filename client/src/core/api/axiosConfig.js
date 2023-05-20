@@ -17,7 +17,7 @@ const NORMAL = {
 const AUTH = {
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
-    Authorization: '',
+    // Authorization: '',
   },
   baseURL: root,
 };
