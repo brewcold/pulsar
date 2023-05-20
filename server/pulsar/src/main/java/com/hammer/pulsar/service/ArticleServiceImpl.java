@@ -4,7 +4,8 @@ import com.hammer.pulsar.dao.ArticleDao;
 import com.hammer.pulsar.dao.ArticleTagDao;
 import com.hammer.pulsar.dto.article.*;
 import com.hammer.pulsar.dto.common.Tag;
-import com.hammer.pulsar.dto.member.MemberModifyRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -13,11 +14,20 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+// 실제 로직이 구현된 ArticleService 인터페이스의 구현체 클래스
+@Service
 public class ArticleServiceImpl implements ArticleService {
-    private ArticleDao articleDao;
-    private ArticleTagDao articleTagDao;
+    private final ArticleDao articleDao;
+    private final ArticleTagDao articleTagDao;
 
-    private FileManagementService fileManagementService;
+    private final FileManagementService fileManagementService;
+
+    @Autowired
+    public ArticleServiceImpl(ArticleDao articleDao, ArticleTagDao articleTagDao, FileManagementService fileManagementService) {
+        this.articleDao = articleDao;
+        this.articleTagDao = articleTagDao;
+        this.fileManagementService = fileManagementService;
+    }
 
     /**
      * 사용자가 작성한 게시글 정보에 작성자의 회원번호를 추가한 Request를 만들어 테이블에 정보를 추가하는 메서드
