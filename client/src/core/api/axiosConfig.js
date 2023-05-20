@@ -50,8 +50,7 @@ const call = async (uri, method = 'get', data, authType = 'normal') => {
   try {
     let result;
     if (method === 'get') result = await instance.get(URI);
-    if (method === 'post')
-      result = await instance.post(root + URI, data);
+    if (method === 'post') result = await instance.post(URI, data);
     if (method === 'put') result = await instance.put(URI, data);
     if (method === 'delete') result = await instance.delete(URI);
     //promise 객체
