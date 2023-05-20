@@ -92,14 +92,8 @@ public class MemberRestController {
     @PostMapping("/{memberId}/quit")
     public ResponseEntity<Void> quitMember(@PathVariable int memberId) {
         memberService.quitMember(memberId);
-        
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
-    // 내 활동내역 보기 - 북마크한 글 API
-    @GetMapping("/{memberId}/history/bookmark")
-    public ResponseEntity<List<ArticlePreview>> showBookmarked(@PathVariable int memberId) {
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 내 활동내역 보기 - 작성한 글 API
