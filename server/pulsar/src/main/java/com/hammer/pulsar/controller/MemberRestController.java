@@ -40,7 +40,7 @@ public class MemberRestController {
     // 이메일 중복 검사 요청 API
     // 중복된 이메일이 있을 경우 409 CONFLICT 응답
     @PostMapping("/signup/validation/email")
-    public ResponseEntity<Void> checkValidEmail(String email) {
+    public ResponseEntity<Void> checkValidEmail(@RequestBody String email) {
         return memberService.checkDuplicateEmail(email) ?
                 new ResponseEntity<>(HttpStatus.CONFLICT) :
                 new ResponseEntity<>(HttpStatus.OK);
@@ -49,7 +49,7 @@ public class MemberRestController {
     // 닉네임 중복 검사 요청 API
     // 중복된 닉네임이 있을 경우 409 CONFLICT 응답
     @PostMapping("/signup/validation/nickname")
-    public ResponseEntity<Void> checkValidNickname(String nickname) {
+    public ResponseEntity<Void> checkValidNickname(@RequestBody String nickname) {
         return memberService.checkDuplicateNickname(nickname) ?
                 new ResponseEntity<>(HttpStatus.CONFLICT) :
                 new ResponseEntity<>(HttpStatus.OK);
