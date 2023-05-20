@@ -2,6 +2,8 @@ package com.hammer.pulsar.controller;
 
 import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.ArticlePreview;
+import com.hammer.pulsar.dto.member.Member;
+import com.hammer.pulsar.dto.member.MemberModifyForm;
 import com.hammer.pulsar.dto.member.MemberRegistForm;
 import com.hammer.pulsar.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,16 +70,22 @@ public class MemberRestController {
 
     // 회원정보 수정 API
     // 먼저 화면에 보여줄 현재 회원 정보
+    // TODO: 이후에 서비스 로직에 Optional을 도입하면 404도 고려해보기
     @GetMapping("/{memberId}")
-    public ResponseEntity<NotDetermined> showMemberInfo(@PathVariable int memberId) {
-        return null;
+    public ResponseEntity<Member> showMemberInfo(@PathVariable int memberId) {
+        Member memberInfo = memberService.getMemberInfo(memberId);
+
+        return new ResponseEntity<>(memberInfo, HttpStatus.OK);
     }
 
     // 회원정보 수정 API
     // 작성한 정보로 수정 요청
     @PostMapping("/{memberId}")
-    public ResponseEntity<Void> modifyMemberInfo(@PathVariable int memberId) {
-        return null;
+    public ResponseEntity<Void> modifyMemberInfo(@PathVariable int memberId,
+                                                 MemberModifyForm form, MultipartFile imgFile) {
+        memberService.modifyMemberInfo(form, imgFile);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 회원 탈퇴 API
