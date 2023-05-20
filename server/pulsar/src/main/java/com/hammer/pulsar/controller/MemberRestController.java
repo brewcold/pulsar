@@ -1,10 +1,13 @@
 package com.hammer.pulsar.controller;
 
-import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.ArticlePreview;
-import com.hammer.pulsar.dto.member.MemberRegistRequest;
+import com.hammer.pulsar.dto.article.CommentedArticle;
+import com.hammer.pulsar.dto.member.Member;
+import com.hammer.pulsar.dto.member.MemberModifyForm;
+import com.hammer.pulsar.dto.member.MemberRegistForm;
 import com.hammer.pulsar.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,20 +30,29 @@ public class MemberRestController {
 
     // 회원가입 요청 API
     @PostMapping("/signup")
-    public ResponseEntity<Void> registMember(MemberRegistRequest request, MultipartFile file) {
-        return null;
+    public ResponseEntity<Void> registMember(MemberRegistForm form, MultipartFile imgFile) {
+        memberService.registMember(form, imgFile);
+
+        // 회원가입을 문제없이 완료하면 201 응답
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     // 이메일 중복 검사 요청 API
+    // 중복된 이메일이 있을 경우 409 CONFLICT 응답
     @PostMapping("/signup/validation/email")
     public ResponseEntity<Void> checkValidEmail(String email) {
-        return null;
+        return memberService.checkDuplicateEmail(email) ?
+                new ResponseEntity<>(HttpStatus.CONFLICT) :
+                new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 닉네임 중복 검사 요청 API
+    // 중복된 닉네임이 있을 경우 409 CONFLICT 응답
     @PostMapping("/signup/validation/nickname")
     public ResponseEntity<Void> checkValidNickname(String nickname) {
-        return null;
+        return memberService.checkDuplicateNickname(nickname) ?
+                new ResponseEntity<>(HttpStatus.CONFLICT) :
+                new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 로그인 API
@@ -58,46 +70,54 @@ public class MemberRestController {
 
     // 회원정보 수정 API
     // 먼저 화면에 보여줄 현재 회원 정보
+    // TODO: 이후에 서비스 로직에 Optional을 도입하면 404도 고려해보기
     @GetMapping("/{memberId}")
-    public ResponseEntity<NotDetermined> showMemberInfo(@PathVariable int memberId) {
-        return null;
+    public ResponseEntity<Member> showMemberInfo(@PathVariable int memberId) {
+        Member memberInfo = memberService.getMemberInfo(memberId);
+
+        return new ResponseEntity<>(memberInfo, HttpStatus.OK);
     }
 
     // 회원정보 수정 API
     // 작성한 정보로 수정 요청
     @PostMapping("/{memberId}")
-    public ResponseEntity<Void> modifyMemberInfo(@PathVariable int memberId) {
-        return null;
+    public ResponseEntity<Void> modifyMemberInfo(@PathVariable int memberId,
+                                                 MemberModifyForm form, MultipartFile imgFile) {
+        memberService.modifyMemberInfo(form, imgFile);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 회원 탈퇴 API
     @PostMapping("/{memberId}/quit")
     public ResponseEntity<Void> quitMember(@PathVariable int memberId) {
-        return null;
-    }
+        memberService.quitMember(memberId);
 
-    // 내 활동내역 보기 - 북마크한 글 API
-    @GetMapping("/{memberId}/history/bookmark")
-    public ResponseEntity<List<ArticlePreview>> showBookmarked(@PathVariable int memberId) {
-        return null;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 내 활동내역 보기 - 작성한 글 API
     @GetMapping("/{memberId}/history/myarticle")
     public ResponseEntity<List<ArticlePreview>> showWritten(@PathVariable int memberId) {
-        return null;
+        List<ArticlePreview> myArticles = memberService.getAllWritten(memberId);
+
+        return new ResponseEntity<>(myArticles, HttpStatus.OK);
     }
 
     // 내 활동내역 보기 - 추천한 글 API
     @GetMapping("/{memberId}/history/recommended")
     public ResponseEntity<List<ArticlePreview>> showLiked(@PathVariable int memberId) {
-        return null;
+        List<ArticlePreview> myLiked = memberService.getAllLiked(memberId);
+
+        return new ResponseEntity<>(myLiked, HttpStatus.OK);
     }
 
     // 내 활동내역 보기 - 댓글 작성한 글 API
     @GetMapping("/{memberId}/history/comment")
-    public ResponseEntity<List<NotDetermined>> showCommented(@PathVariable int memberId) {
-        return null;
+    public ResponseEntity<List<CommentedArticle>> showCommented(@PathVariable int memberId) {
+        List<CommentedArticle> myComments = memberService.getAllCommented(memberId);
+
+        return new ResponseEntity<>(myComments, HttpStatus.OK);
     }
 
 }
