@@ -1,4 +1,4 @@
-import LandingContainer from '../LandingContainer.vue';
+import LandingView from '../LandingView.vue';
 import LoginContainer from '../components/LoginContainer.vue';
 import SignUp from '../components/SignUp.vue';
 
@@ -6,7 +6,7 @@ export default [
   {
     path: '/',
     name: 'landing', //랜딩 페이지 (로그인, 로그아웃, 회원가입)
-    component: LandingContainer,
+    component: LandingView,
     children: [
       { path: '', component: LoginContainer },
       {
