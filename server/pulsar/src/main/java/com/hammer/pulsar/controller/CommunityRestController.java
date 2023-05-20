@@ -75,16 +75,8 @@ public class CommunityRestController {
     @DeleteMapping("/{articleId}")
     public ResponseEntity<Void> removeArticle(@PathVariable int articleId) {
         articleService.removeArticle(articleId);
-        
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    // GET 요청이 더 좋아보이기도 합니다.
-    // 응답에 검색조건에 맞는 게시글 목록이 들어가야 할 것 같습니다.
-    // 검색 API
-    @PostMapping("/search")
-    public ResponseEntity<List<ArticlePreview>> searchArticles(NotDetermined searchCondition) {
-        return null;
-    }
-
+    
 }
