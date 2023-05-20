@@ -14,7 +14,7 @@ import java.util.List;
 // 커뮤니티 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
 @RequestMapping("/community")
-public class CommunityController {
+public class CommunityRestController {
 
     // 커뮤니티 관련 서비스 로직을 처리할 클래스
     private final ArticleService articleService;
@@ -22,7 +22,7 @@ public class CommunityController {
 
     // 컨트롤러의 생성자
     @Autowired
-    public CommunityController(ArticleService articleService, InteractionService interactionService) {
+    public CommunityRestController(ArticleService articleService, InteractionService interactionService) {
         this.articleService = articleService;
         this.interactionService = interactionService;
     }
