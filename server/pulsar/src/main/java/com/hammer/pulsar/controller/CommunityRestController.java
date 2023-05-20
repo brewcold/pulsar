@@ -146,5 +146,13 @@ public class CommunityRestController {
 
         return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
-    
+
+    // 댓글 삭제 API
+    @DeleteMapping("/{articleId}/active/comment/{commentId}")
+    public ResponseEntity<List<Comment>> removeComment(@PathVariable int articleId, @PathVariable int commentId) {
+        List<Comment> commentList = interactionService.removeComment(articleId, commentId);
+
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
+    }
+
 }
