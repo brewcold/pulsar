@@ -39,7 +39,9 @@ public class CommunityRestController {
     // 글 상세보기 API
     @GetMapping("/{articleId}/static")
     public ResponseEntity<Article> showArticleDetail(@PathVariable int articleId) {
-        return null;
+        Article article = articleService.getArticle(articleId);
+
+        return new ResponseEntity<>(article, HttpStatus.OK);
     }
 
     // 글 작성하기 API
