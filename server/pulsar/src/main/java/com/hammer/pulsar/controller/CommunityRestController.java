@@ -6,6 +6,7 @@ import com.hammer.pulsar.dto.article.ArticleModifyForm;
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.ArticleWriteForm;
 import com.hammer.pulsar.dto.interaction.Comment;
+import com.hammer.pulsar.dto.interaction.CommentWriteRequest;
 import com.hammer.pulsar.dto.interaction.Like;
 import com.hammer.pulsar.dto.interaction.LikeRequest;
 import com.hammer.pulsar.service.ArticleService;
@@ -121,9 +122,29 @@ public class CommunityRestController {
     // 댓글 가져오기 API
     @GetMapping("/{articleId}/active/comment")
     public ResponseEntity<List<Comment>> getAllComments(@PathVariable int articleId) {
-        List<Comment> comments = interactionService.getAllComments(articleId);
+        List<Comment> commentList = interactionService.getAllComments(articleId);
 
-        return new ResponseEntity<>(comments, HttpStatus.OK);
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
 
+    // 댓글 쓰기 API
+    @PostMapping("/{articleId}/active/comment")
+    public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, String content, HttpServletRequest request) {
+        // 로그인한 회원의 아이디를 불러오기
+        // TODO: 로그인 로직은 아직 구현되지 않았으므로 변경 가능함
+        int memberId = (Integer) request.getSession().getAttribute("memberId");
+
+        // 댓글 작성에 필요한 데이터를 DTO에 담기
+        CommentWriteRequest writeRequest = new CommentWriteRequest();
+
+        writeRequest.setWriterId(memberId);
+        writeRequest.setArticleId(articleId);
+        writeRequest.setContent(content);
+
+        // 댓글을 작성하고 댓글 목록을 다시 가져오기
+        List<Comment> commentList = interactionService.writeComment(writeRequest);
+
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
+    }
+    
 }
