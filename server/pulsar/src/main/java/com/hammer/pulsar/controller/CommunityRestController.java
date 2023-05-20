@@ -5,6 +5,8 @@ import com.hammer.pulsar.dto.article.Article;
 import com.hammer.pulsar.dto.article.ArticleModifyForm;
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.ArticleWriteForm;
+import com.hammer.pulsar.dto.interaction.Like;
+import com.hammer.pulsar.dto.interaction.LikeRequest;
 import com.hammer.pulsar.service.ArticleService;
 import com.hammer.pulsar.service.InteractionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +80,21 @@ public class CommunityRestController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+
+    @GetMapping("/{articleId}/active/like")
+    public ResponseEntity<Like> showLikes(@PathVariable int articleId, HttpServletRequest request) {
+        // 로그인 한 회원의 아이디를 불러오기
+        int memberId = (Integer) request.getSession().getAttribute("memberId");
+
+        // 추천수를 가져오기 위해 필요한 정보를 담기
+        LikeRequest likeRequest = new LikeRequest();
+        likeRequest.setMemberId(memberId);
+        likeRequest.setArticleId(articleId);
+
+        // 해당 게시글의 추천수를 가져오기
+        Like likes = interactionService.countAllLikes(likeRequest);
+
+        return new ResponseEntity<>(likes, HttpStatus.OK);
+    }
+
 }
