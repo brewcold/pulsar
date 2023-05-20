@@ -68,7 +68,9 @@ public class RoutineRestController {
     // 루틴 삭제 API
     @DeleteMapping("/routine/{routineId}")
     public ResponseEntity<Void> removeRoutine(@PathVariable int routineId) {
-        return null;
+        routineService.removeRoutine(routineId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // URI를 routine/plan 으로 변경하는 것도 깔끔할 것 같습니다.
