@@ -74,7 +74,9 @@ public class CommunityRestController {
     // 글 삭제하기 API
     @DeleteMapping("/{articleId}")
     public ResponseEntity<Void> removeArticle(@PathVariable int articleId) {
-        return null;
+        articleService.removeArticle(articleId);
+        
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // GET 요청이 더 좋아보이기도 합니다.
