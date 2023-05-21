@@ -37,19 +37,18 @@ export default {
 }
 
 #aboutBtn {
-  border-radius: 24px;
+  border-radius: 3rem;
   border: 1px solid var(--light-color-darkgrey);
   color: var(--light-color-darkgrey);
   background: white;
   cursor: pointer;
-  height: 3rem;
+  height: 2.75rem;
   width: 3rem;
   font-size: 1.25rem;
 }
 
 #aboutBtn:hover {
-  width: 2.75rem;
-  height: 2.75rem;
+  opacity: 0.7;
   font-size: 1rem;
 }
 

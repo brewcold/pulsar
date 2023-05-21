@@ -3,8 +3,8 @@
   <!--class attribute의 show를 바인딩해 사용합니다.-->
   <article id="about_content_container" :class="{ show: show }">
     <div id="about_content_content">
-      <h1>PULSAR</h1>
-      <p>TEAM 최종병기 망치</p>
+      <h1>CREDITS</h1>
+      <p>민병기, 유승윤</p>
     </div>
   </article>
 </template>

@@ -1,18 +1,16 @@
 <template>
   <div id="landing_wrapper">
+    <welcome-pulsar />
     <router-view />
   </div>
 </template>
 
-<style scoped>
-@import url('../../assets/css/init.css');
-@import url('../../assets/css/root.css');
-@import url('../../assets/css/typography.css');
-</style>
-
 <script>
+import WelcomePulsar from './components/WelcomePulsar.vue';
+
 export default {
-  name: '',
+  name: 'LandingView',
+  components: { WelcomePulsar },
   data() {
     return {};
   },
@@ -23,3 +21,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url('../../assets/css/init.css');
+@import url('../../assets/css/root.css');
+@import url('../../assets/css/typography.css');
+
+#landing_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+</style>
