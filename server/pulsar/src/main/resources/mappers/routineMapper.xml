@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.MemberDao">
+
+    <!--  루틴 추가를 위한 SQL  -->
+    <insert id="insertRoutine" parameterType="RoutineRegistRequest">
+        INSERT INTO TB_ROUTINE (MEMBER_ID, TITLE, REPEAT_UNIT, REPEAT_PERIOD, START_HOUR, START_TIME)
+        VALUES (#{writeId}, #{title}, #{repeatUnit}, #{repeatPeriod}, #{startHour}, #{startMin})
+    </insert>
+
+    <!--  루틴 목록 조회를 위한 SQL  -->
+    <select id="selectRoutinesByMemberId" parameterType="int">
+        SELECT
+            *
+        FROM TB_ROUTINE
+        WHERE
+            MEMBER_ID = #{memberId}
+    </select>
+
+    <!--  루틴 상세 정보 조회를 위한 SQL  -->
+    <select id="selectRoutineByRoutineId" parameterType="int">
+        SELECT
+            *
+        FROM TB_ROUTINE
+        WHERE
+            ROUTINE_ID = #{routineId}
+    </select>
+
+    <!--  루틴 작성자 프로필 조회를 위한 SQL  -->
+    <select id="selectProfileByRoutineId" parameterType="int">
+
+    </select>
+
+    <!--  루틴 수정을 위한 SQL  -->
+    <update id="updateRoutine" parameterType="RoutineModifyRequest">
+
+    </update>
+
+    <!--  루틴 삭제를 위한 SQL  -->
+    <delete id="deleteRoutine" parameterType="int">
+        DELETE FROM TB_ROUTINE
+        WHERE ID = #{routineId}
+    </delete>
+
+</mapper>
