@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.ConcernTagDao">
+
+    <!--  게시글의 태그 목록을 조회하는 SQL  -->
+    <!--  TODO: 서브쿼리로 변경하기  -->
+    <select id="selectTagByArticleId" parameterType="int" resultType="Tag">
+        SELECT
+            T.*
+        FROM TB_ARTICLE_TAG AT
+        INNER JOIN TB_TAG_INFO T
+        ON
+            T.ID = AT.TAG_ID
+        WHERE
+            AT.ID = #{articleId}
+    </select>
+
+    <!--  게시글에 태그를 추가하는 SQL  -->
+    <insert id="insertArticleTags" parameterType="ArticleTagUpdateRequest">
+        INSERT INTO TB_ARTICLE_TAG
+        <!--  TODO: 반복문으로 추가하기  -->
+        VALUES (#{articleId}, #{articleTagsId})
+    </insert>
+
+    <!--  게시글에 태그를 삭제하는 SQL  -->
+    <delete id="deleteArticleTags" parameterType="ArticleTagUpdateRequest">
+        DELETE FROM TB_ARTICLE_TAG
+        WHERE
+            ARTICLE_ID = #{articleId}
+        AND TAG_ID IN #{articleTagsId}
+    </delete>
+
+</mapper>
