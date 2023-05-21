@@ -8,6 +8,7 @@ import com.hammer.pulsar.dto.common.Tag;
 import com.hammer.pulsar.dto.member.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -53,9 +54,10 @@ public class MemberServiceImpl implements MemberService {
      * @param imgFile
      */
     @Override
-    public void registMember(MemberRegistForm form, MultipartFile imgFile) {
+    @Transactional
+    public boolean registMember(MemberRegistForm form, MultipartFile imgFile) {
         // 이메일, 닉네임 중복 검사를 서버 측에서 한 번 더 진행하기
-        if(!isValidEmail(form.getEmail()) || !isValidNickname(form.getNickname())) return;
+        if(!isValidEmail(form.getEmail()) || !isValidNickname(form.getNickname())) return false;
 
         // 프로필 이미지를 저장하기
         String profileImg = fileManagementService.uploadMemberProfileImg(imgFile);
@@ -71,6 +73,8 @@ public class MemberServiceImpl implements MemberService {
                         map((Tag::getTagNo)).collect(Collectors.toList()));
         // 고민 테이블에 정보를 저장하기
 //        concernDao.insertConcernTags(concernUpdateRequest);
+
+        return true;
     }
 
     /**

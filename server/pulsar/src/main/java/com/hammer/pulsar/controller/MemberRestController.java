@@ -37,11 +37,11 @@ public class MemberRestController {
     @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Void> registMember(@RequestPart(value = "form") MemberRegistForm form,
                                              @RequestPart(value = "profileImg", required = false) MultipartFile imgFile) {
-        logger.debug("form = {}, imgFile = {}", form, imgFile);
-        memberService.registMember(form, imgFile);
 
         // 회원가입을 문제없이 완료하면 201 응답
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return memberService.registMember(form, imgFile) ?
+                new ResponseEntity<>(HttpStatus.CREATED) :
+                new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
     // 이메일 중복 검사 요청 API

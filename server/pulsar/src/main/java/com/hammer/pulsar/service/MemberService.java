@@ -12,7 +12,7 @@ import java.util.List;
 // 회원 관련 로직을 처리할 서비스의 인터페이스
 public interface MemberService {
     // 회원 가입 로직
-    public void registMember(MemberRegistForm form, MultipartFile imgFile);
+    public boolean registMember(MemberRegistForm form, MultipartFile imgFile);
 
     // 이메일 중복 검사 로직
     public boolean checkDuplicateEmail(String email);
