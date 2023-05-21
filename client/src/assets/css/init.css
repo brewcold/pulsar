@@ -41,7 +41,7 @@ input,
 select {
   margin: 0;
 }
-html {
+* {
   box-sizing: border-box;
 }
 *,
