@@ -6,8 +6,6 @@ import com.hammer.pulsar.dto.member.Member;
 import com.hammer.pulsar.dto.member.MemberModifyForm;
 import com.hammer.pulsar.dto.member.MemberRegistForm;
 import com.hammer.pulsar.service.MemberService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,14 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 // 회원 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
 @RequestMapping("/member")
 public class MemberRestController {
-
-    private final Logger logger = LoggerFactory.getLogger(MemberRestController.class);
 
     // 회원 관련 서비스 로직을 처리할 클래스
     private final MemberService memberService;
@@ -34,7 +29,15 @@ public class MemberRestController {
         this.memberService = memberService;
     }
 
-    // 회원가입 요청 API
+    /**
+     * 회원가입 요청 API
+     *
+     * @param form
+     * @param imgFile
+     * @return
+     *  200 OK : 회원가입 성공 <br>
+     *  409 CONFLICT : 이메일 또는 닉네임 중복
+     */
     @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Void> registMember(@RequestPart(value = "form") MemberRegistForm form,
                                              @RequestPart(value = "profileImg", required = false) MultipartFile imgFile) {
@@ -45,8 +48,14 @@ public class MemberRestController {
                 new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
-    // 이메일 중복 검사 요청 API
-    // 중복된 이메일이 있을 경우 409 CONFLICT 응답
+    /**
+     * 이메일 중복 검사 요청 API
+     *
+     * @param email
+     * @return
+     *  200 OK : 사용 가능한 이메일 <br>
+     *  409 CONFLICT : 중복된 이메일
+     */
     @PostMapping("/signup/validation/email")
     public ResponseEntity<Void> checkValidEmail(@RequestBody String email) {
         return memberService.checkDuplicateEmail(email) ?
@@ -54,8 +63,14 @@ public class MemberRestController {
                 new ResponseEntity<>(HttpStatus.CONFLICT) ;
     }
 
-    // 닉네임 중복 검사 요청 API
-    // 중복된 닉네임이 있을 경우 409 CONFLICT 응답
+    /**
+     * 닉네임 중복 검사 요청 API
+     *
+     * @param nickname
+     * @return
+     *  200 OK : 사용가능한 닉네임 <br>
+     *  409 CONFLICT : 중복된 닉네임
+     */
     @PostMapping("/signup/validation/nickname")
     public ResponseEntity<Void> checkValidNickname(@RequestBody String nickname) {
         return memberService.checkDuplicateNickname(nickname) ?
@@ -76,9 +91,14 @@ public class MemberRestController {
         return null;
     }
 
-    // 회원정보 수정 API
-    // 먼저 화면에 보여줄 현재 회원 정보
-    // TODO: 이후에 서비스 로직에 Optional을 도입하면 404도 고려해보기
+    /**
+     * 회원정보 조회 API
+     *
+     * @param memberId
+     * @return
+     *  200 OK : 조회 성공 <br>
+     *  404 NOT FOUND : 존재하지 않는 회원
+     */
     @GetMapping("/{memberId}")
     public ResponseEntity<Member> showMemberInfo(@PathVariable int memberId) {
         Member memberInfo = memberService.getMemberInfo(memberId);
@@ -96,9 +116,16 @@ public class MemberRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 회원 탈퇴 API
+    /**
+     * 회원 탈퇴 API
+     *
+     * @param memberId
+     * @return
+     *  200 OK : 회원탈퇴 성공 <br>
+     *  404 NOT FOUND : 존재하지 않는 회원
+     */
     @PostMapping("/{memberId}/quit")
-    public ResponseEntity<Void> quitMember(@PathVariable int memberId) throws NoSuchElementException {
+    public ResponseEntity<Void> quitMember(@PathVariable int memberId) {
         memberService.quitMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
