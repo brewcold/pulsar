@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.ConcernTagDao">
+
+    <!--  회원의 고민 태그를 추가하는 SQL  -->
+    <!--  TODO: 서브쿼리로 변경하기  -->
+    <insert id="insertConcernTags" parameterType="ConcernUpdateRequest">
+        INSERT INTO TB_CONCERN_TAG
+        <!--  TODO: 반복문으로 추가하기  -->
+        VALUES (#{memberId}, #{concernTagsId})
+
+    </insert>
+
+    <!--  회원의 고민 태그를 조회하는 SQL  -->
+    <select id="selectTagsByMemberId" parameterType="int">
+        SELECT
+            T.*
+        FROM TB_CONCERN_TAG CT
+        INNER JOIN TB_TAG_INFO T
+        ON
+            T.ID = CT.TAG_ID
+        WHERE
+            CT.MEMBER_ID = #{memberId}
+    </select>
+
+
+    <!--  회원의 고민 태그를 삭제하는 SQL  -->
+    <delete id="deleteConcernTags" parameterType="ConcernUpdateRequest">
+        DELETE FROM TB_CONCERN_TAG
+        WHERE
+            CONCERN_ID = #{concernId}
+            AND TAG_ID IN #{concernTagsId}
+    </delete>
+
+</mapper>

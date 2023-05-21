@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.CommentDao">
+
+    <!--  댓글을 추가하는 SQL  -->
+    <insert id="insertComment" parameterType="CommentWriteRequest">
+
+    </insert>
+
+    <!--  게시글의 모든 댓글을 조회하는 SQL  -->
+    <select id="selectCommentsByArticleId" parameterType="int" resultType="Comment">
+        SELECT
+            *
+        FROM TB_COMMENT
+        WHERE
+            ARTICLE_ID = #{articleId}
+    </select>
+
+    <!--  회원이 작성한 모든 댓글과 게시글을 조회하는 SQL  -->
+    <select id="selectCommentsByMemberId" parameterType="int" resultType="CommentedArticle">
+
+    </select>
+
+    <!--  댓글을 삭제하는 SQL  -->
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM TB_COMMENT
+        WHERE
+            ID = #{routineId}
+    </delete>
+
+</mapper>

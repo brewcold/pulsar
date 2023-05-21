@@ -15,6 +15,7 @@ public interface CommentDao {
     public List<Comment> selectCommentsByArticleId(int articleId);
 
     // 선택한 회원이 작성한 댓글들과 해당 댓글이 작성된 게시글의 미리보기를 조회하는 메서드
+    // TODO: 댓글과 게시글을 따로 불러와서 서비스에서 조합하도록 변경
     public List<CommentedArticle> selectCommentsByMemberId(int memberId);
 
     // 선택한 댓글을 삭제하는 메서드

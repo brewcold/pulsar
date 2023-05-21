@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.ArticleDao">
+
+    <!--  새로운 게시글을 추가하는 SQL  -->
+    <insert id="insertArticle" parameterType="ArticleWriteRequest">
+
+    </insert>
+
+    <!--  게시글 목록을 조회하는 SQL  -->
+    <!--  페이지네이션, 검색 기능 추가 예정  -->
+    <select id="selectArticles" resultType="ArticlePreview">
+        SELECT
+            *
+        FROM TB_ARTICLE
+    </select>
+
+    <!--  선택한 게시글을 상세 조회하는 SQL  -->
+    <select id="selectArticleByArticleId" parameterType="int" resultType="Article">
+        SELECT
+            *
+        FROM TB_ARTICLE
+        WHERE
+            ID = #{articleId}
+    </select>
+
+    <!--  선택한 회원의 게시글 목록을 조회하는 SQL  -->
+    <select id="selectArticleByMemberId" parameterType="int" resultType="ArticlePreview">
+        SELECT
+            *
+        FROM TB_ARTICLE
+        WHERE
+            WRITER_ID = #{writerId}
+    </select>
+
+    <!--  선택한 게시글을 수정하는 SQL  -->
+    <update id="updateArticle" parameterType="ArticleModifyRequest">
+
+    </update>
+
+    <!--  선택한 게시글의 추천수를 1 증가시키는 SQL  -->
+    <update id="addLikes" parameterType="int">
+        UPDATE TB_ARTICLE
+        SET
+            LIKE_CNT = LIKE_CNT + 1
+        WHERE
+            ID = #{articleId}
+    </update>
+
+    <!--  선택한 게시글의 추천수를 1 감소시키는 SQL  -->
+    <update id="subtractLikes" parameterType="int">
+        UPDATE TB_ARTICLE
+        SET
+            LIKE_CNT = LIKE_CNT - 1
+        WHERE
+            ID = #{articleId}
+    </update>
+
+    <!--  선택한 게시글의 조회수를 1 증가시키는 SQL  -->
+    <update id="updateViewCnt" parameterType="int">
+        UPDATE TB_ARTICLE
+        SET
+            VIEW_CNT = VIEW_CNT + 1
+        WHERE
+            ID = #{articleId}
+    </update>
+
+</mapper>
