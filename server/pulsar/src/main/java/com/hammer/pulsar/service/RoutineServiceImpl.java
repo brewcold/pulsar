@@ -1,8 +1,8 @@
 package com.hammer.pulsar.service;
 
-import com.hammer.pulsar.dao.ExerciseDao;
 import com.hammer.pulsar.dao.MemberDao;
 import com.hammer.pulsar.dao.RoutineDao;
+import com.hammer.pulsar.dao.RoutineDetailDao;
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.routine.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,13 @@ import java.util.NoSuchElementException;
 public class RoutineServiceImpl implements RoutineService {
     private final MemberDao memberDao;
     private final RoutineDao routineDao;
-    private final ExerciseDao exerciseDao;
+    private final RoutineDetailDao routineDetailDao;
 
     @Autowired
-    public RoutineServiceImpl(MemberDao memberDao, RoutineDao routineDao, ExerciseDao exerciseDao) {
+    public RoutineServiceImpl(MemberDao memberDao, RoutineDao routineDao, RoutineDetailDao routineDetailDao) {
         this.memberDao = memberDao;
         this.routineDao = routineDao;
-        this.exerciseDao = exerciseDao;
+        this.routineDetailDao = routineDetailDao;
     }
 
     /**
@@ -58,7 +58,13 @@ public class RoutineServiceImpl implements RoutineService {
      */
     @Override
     public List<Routine> getAllRoutines(int memberId) {
-        return routineDao.selectRoutinesByMemberId(memberId);
+        List<Routine> routines = routineDao.selectRoutinesByMemberId(memberId);
+
+        for(Routine routine : routines) {
+            routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
+        }
+
+        return routines;
     }
 
     /**
@@ -69,7 +75,10 @@ public class RoutineServiceImpl implements RoutineService {
      */
     @Override
     public Routine getRoutineDetail(int routineId) {
-        return routineDao.selectRoutineByRoutineId(routineId);
+        Routine routine = routineDao.selectRoutineByRoutineId(routineId);
+        routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
+
+        return routine;
     }
 
     /**
