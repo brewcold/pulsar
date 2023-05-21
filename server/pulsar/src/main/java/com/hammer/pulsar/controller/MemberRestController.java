@@ -6,8 +6,11 @@ import com.hammer.pulsar.dto.member.Member;
 import com.hammer.pulsar.dto.member.MemberModifyForm;
 import com.hammer.pulsar.dto.member.MemberRegistForm;
 import com.hammer.pulsar.service.MemberService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +22,8 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberRestController {
 
+    private final Logger logger = LoggerFactory.getLogger(MemberRestController.class);
+
     // 회원 관련 서비스 로직을 처리할 클래스
     private final MemberService memberService;
 
@@ -29,8 +34,10 @@ public class MemberRestController {
     }
 
     // 회원가입 요청 API
-    @PostMapping("/signup")
-    public ResponseEntity<Void> registMember(MemberRegistForm form, MultipartFile imgFile) {
+    @PostMapping(value = "/signup", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Void> registMember(@RequestPart(value = "form") MemberRegistForm form,
+                                             @RequestPart(value = "profileImg", required = false) MultipartFile imgFile) {
+        logger.debug("form = {}, imgFile = {}", form, imgFile);
         memberService.registMember(form, imgFile);
 
         // 회원가입을 문제없이 완료하면 201 응답

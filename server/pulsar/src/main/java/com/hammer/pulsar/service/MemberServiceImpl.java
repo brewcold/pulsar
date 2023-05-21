@@ -70,7 +70,7 @@ public class MemberServiceImpl implements MemberService {
                 new ConcernUpdateRequest(memberId, form.getSelectedTag().stream().
                         map((Tag::getTagNo)).collect(Collectors.toList()));
         // 고민 테이블에 정보를 저장하기
-        concernDao.insertConcernTags(concernUpdateRequest);
+//        concernDao.insertConcernTags(concernUpdateRequest);
     }
 
     /**
