@@ -11,18 +11,9 @@ import { postMemberLogIn } from '../../../core/api/member';
 export default {
   name: 'LoginContainer',
   components: { LoginContent },
-  data() {
-    return {
-      email: '',
-      password: '',
-    };
-  },
   methods: {
-    login() {
-      const data = {
-        email: this.email,
-        password: this.password,
-      }; //데이터를 API 형식에 맞춰 서버로 보냅니다
+    login(email, password) {
+      const data = { email, password }; //데이터를 API 형식에 맞춰 서버로 보냅니다
       postMemberLogIn(data)
         .then((res) => {
           //vuex store에 정보 저장
