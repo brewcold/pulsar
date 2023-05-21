@@ -99,7 +99,7 @@ public class MemberServiceImpl implements MemberService {
      * 회원가입 폼에서 AJAX로 이메일 중복 검사를 진행할 때 호출할 메서드
      *
      * @param email
-     * @return
+     * @return 중복이면 false
      */
     @Override
     public boolean checkDuplicateEmail(String email) {
@@ -110,7 +110,7 @@ public class MemberServiceImpl implements MemberService {
      * 회원가입 폼에서 AJAX로 닉네임 중복 검사를 진행할 때 호출할 메서드
      *
      * @param nickname
-     * @return
+     * @return 중복이면 false
      */
     @Override
     public boolean checkDuplicateNickname(String nickname) {

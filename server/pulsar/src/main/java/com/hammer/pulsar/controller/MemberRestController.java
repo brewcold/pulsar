@@ -49,8 +49,8 @@ public class MemberRestController {
     @PostMapping("/signup/validation/email")
     public ResponseEntity<Void> checkValidEmail(@RequestBody String email) {
         return memberService.checkDuplicateEmail(email) ?
-                new ResponseEntity<>(HttpStatus.CONFLICT) :
-                new ResponseEntity<>(HttpStatus.OK);
+                new ResponseEntity<>(HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.CONFLICT) ;
     }
 
     // 닉네임 중복 검사 요청 API
@@ -58,8 +58,8 @@ public class MemberRestController {
     @PostMapping("/signup/validation/nickname")
     public ResponseEntity<Void> checkValidNickname(@RequestBody String nickname) {
         return memberService.checkDuplicateNickname(nickname) ?
-                new ResponseEntity<>(HttpStatus.CONFLICT) :
-                new ResponseEntity<>(HttpStatus.OK);
+                new ResponseEntity<>(HttpStatus.OK) :
+                new ResponseEntity<>(HttpStatus.CONFLICT) ;
     }
 
     // 로그인 API
