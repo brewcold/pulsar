@@ -8,12 +8,10 @@ import com.hammer.pulsar.dto.common.Tag;
 import com.hammer.pulsar.dto.member.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // 실제 로직이 구현된 MemberService 인터페이스의 구현체 클래스
@@ -53,9 +51,10 @@ public class MemberServiceImpl implements MemberService {
      * @param imgFile
      */
     @Override
-    public void registMember(MemberRegistForm form, MultipartFile imgFile) {
+    @Transactional
+    public boolean registMember(MemberRegistForm form, MultipartFile imgFile) {
         // 이메일, 닉네임 중복 검사를 서버 측에서 한 번 더 진행하기
-        if(!isValidEmail(form.getEmail()) || !isValidNickname(form.getNickname())) return;
+        if(!isValidEmail(form.getEmail()) || !isValidNickname(form.getNickname())) return false;
 
         // 프로필 이미지를 저장하기
         String profileImg = fileManagementService.uploadMemberProfileImg(imgFile);
@@ -70,7 +69,9 @@ public class MemberServiceImpl implements MemberService {
                 new ConcernUpdateRequest(memberId, form.getSelectedTag().stream().
                         map((Tag::getTagNo)).collect(Collectors.toList()));
         // 고민 테이블에 정보를 저장하기
-        concernDao.insertConcernTags(concernUpdateRequest);
+//        concernDao.insertConcernTags(concernUpdateRequest);
+
+        return true;
     }
 
     /**
@@ -99,7 +100,7 @@ public class MemberServiceImpl implements MemberService {
      * 회원가입 폼에서 AJAX로 이메일 중복 검사를 진행할 때 호출할 메서드
      *
      * @param email
-     * @return
+     * @return 중복이면 false
      */
     @Override
     public boolean checkDuplicateEmail(String email) {
@@ -110,7 +111,7 @@ public class MemberServiceImpl implements MemberService {
      * 회원가입 폼에서 AJAX로 닉네임 중복 검사를 진행할 때 호출할 메서드
      *
      * @param nickname
-     * @return
+     * @return 중복이면 false
      */
     @Override
     public boolean checkDuplicateNickname(String nickname) {
@@ -124,8 +125,12 @@ public class MemberServiceImpl implements MemberService {
      * @return
      */
     @Override
-    public Member getMemberInfo(int memberId) {
-        return memberDao.selectMemberByMemberId(memberId);
+    public Member getMemberInfo(int memberId) throws NoSuchElementException {
+        Member memberInfo = memberDao.selectMemberByMemberId(memberId);
+
+        if(memberInfo == null) throw new NoSuchElementException("일치하는 회원이 없습니다.");
+        
+        return memberInfo;
     }
 
     /**
@@ -232,8 +237,10 @@ public class MemberServiceImpl implements MemberService {
      * @param memberId
      */
     @Override
-    public void quitMember(int memberId) {
-        memberDao.deleteMember(memberId);
+    public void quitMember(int memberId) throws NoSuchElementException {
+        if(memberDao.deleteMember(memberId) == 0) {
+            throw new NoSuchElementException("일치하는 회원이 없습니다.");
+        }
     }
 
     /**
