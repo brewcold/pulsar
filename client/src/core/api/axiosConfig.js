@@ -54,9 +54,9 @@ const call = async (uri, method = 'get', data, authType = 'normal') => {
     if (method === 'put') result = await instance.put(URI, data);
     if (method === 'delete') result = await instance.delete(URI);
     //promise 객체
-    return result.data;
+    return result;
   } catch (err) {
-    return err.response.status;
+    return err;
   }
 };
 
