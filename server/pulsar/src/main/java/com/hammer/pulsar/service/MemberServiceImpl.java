@@ -125,8 +125,12 @@ public class MemberServiceImpl implements MemberService {
      * @return
      */
     @Override
-    public Member getMemberInfo(int memberId) {
-        return memberDao.selectMemberByMemberId(memberId);
+    public Member getMemberInfo(int memberId) throws NoSuchElementException {
+        Member memberInfo = memberDao.selectMemberByMemberId(memberId);
+
+        if(memberInfo == null) throw new NoSuchElementException("일치하는 회원이 없습니다.");
+        
+        return memberInfo;
     }
 
     /**

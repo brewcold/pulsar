@@ -22,7 +22,7 @@ public interface MemberService {
     public boolean checkDuplicateNickname(String nickname);
 
     // 선택한 회원의 정보 조회 로직
-    public Member getMemberInfo(int memberId);
+    public Member getMemberInfo(int memberId) throws NoSuchElementException;
 
     // 회원 정보 수정 로직
     public String modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile);
