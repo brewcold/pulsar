@@ -3,13 +3,13 @@ package com.hammer.pulsar.service;
 import com.hammer.pulsar.dao.ExerciseDao;
 import com.hammer.pulsar.dao.MemberDao;
 import com.hammer.pulsar.dao.RoutineDao;
-import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.routine.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 // 실제 로직이 구현된 RoutineService 인터페이스의 구현체 클래스
 @Service
@@ -90,7 +90,7 @@ public class RoutineServiceImpl implements RoutineService {
      */
     @Override
     public void removeRoutine(int routineId) {
-        routineDao.deleteRoutine(routineId);
+        if(routineDao.deleteRoutine(routineId) == 0) throw new NoSuchElementException("존재하지 않는 루틴입니다.");
     }
 
 }
