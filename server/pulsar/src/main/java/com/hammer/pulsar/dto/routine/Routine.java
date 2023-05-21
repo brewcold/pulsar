@@ -8,7 +8,7 @@ public class Routine {
     // 루틴 번호
     private int routineNo;
     // 루틴 이름
-    private int routineTitle;
+    private String routineTitle;
     // 시간 정보
     private RoutineTime time;
     // 루틴에 포함된 운동 정보
@@ -26,11 +26,11 @@ public class Routine {
         this.routineNo = routineNo;
     }
 
-    public int getRoutineTitle() {
+    public String getRoutineTitle() {
         return routineTitle;
     }
 
-    public void setRoutineTitle(int routineTitle) {
+    public void setRoutineTitle(String routineTitle) {
         this.routineTitle = routineTitle;
     }
 

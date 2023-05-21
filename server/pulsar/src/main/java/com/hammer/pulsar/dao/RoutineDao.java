@@ -25,5 +25,5 @@ public interface RoutineDao {
     public void updateRoutine(RoutineModifyRequest request);
 
     // 회원의 루틴을 삭제하는 메서드
-    public void deleteRoutine(int routineId);
+    public int deleteRoutine(int routineId);
 }
