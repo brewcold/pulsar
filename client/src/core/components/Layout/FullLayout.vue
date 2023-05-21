@@ -4,6 +4,7 @@
     <about-container />
     <div id="container">
       <the-header />
+      <router-view />
       <the-nav />
     </div>
   </div>

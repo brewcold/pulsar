@@ -1,11 +1,11 @@
-import Mypage from '../Mypage.vue';
+import MypageContainer from '../MypageContainer.vue';
 import Bookmarks from '../components/Bookmarks.vue';
 import MyArticles from '../components/MyArticles.vue';
 
 export default [
   {
     path: '/mypage', //마이페이지
-    component: Mypage,
+    component: MypageContainer,
     children: [
       {
         path: 'bookmarks', //북마크 보기

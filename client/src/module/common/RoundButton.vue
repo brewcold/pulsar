@@ -31,10 +31,9 @@ button:hover {
 <script>
 export default {
   name: 'RoundButton',
-  props: { theme: String, value: String, callback: Function },
+  props: { theme: String, value: String },
   methods: {
     handleClick(event) {
-      callback(event);
       this.$emit('handle-click');
     },
   },
