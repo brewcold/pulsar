@@ -7,7 +7,7 @@
       class="btn"
       :style="styles"
       :placeholder="placeholder"
-      @change="handleChange"
+      @input="$emit('handle-change', $event)"
       v-model="value"
     />
   </div>
@@ -42,8 +42,8 @@ export default {
   },
   methods: {
     handleChange(event) {
-      callback(event);
-      this.$emit('handle-change');
+      const data = this.value;
+      this.$emit('handle-change', data);
     },
   },
   data() {

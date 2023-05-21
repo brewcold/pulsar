@@ -56,7 +56,7 @@ const call = async (uri, method = 'get', data, authType = 'normal') => {
     //promise 객체
     return result.data;
   } catch (err) {
-    return err.message;
+    return err.response.status;
   }
 };
 

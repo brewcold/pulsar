@@ -10,7 +10,7 @@
 
     <!--  이메일 중복 검사를 위한 SQL  -->
     <select id="findEmail" parameterType="string" resultType="boolean">
-        SELECT EXISTS(
+        SELECT NOT EXISTS(
             SELECT
                 *
             FROM TB_MEMBER
@@ -21,7 +21,7 @@
 
     <!-- 닉네임 중복 검사를 위한 SQL-->
     <select id="findNickname" parameterType="string" resultType="boolean">
-        SELECT EXISTS(
+        SELECT NOT EXISTS(
             SELECT
                 *
             FROM TB_MEMBER
