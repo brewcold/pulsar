@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.ArticleTagDao">
-    
+
     <!--  게시글의 태그 목록을 조회하는 SQL  -->
     <!--  TODO: 서브쿼리로 변경하기  -->
     <select id="selectTagByArticleId" parameterType="int" resultType="Tag">
         SELECT
-        T.*
+            T.*
         FROM TB_ARTICLE_TAG AT
         INNER JOIN TB_TAG_INFO T
         ON
-        T.ID = AT.TAG_ID
+            T.ID = AT.TAG_ID
         WHERE
-        AT.ID = #{articleId}
+            AT.ARTICLE_ID = #{articleId}
     </select>
 
     <!--  게시글에 태그를 추가하는 SQL  -->
@@ -26,8 +26,8 @@
     <delete id="deleteArticleTags" parameterType="ArticleTagUpdateRequest">
         DELETE FROM TB_ARTICLE_TAG
         WHERE
-        ARTICLE_ID = #{articleId}
-        AND TAG_ID IN #{articleTagsId}
+            ARTICLE_ID = #{articleId}
+            AND TAG_ID IN #{articleTagsId}
     </delete>
 
 </mapper>
