@@ -1,6 +1,5 @@
 package com.hammer.pulsar.service;
 
-import com.hammer.pulsar.dto.NotDetermined;
 import com.hammer.pulsar.dto.article.Article;
 import com.hammer.pulsar.dto.article.ArticleModifyForm;
 import com.hammer.pulsar.dto.article.ArticlePreview;
