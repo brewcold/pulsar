@@ -5,14 +5,14 @@
 }
 @font-face {
   font-family: bd;
-  src: url('../fonts/MediumLL-Bold.otf');
   src: url('../fonts/SpoqaHanSansNeo-Bold.woff');
+  src: url('../fonts/MediumLL-Bold.otf');
   font-weight: 700;
 }
 @font-face {
   font-family: nm;
-  src: url('../fonts/MediumLL-Book.otf');
   src: url('../fonts/SpoqaHanSansNeo-Regular.woff');
+  src: url('../fonts/MediumLL-Book.otf');
   font-weight: 400;
 }
 body {

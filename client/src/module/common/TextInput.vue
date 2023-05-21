@@ -52,6 +52,7 @@ input[type='password'] {
   border: 1px solid var(--light-color-black);
   border-radius: 6px;
   outline: none;
+  font-size: 1rem;
   width: calc(100% - 3rem);
 }
 

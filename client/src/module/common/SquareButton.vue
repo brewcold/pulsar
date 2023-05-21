@@ -29,6 +29,8 @@ button {
   color: var(--text);
   width: calc(100% - 3rem);
   margin-bottom: 1rem;
+  font-size: 1rem;
+  font-family: 'bd', sans-serif;
 }
 
 button:hover {
