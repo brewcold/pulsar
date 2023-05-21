@@ -35,4 +35,7 @@ public interface ArticleDao {
     // 선택한 게시글의 추천수를 1 감소시키는 메서드
     public void subtractLikes(int articleId);
 
+    // 선택한 게시글의 조회수를 1 증가시키는 메서드
+    public void updateViewCnt(int articleId);
+
 }
