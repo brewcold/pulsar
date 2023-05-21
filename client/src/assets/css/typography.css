@@ -5,14 +5,14 @@
 }
 @font-face {
   font-family: bd;
-  src: url('../fonts/MediumLL-Bold.otf');
   src: url('../fonts/SpoqaHanSansNeo-Bold.woff');
+  src: url('../fonts/MediumLL-Bold.otf');
   font-weight: 700;
 }
 @font-face {
   font-family: nm;
-  src: url('../fonts/MediumLL-Book.otf');
   src: url('../fonts/SpoqaHanSansNeo-Regular.woff');
+  src: url('../fonts/MediumLL-Book.otf');
   font-weight: 400;
 }
 body {
@@ -23,15 +23,18 @@ h1 {
   font-family: 'h1', sans-serif;
   font-style: oblique;
   font-size: 2.5rem;
-  margin: 0 1.5rem 1rem 1rem;
+  margin: 0 0 1rem 0;
 }
 h2 {
   font-family: 'nm', sans-serif;
   font-size: 1.5rem;
-  margin: 0 1.5rem 1rem 1rem;
+  margin: 0 1rem 0 0;
 }
 h3 {
   font-family: 'bd', sans-serif;
   font-size: 1.25rem;
-  margin: 0 1.5rem 1rem 0;
+  margin: 0 0 1rem 0;
+}
+p {
+  margin: 0 0.5rem 0 0;
 }
