@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // 실제 로직이 구현된 MemberService 인터페이스의 구현체 클래스
@@ -236,8 +233,10 @@ public class MemberServiceImpl implements MemberService {
      * @param memberId
      */
     @Override
-    public void quitMember(int memberId) {
-        memberDao.deleteMember(memberId);
+    public void quitMember(int memberId) throws NoSuchElementException {
+        if(memberDao.deleteMember(memberId) == 0) {
+            throw new NoSuchElementException("일치하는 회원이 없습니다.");
+        }
     }
 
     /**

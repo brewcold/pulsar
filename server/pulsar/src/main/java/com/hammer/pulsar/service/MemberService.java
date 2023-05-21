@@ -8,6 +8,7 @@ import com.hammer.pulsar.dto.member.MemberRegistForm;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 // 회원 관련 로직을 처리할 서비스의 인터페이스
 public interface MemberService {
@@ -27,7 +28,7 @@ public interface MemberService {
     public String modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile);
 
     // 회원 탈퇴 로직
-    public void quitMember(int memberId);
+    public void quitMember(int memberId) throws NoSuchElementException;
 
     // 회원이 쓴 글 목록 조회 로직
     public List<ArticlePreview> getAllWritten(int memberId);

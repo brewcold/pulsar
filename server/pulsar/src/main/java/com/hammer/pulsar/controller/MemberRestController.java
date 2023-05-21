@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 // 회원 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
@@ -97,7 +98,7 @@ public class MemberRestController {
 
     // 회원 탈퇴 API
     @PostMapping("/{memberId}/quit")
-    public ResponseEntity<Void> quitMember(@PathVariable int memberId) {
+    public ResponseEntity<Void> quitMember(@PathVariable int memberId) throws NoSuchElementException {
         memberService.quitMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
