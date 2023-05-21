@@ -1,62 +1,68 @@
 <template>
-  <div>
-    <label :html-for="inputName">{{ inputName }}</label>
-    <input
-      :id="inputName"
-      type="text"
-      class="btn"
-      :style="styles"
-      :placeholder="placeholder"
-      @input="$emit('handle-change', $event)"
-      v-model="value"
-    />
+  <div class="text_input_container" :style="styles">
+    <div class="text_input_container_label">
+      <label :html-for="inputName" />
+    </div>
+    <div class="text_input_container_input">
+      <input
+        :id="inputName"
+        :type="type"
+        :placeholder="placeholder"
+        :value="value"
+        @change="$emit('input', $event.target.value)"
+      />
+      <p class="caption">{{ caption }}</p>
+    </div>
   </div>
 </template>
-
-<style scoped>
-@import url('../../assets/css/init.css');
-@import url('../../assets/css/root.css');
-@import url('../../assets/css/typography.css');
-
-Input[type='text'] {
-  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
-  width: var(--width);
-  border: 1px solid var(--light-color-black);
-  border-radius: 6px;
-  outline: none;
-}
-
-Input::placeholder {
-  color: var(--light-color-grey);
-}
-</style>
 
 <script>
 export default {
   name: 'TextInput',
   props: {
-    placeholder: String,
     inputName: String,
-    callback: Function,
-    width: String,
-  },
-  methods: {
-    handleChange(event) {
-      const data = this.value;
-      this.$emit('handle-change', data);
-    },
-  },
-  data() {
-    return {
-      value: '',
-    };
+    type: String,
+    placeholder: String,
+    caption: String,
+    value: String,
+    margin: String,
   },
   computed: {
     styles() {
       return {
-        '--width': this.width,
+        '--margin': this.margin,
+        '--display': this.caption ? 'block' : 'none',
       };
     },
   },
 };
 </script>
+
+<style scoped>
+@import url('../../assets/css/init.css');
+@import url('../../assets/css/root.css');
+@import url('../../assets/css/typography.css');
+.text_input_container {
+  margin-bottom: var(--margin);
+}
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+  border: 1px solid var(--light-color-black);
+  border-radius: 6px;
+  outline: none;
+  width: calc(100% - 3rem);
+}
+
+input::placeholder {
+  color: var(--light-color-grey);
+}
+.caption {
+  color: var(--light-color-darkgrey);
+  text-align: right;
+  font-size: 0.85rem;
+  padding: 0.5rem 0 0.5rem 0;
+  display: var(--display);
+}
+</style>
