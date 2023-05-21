@@ -9,25 +9,6 @@
   </button>
 </template>
 
-<style scoped>
-@import url('../../assets/css/init.css');
-@import url('../../assets/css/root.css');
-@import url('../../assets/css/typography.css');
-
-button {
-  cursor: pointer;
-  background-color: var(--color);
-  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
-  border: var(--border);
-  border-radius: 1.5rem;
-  color: var(--text);
-}
-
-button:hover {
-  opacity: 0.7;
-}
-</style>
-
 <script>
 export default {
   name: 'RoundButton',
@@ -48,7 +29,7 @@ export default {
       }
       if (this.theme === 'highlight') {
         return {
-          '--color': '#eca23c',
+          '--color': '#ff8048',
           '--border': 'none',
           '--text': 'white',
         };
@@ -62,3 +43,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url('../../assets/css/init.css');
+@import url('../../assets/css/root.css');
+@import url('../../assets/css/typography.css');
+
+button {
+  cursor: pointer;
+  background-color: var(--color);
+  padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+  border: var(--border);
+  border-radius: 1.5rem;
+  color: var(--text);
+}
+
+button:hover {
+  opacity: 0.7;
+}
+</style>
