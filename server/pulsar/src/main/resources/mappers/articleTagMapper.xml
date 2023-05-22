@@ -18,8 +18,10 @@
     <!--  게시글에 태그를 추가하는 SQL  -->
     <insert id="insertArticleTags" parameterType="ArticleTagUpdateRequest">
         INSERT INTO TB_ARTICLE_TAG
-        <!--  TODO: 반복문으로 추가하기  -->
-        VALUES (#{articleId}, #{articleTagsId})
+        VALUES
+        <foreach item="articleTagsId" index="index" collection="list" separator="," nullable="true">
+            (#{articleId}, #{item})
+        </foreach>
     </insert>
 
     <!--  게시글에 태그를 삭제하는 SQL  -->
@@ -27,7 +29,11 @@
         DELETE FROM TB_ARTICLE_TAG
         WHERE
             ARTICLE_ID = #{articleId}
-            AND TAG_ID IN #{articleTagsId}
+            AND
+            <foreach item="articleTagsId" index="index" collection="list"
+                     open="TAG_ID in (" separator="," close=")" nullable="true">
+                #{item}
+            </foreach>
     </delete>
 
 </mapper>
