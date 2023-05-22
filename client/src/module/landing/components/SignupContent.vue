@@ -78,23 +78,26 @@ export default {
       email: '',
       password: '',
       nickname: '',
-      selectedTag: '',
-      profileImg: '',
+      selectedTag: [],
+      profileImg: null,
     };
   },
   methods: {
     handleBtn() {
       //로그인을 시도하기 위해 위쪽으로 로그인 이벤트와 값을 보내고,
       //양방향 바인딩되어 있는 데이터 쪽의 값을 초기화해 인풋을 빈 값으로 만듭니다.
-
-      this.$emit(
-        'signup',
-        this.email,
-        this.password,
-        this.nickname,
-        this.selectedTag,
-        this.profileImg
-      );
+      const email = this.email;
+      const password = this.password;
+      const nickname = this.nickname;
+      const selectedTag = this.selectedTag;
+      const profileImg = this.profileImg;
+      const form = {
+        email,
+        password,
+        nickname,
+        selectedTag,
+      };
+      this.$emit('signup', form, profileImg);
       this.email = '';
       this.password = '';
       this.nickname = '';

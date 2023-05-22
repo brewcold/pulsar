@@ -9,7 +9,7 @@ const root = `http://localhost:8080`;
 //content-type 헤더를 설정하면 stringify하지 않아도 json으로 알아서 잘 갑니다.
 const NORMAL = {
   headers: {
-    'Content-Type': 'application/json; charset=UTF-8',
+    'Content-Type': 'multipart/form-data',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
   },
