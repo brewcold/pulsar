@@ -89,8 +89,10 @@ public class MemberRestController {
 
     // 로그아웃 API
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout() {
-        return null;
+    public ResponseEntity<Void> logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("loginInfo");
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
