@@ -1,35 +1,42 @@
 <template>
-  <div class="text_input_container" :style="styles">
-    <div class="text_input_container_label">
-      <label :html-for="inputName" />
-    </div>
-    <div class="text_input_container_input">
-      <input
-        :id="inputName"
-        :type="inputType"
-        :placeholder="placeholder"
-        :value="value"
-        @keyup="$emit('input', $event.target.value)"
+  <div class="tagform" :style="styles">
+    <!--전체 태그를 불러올 때-->
+    <div v-if="tags.length > 0">
+      <TagItem
+        v-for="({ tagNo, tagName } = tag, idx) in tags"
+        :key="idx"
+        :tagNo="tagNo"
+        :tagName="tagName"
+        :selectable="selectable"
+        :selectedTag="selectedTag"
       />
-      <p class="caption">{{ caption }}</p>
+    </div>
+    <!--선택된 태그를 불러올 때-->
+    <div v-else>
+      <TagItem
+        v-for="({ tagNo, tagName } = tag, idx) in selectedTag"
+        :key="idx"
+        :tagNo="tagNo"
+        :tagName="tagName"
+        :selectable="selectable"
+        :selectedTag="selectedTag"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import TagItem from './TagItem.vue';
+
 export default {
-  name: 'TextInput',
+  name: 'TagForm',
   props: {
-    inputName: String,
-    inputType: {
-      type: String,
-      default: 'text',
-    },
-    placeholder: String,
-    caption: String,
-    value: String,
-    margin: String,
+    tags: Array,
+    selectable: Boolean,
+    selectedTag: Array,
   },
+
+  components: { TagItem },
   computed: {
     isValid() {
       const regex =

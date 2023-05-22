@@ -28,7 +28,6 @@ button {
   border-radius: 8px;
   color: var(--text);
   width: calc(100% - 3rem);
-  margin-bottom: 1rem;
   font-size: 0.9rem;
   font-family: 'bd', sans-serif;
 }

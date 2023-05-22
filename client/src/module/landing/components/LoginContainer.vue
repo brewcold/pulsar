@@ -22,7 +22,13 @@ export default {
             this.$store.dispatch('login', res.data);
             //기본 화면인 루틴으로 리다이렉트시킵니다.
             this.$router.push('/routines');
-          } else console.log('로그인에 실패했어요');
+          } else if (res && res.status < 500)
+            alert(
+              '로그인에 실패했어요. 아이디와 비밀번호를 확인해 주세요.'
+            );
+          else {
+            alert('서버가 아파요. 최대한 빠르게 치료할게요.');
+          }
         })
         .catch((err) => err.status);
     },
