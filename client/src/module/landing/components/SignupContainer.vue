@@ -12,13 +12,10 @@ export default {
   name: 'SignupContainer',
   components: { SignupContent },
   methods: {
-    signup(email, password, nickname, selectedTag, profileImg) {
+    signup(form, file) {
       const data = {
-        email,
-        password,
-        nickname,
-        selectedTag,
-        profileImg,
+        form,
+        file,
       };
       postMemberSignUp(data)
         .then((res) => {
