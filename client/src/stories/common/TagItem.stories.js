@@ -4,7 +4,7 @@ export default {
   /**
    * DOCS
    */
-  title: 'Tag (태그)',
+  title: 'common/Tag (태그)',
   component: TagItem,
   render: (args, { argTypes }) => ({
     props: Object.keys(argTypes),

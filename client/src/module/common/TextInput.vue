@@ -6,7 +6,7 @@
     <div class="text_input_container_input">
       <input
         :id="inputName"
-        :type="type"
+        :type="inputType"
         :placeholder="placeholder"
         :value="value"
         @change="$emit('input', $event.target.value)"
@@ -21,7 +21,10 @@ export default {
   name: 'TextInput',
   props: {
     inputName: String,
-    type: String,
+    inputType: {
+      type: String,
+      default: 'text',
+    },
     placeholder: String,
     caption: String,
     value: String,

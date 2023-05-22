@@ -13,10 +13,10 @@
     </p>
     <p>
       <span class="community_list_item_recommendCnt">
-        {{ recommendCnt ? recommendCnt + ' Likes / ' : '---' }}</span
+        {{ recommendCnt ? recommendCnt : '0' }} Likes /</span
       >
       <span class="community_list_item_viewCnt">
-        {{ viewCnt ? viewCnt + ' Views' : '---' }}
+        {{ viewCnt ? viewCnt : '0' }} Views
       </span>
     </p>
     <div class="community_list_item_tags">

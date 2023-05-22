@@ -4,7 +4,7 @@ export default {
   /**
    * DOCS
    */
-  title: 'Button (버튼)',
+  title: 'common/RoundButton (원형 버튼)',
   component: RoundButton,
   render: (args, { argTypes }) => ({
     props: Object.keys(argTypes),

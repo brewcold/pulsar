@@ -2,9 +2,9 @@ import TextInput from '../../module/common/TextInput.vue';
 
 export default {
   /**
-   * DOCS
+   * docs
    */
-  title: 'TextInput (텍스트 입력)',
+  title: 'common/TextInput (텍스트, 이메일, 비밀번호)',
   component: TextInput,
   render: (args, { argTypes }) => ({
     props: Object.keys(argTypes),
