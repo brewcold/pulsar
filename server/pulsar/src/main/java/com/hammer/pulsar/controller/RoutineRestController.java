@@ -63,7 +63,7 @@ public class RoutineRestController {
     // 루틴 작성 API
     @PostMapping("/routine")
     public ResponseEntity<Integer> addNewRoutine(RoutineRegistForm form, HttpServletRequest request) {
-        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("AUTHORIZIATION")).getMemberNo();
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         int routineNo = routineService.addNewRoutine(form, memberId);
 
