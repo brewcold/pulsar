@@ -2,6 +2,8 @@ package com.hammer.pulsar.dto.member;
 
 // DB에 새로운 회원 정보를 추가하기 위한 정보를 담고 있는 DTO 클래스
 public class MemberRegistRequest {
+    // 저장한 고유번호를 담기 위한 변수
+    private int memberId;
     // 이메일
     private String email;
     // 패스워드
@@ -23,6 +25,14 @@ public class MemberRegistRequest {
     }
 
     // Getters, Setters
+    public int getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(int memberId) {
+        this.memberId = memberId;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -59,7 +69,8 @@ public class MemberRegistRequest {
     @Override
     public String toString() {
         return "MemberRegistRequest{" +
-                "email='" + email + '\'' +
+                "memberId=" + memberId +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", profileImg='" + profileImg + '\'' +

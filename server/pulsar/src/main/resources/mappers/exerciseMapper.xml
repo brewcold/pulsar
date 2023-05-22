@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.RoutineDetailDao">
+
+    <!--  운동 세부정보 조회 쿼리 결과 매퍼  -->
     <resultMap id="ExerciseMap" type="Exercise">
         <result column="ID" property="exerciseNo"/>
         <result column="EXERCISE_NAME" property="exerciseName"/>

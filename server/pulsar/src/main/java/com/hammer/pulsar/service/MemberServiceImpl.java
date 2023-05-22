@@ -65,15 +65,16 @@ public class MemberServiceImpl implements MemberService {
         // 회원 테이블에 저장할 정보만 담기
         MemberRegistRequest memberRegistRequest = new MemberRegistRequest(form, profileImg);
         // 회원 테이블에 정보를 저장하기
-        int memberId = memberDao.insertMember(memberRegistRequest);
+        memberDao.insertMember(memberRegistRequest);
 
         // 고민 테이블에 저장할 정보만 담기
         // 고민 태그는 번호만 추출해서 Request 객체에 저장한다.
         ConcernUpdateRequest concernUpdateRequest =
-                new ConcernUpdateRequest(memberId, form.getSelectedTag().stream().
+                new ConcernUpdateRequest(memberRegistRequest.getMemberId(), form.getSelectedTag().stream().
                         map((Tag::getTagNo)).collect(Collectors.toList()));
+
         // 고민 테이블에 정보를 저장하기
-//        concernDao.insertConcernTags(concernUpdateRequest);
+        concernTagDao.insertConcernTags(concernUpdateRequest);
 
         return true;
     }

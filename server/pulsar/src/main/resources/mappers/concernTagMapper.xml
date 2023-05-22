@@ -10,7 +10,7 @@
     <insert id="insertConcernTags" parameterType="ConcernUpdateRequest">
         INSERT INTO TB_CONCERN_TAG
         VALUES
-        <foreach item="concernTagsId" index="index" collection="list" separator="," nullable="true">
+        <foreach item="item" index="index" collection="concernTagsId" separator="," nullable="true">
             (#{memberId}, #{item})
         </foreach>
     </insert>
