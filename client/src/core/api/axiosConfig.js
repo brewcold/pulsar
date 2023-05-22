@@ -25,32 +25,29 @@ const IMG = {
 };
 //AUTH가 필요한 요청입니다. JWT를 쓸 때 authorization 헤더에,
 //BEARER authentification을 적용하기 위한 자리입니다.
-const AUTH = {
-  headers: {
-    'Content-Type': 'application/json; charset=UTF-8',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': 'true',
-    // Authorization: '',
-  },
-  baseURL: root,
+const AUTH = (sessionId) => {
+  return {
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      Authorization: `${sessionId}`,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      // Authorization: '',
+    },
+    baseURL: root,
+  };
 };
-const AUTH_IMG = {
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': 'true',
-  },
-  baseURL: root,
+const AUTH_IMG = (sessionId) => {
+  return {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `${sessionId}`,
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+    },
+    baseURL: root,
+  };
 };
-//설정 객체를 가지고 axios instance를 생성합니다.
-const NORMAL_INSTANCE = axios.create(NORMAL);
-const AUTH_INSTANCE = axios.create(AUTH);
-const NORMAL_IMG_INSTANCE = axios.create(IMG);
-const AUTH_IMG_INSTANCE = axios.create(AUTH_IMG);
-// NORMAL_INSTANCE.defaults.withCredentials = true;
-// AUTH_INSTANCE.defaults.withCredentials = true;
-//withCredentials를 설정합니다. 프론트 단에서 인증정보를 담는 경우 이 설정이 없으면
-//CORS 에러가 발생합니다 (server에서 allow 어쩌고 하는 것처럼...)
 
 /**
  * ### 실질적으로 API CALL을 통해 결과값을 리턴하는 함수입니다.
@@ -64,13 +61,20 @@ const AUTH_IMG_INSTANCE = axios.create(AUTH_IMG);
  * @param {'normal'|'auth'|'normal_img'|'auth_img'} authType
  * @returns `Promise<Object>`
  */
-const call = async (uri, method = 'get', data, authType = 'normal') => {
+const call = async (
+  uri,
+  method = 'get',
+  data,
+  authType = 'normal',
+  sessionId
+) => {
   //bearer auth가 필요하면 authType에 문자열 'auth'를 입력하면 됩니다.
   let instance;
-  if (authType === 'auth') instance = AUTH_INSTANCE;
-  else if (authType === 'auth_img') instance = AUTH_IMG_INSTANCE;
-  else if (authType === 'normal_img') instance = NORMAL_IMG_INSTANCE;
-  else instance = NORMAL_INSTANCE;
+  if (authType === 'auth') instance = axios.create(AUTH(sessionId));
+  else if (authType === 'auth_img')
+    instance = axios.create(AUTH_IMG(sessionId));
+  else if (authType === 'normal_img') instance = axios.create(IMG);
+  else instance = axios.create(NORMAL);
 
   const URI = root + uri;
   try {
