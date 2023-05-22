@@ -10,6 +10,7 @@ import com.hammer.pulsar.dto.interaction.Like;
 import com.hammer.pulsar.dto.interaction.LikeRequest;
 import com.hammer.pulsar.service.ArticleService;
 import com.hammer.pulsar.service.InteractionService;
+import com.hammer.pulsar.util.UUIDTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,13 +56,11 @@ public class CommunityRestController {
     @PostMapping()
     public ResponseEntity<Integer> writeArticle(ArticleWriteForm form, MultipartFile[] imgFiles,
                                                 HttpServletRequest request) {
-        // 로그인 회원의 고유번호
-        // TODO: 회원번호를 가져온 것은 임시코드이므로 로그인 구현시 수정할 것
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         int articleNo = articleService.writeArticle(form, imgFiles, memberId);
 
-        // TODO: OK보다 CREATED가 어울린다면 변경
         return new ResponseEntity<>(articleNo, HttpStatus.OK);
     }
 
@@ -85,9 +84,8 @@ public class CommunityRestController {
     // 추천 수 가져오기 API
     @GetMapping("/{articleId}/active/like")
     public ResponseEntity<Like> showLikes(@PathVariable int articleId, HttpServletRequest request) {
-        // 로그인 한 회원의 아이디를 불러오기
-        // TODO: 로그인 로직은 아직 구현되지 않았으므로 변경 가능함
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         // 추천수를 가져오기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
@@ -103,9 +101,8 @@ public class CommunityRestController {
     // 추천하기 API
     @PostMapping("/{articleId}/active/like")
     public ResponseEntity<Like> toggleLIkeStatus(@PathVariable int articleId, HttpServletRequest request) {
-        // 로그인한 회원의 아이디를 불러오기
-        // TODO: 로그인 로직은 아직 구현되지 않았으므로 변경 가능함
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         // 추천하기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
@@ -129,9 +126,8 @@ public class CommunityRestController {
     // 댓글 쓰기 API
     @PostMapping("/{articleId}/active/comment")
     public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, String content, HttpServletRequest request) {
-        // 로그인한 회원의 아이디를 불러오기
-        // TODO: 로그인 로직은 아직 구현되지 않았으므로 변경 가능함
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         // 댓글 작성에 필요한 데이터를 DTO에 담기
         CommentWriteRequest writeRequest = new CommentWriteRequest();
