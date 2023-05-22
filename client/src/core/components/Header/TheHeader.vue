@@ -3,12 +3,27 @@
 <template>
   <div id="header_container">
     <div id="profile" />
+    <button @click="logout">LOGOUT</button>
   </div>
 </template>
 
 <script>
+import { postMemberLogOut } from '@/api/member';
+
 export default {
   name: 'TheHeader',
+  methods: {
+    // 테스트 로그아웃 코드
+    logout() {
+      try {
+        postMemberLogOut(this.$store.getters.getSessionId);
+        this.$store.dispatch('logout');
+        console.log('로그아웃됨');
+      } catch (err) {
+        return console.log(err);
+      }
+    },
+  },
 };
 </script>
 
