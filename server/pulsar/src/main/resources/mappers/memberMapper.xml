@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.MemberDao">
 
+    <resultMap id="MemberMapper" type="Member">
+        <result column="ID" property="memberId" />
+        <result column="EMAIL" property="email" />
+        <result column="PASSWORD" property="password" />
+        <result column="NICKNAME" property="nickname" />
+        <result column="SRC" property="profileImg" />
+    </resultMap>
+
     <!--  회원가입을 위한 SQL  -->
     <insert id="insertMember" parameterType="MemberRegistRequest">
         INSERT INTO TB_MEMBER (EMAIL, PASSWORD, NICKNAME, SRC)
@@ -30,13 +38,22 @@
         ) as is_duplicated
     </select>
 
-    <!--  회원의 세부 정보 조회를 위한 SQL  -->
-    <select id="selectMemberByMemberId" parameterType="int" resultType="Member">
+    <!--  회원번호로 회원의 세부 정보 조회하기 위한 SQL  -->
+    <select id="selectMemberByMemberId" parameterType="int" resultMap="MemberMapper">
         SELECT
             *
         FROM TB_MEMBER
         WHERE
             ID = #{memberId}
+    </select>
+
+    <!--  이메일로 회원의 세부 정보 조회하기 위한 SQL  -->
+    <select id="selectMemberByEmail" parameterType="string" resultMap="MemberMapper">
+        SELECT
+            *
+        FROM TB_MEMBER
+        WHERE
+            EMAIL = #{email}
     </select>
 
     <!--  회원 정보 수정을 위한 SQL  -->

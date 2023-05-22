@@ -2,9 +2,7 @@ package com.hammer.pulsar.controller;
 
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.CommentedArticle;
-import com.hammer.pulsar.dto.member.Member;
-import com.hammer.pulsar.dto.member.MemberModifyForm;
-import com.hammer.pulsar.dto.member.MemberRegistForm;
+import com.hammer.pulsar.dto.member.*;
 import com.hammer.pulsar.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 // 회원 관련 API 요청을 처리할 REST 컨트롤러
@@ -81,14 +80,19 @@ public class MemberRestController {
     // 로그인 API
     // 상세 로직을 정하지 못했음
     @PostMapping("/login")
-    public ResponseEntity<Void> login(String email, String password) {
-        return null;
+    public ResponseEntity<LoginInfo> login(@RequestBody LoginForm form, HttpServletRequest request) {
+        LoginInfo loginInfo = memberService.login(form);
+        request.getSession().setAttribute("loginInfo", loginInfo.getMemberNo());
+
+        return new ResponseEntity<>(loginInfo, HttpStatus.OK);
     }
 
     // 로그아웃 API
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout() {
-        return null;
+    public ResponseEntity<Void> logout(HttpServletRequest request) {
+        request.getSession().removeAttribute("loginInfo");
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /**
