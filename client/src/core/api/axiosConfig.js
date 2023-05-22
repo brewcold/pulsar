@@ -8,7 +8,11 @@ const root = `http://localhost:8080`;
 //AUTH가 필요하지 않은 요청입니다.
 //content-type 헤더를 설정하면 stringify하지 않아도 json으로 알아서 잘 갑니다.
 const NORMAL = {
-  headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+  headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+  },
   baseURL: root,
 };
 
@@ -17,6 +21,8 @@ const NORMAL = {
 const AUTH = {
   headers: {
     'Content-Type': 'application/json; charset=UTF-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
     // Authorization: '',
   },
   baseURL: root,
@@ -25,8 +31,8 @@ const AUTH = {
 //설정 객체를 가지고 axios instance를 생성합니다.
 const NORMAL_INSTANCE = axios.create(NORMAL);
 const AUTH_INSTANCE = axios.create(AUTH);
-NORMAL_INSTANCE.defaults.withCredentials = true;
-AUTH_INSTANCE.defaults.withCredentials = true;
+// NORMAL_INSTANCE.defaults.withCredentials = true;
+// AUTH_INSTANCE.defaults.withCredentials = true;
 //withCredentials를 설정합니다. 프론트 단에서 인증정보를 담는 경우 이 설정이 없으면
 //CORS 에러가 발생합니다 (server에서 allow 어쩌고 하는 것처럼...)
 
