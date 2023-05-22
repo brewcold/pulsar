@@ -25,18 +25,20 @@ public class MemberServiceImpl implements MemberService {
     private final LikeDao likeDao;
     private final CommentDao commentDao;
     private final ConcernTagDao concernTagDao;
+    private final ArticleTagDao articleTagDao;
 
     // 업로드한 파일 저장을 위한 서비스
     private final FileManagementService fileManagementService;
 
     @Autowired
     public MemberServiceImpl(MemberDao memberDao, ArticleDao articleDao, LikeDao likeDao, CommentDao commentDao,
-                             ConcernTagDao concernTagDao, FileManagementService fileManagementService) {
+                             ConcernTagDao concernTagDao, ArticleTagDao articleTagDao, FileManagementService fileManagementService) {
         this.memberDao = memberDao;
         this.articleDao = articleDao;
         this.likeDao = likeDao;
         this.commentDao = commentDao;
         this.concernTagDao = concernTagDao;
+        this.articleTagDao = articleTagDao;
         this.fileManagementService = fileManagementService;
     }
 
@@ -268,8 +270,15 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<ArticlePreview> getAllWritten(int memberId) {
-        return articleDao.selectArticleByMemberId(memberId);
-    }
+
+        List<ArticlePreview> previewList = articleDao.selectArticleByMemberId(memberId);
+
+        for(ArticlePreview preview : previewList) {
+            preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
+        }
+
+        return previewList;
+     }
 
     /**
      * 선택한 회원이 추천한 모든 게시글 목록을 조회하는 메서드
@@ -279,7 +288,13 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<ArticlePreview> getAllLiked(int memberId) {
-        return likeDao.selectLikedByMemberId(memberId);
+        List<ArticlePreview> previewList = likeDao.selectLikedByMemberId(memberId);
+
+        for(ArticlePreview preview : previewList) {
+            preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
+        }
+
+        return previewList;
     }
 
     /**
