@@ -134,7 +134,9 @@ public class MemberServiceImpl implements MemberService {
         Member memberInfo = memberDao.selectMemberByMemberId(memberId);
 
         if(memberInfo == null) throw new NoSuchElementException("일치하는 회원이 없습니다.");
-        
+
+        memberInfo.setSelectedTag(concernTagDao.selectTagsByMemberId(memberId));
+
         return memberInfo;
     }
 
