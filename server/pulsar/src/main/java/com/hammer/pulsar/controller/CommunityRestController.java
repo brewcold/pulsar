@@ -10,6 +10,7 @@ import com.hammer.pulsar.dto.interaction.Like;
 import com.hammer.pulsar.dto.interaction.LikeRequest;
 import com.hammer.pulsar.service.ArticleService;
 import com.hammer.pulsar.service.InteractionService;
+import com.hammer.pulsar.util.UUIDTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,13 +56,11 @@ public class CommunityRestController {
     @PostMapping()
     public ResponseEntity<Integer> writeArticle(ArticleWriteForm form, MultipartFile[] imgFiles,
                                                 HttpServletRequest request) {
-        // 로그인 회원의 고유번호
-        // TODO: 회원번호를 가져온 것은 임시코드이므로 로그인 구현시 수정할 것
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         int articleNo = articleService.writeArticle(form, imgFiles, memberId);
 
-        // TODO: OK보다 CREATED가 어울린다면 변경
         return new ResponseEntity<>(articleNo, HttpStatus.OK);
     }
 
