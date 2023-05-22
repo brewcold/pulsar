@@ -1,6 +1,6 @@
 import LandingView from '../LandingView.vue';
 import LoginContainer from '../components/LoginContainer.vue';
-import SignUp from '../components/SignUp.vue';
+import SignupContainer from '../components/SignupContainer.vue';
 
 export default [
   {
@@ -10,7 +10,7 @@ export default [
       { path: '', component: LoginContainer },
       {
         path: 'signup', //회원가입 폼
-        component: SignUp,
+        component: SignupContainer,
       },
     ],
   },
