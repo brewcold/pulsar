@@ -6,9 +6,10 @@
     <!--  TODO: 서브쿼리로 변경하기  -->
     <insert id="insertConcernTags" parameterType="ConcernUpdateRequest">
         INSERT INTO TB_CONCERN_TAG
-        <!--  TODO: 반복문으로 추가하기  -->
-        VALUES (#{memberId}, #{concernTagsId})
-
+        VALUES
+        <foreach item="concernTagsId" index="index" collection="list" separator="," nullable="true">
+            (#{memberId}, #{item})
+        </foreach>
     </insert>
 
     <!--  회원의 고민 태그를 조회하는 SQL  -->
@@ -28,8 +29,12 @@
     <delete id="deleteConcernTags" parameterType="ConcernUpdateRequest">
         DELETE FROM TB_CONCERN_TAG
         WHERE
-            CONCERN_ID = #{concernId}
-            AND TAG_ID IN #{concernTagsId}
+        CONCERN_ID = #{concernId}
+        AND
+        <foreach item="concernTagsId" index="index" collection="list"
+                 open="TAG_ID in (" separator="," close=")" nullable="true">
+            #{item}
+        </foreach>
     </delete>
 
 </mapper>
