@@ -84,9 +84,8 @@ public class CommunityRestController {
     // 추천 수 가져오기 API
     @GetMapping("/{articleId}/active/like")
     public ResponseEntity<Like> showLikes(@PathVariable int articleId, HttpServletRequest request) {
-        // 로그인 한 회원의 아이디를 불러오기
-        // TODO: 로그인 로직은 아직 구현되지 않았으므로 변경 가능함
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         // 추천수를 가져오기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
@@ -102,9 +101,8 @@ public class CommunityRestController {
     // 추천하기 API
     @PostMapping("/{articleId}/active/like")
     public ResponseEntity<Like> toggleLIkeStatus(@PathVariable int articleId, HttpServletRequest request) {
-        // 로그인한 회원의 아이디를 불러오기
-        // TODO: 로그인 로직은 아직 구현되지 않았으므로 변경 가능함
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         // 추천하기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
