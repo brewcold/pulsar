@@ -36,7 +36,7 @@ export const postMemberLogIn = (data) =>
  * ### 로그아웃을 진행합니다.
  * @returns `Promise` with CODE (200, 500, 418)
  */
-export const postMemberLogOut = () =>
+export const postMemberLogOut = (sessionId) =>
   call(`/member/logout`, 'post', [], 'auth', sessionId);
 
 /**
@@ -53,7 +53,7 @@ export const getMemberProfile = (memberNo) =>
  * @param {Object} data
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const putMemberProfile = (memberNo, data) =>
+export const putMemberProfile = (memberNo, data, sessionId) =>
   call(`/member/${memberNo}`, 'put', data, 'auth', sessionId);
 
 /**
@@ -61,7 +61,7 @@ export const putMemberProfile = (memberNo, data) =>
  * @param {number} memberNo
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const deleteMember = (memberNo) =>
+export const deleteMember = (memberNo, sessionId) =>
   call(`/member/${memberNo}`, 'delete', [], 'auth', sessionId);
 
 /**

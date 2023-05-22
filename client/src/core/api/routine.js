@@ -5,7 +5,7 @@ import call from './axiosConfig';
  * @param {number} memberNo
  * @returns Promise with CODE (200, 500, 401)
  */
-export const getRoutines = (memberNo) =>
+export const getRoutines = (memberNo, sessionId) =>
   call(`/routines/${memberNo}`, 'get', [], 'auth', sessionId);
 
 /**
@@ -13,7 +13,7 @@ export const getRoutines = (memberNo) =>
  * @param {number} routineNo
  * @returns Promise with CODE (200, 500, 401)
  */
-export const getRoutineDetail = (routineNo) =>
+export const getRoutineDetail = (routineNo, sessionId) =>
   call(`/routines/routine/${routineNo}`, 'get', [], 'auth', sessionId);
 
 /**
@@ -21,7 +21,7 @@ export const getRoutineDetail = (routineNo) =>
  * @param {Object} data
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const postRoutine = (data) =>
+export const postRoutine = (data, sessionId) =>
   call(`/routines/routine`, 'post', data, 'auth', sessionId);
 
 /**
@@ -29,7 +29,7 @@ export const postRoutine = (data) =>
  * @param {Object} data
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const putRoutine = (routineNo, data) =>
+export const putRoutine = (routineNo, data, sessionId) =>
   call(
     `/routines/routine/${routineNo}`,
     'put',
@@ -43,7 +43,7 @@ export const putRoutine = (routineNo, data) =>
  * @param {number} routineNo
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const deleteRoutine = (routineNo) =>
+export const deleteRoutine = (routineNo, sessionId) =>
   call(
     `/routines/routine/${routineNo}`,
     'delete',

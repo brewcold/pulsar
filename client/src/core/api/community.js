@@ -83,7 +83,7 @@ export const getArticleComment = (articleNo) =>
  * @param {Object} data
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const postArticleComment = (articleNo, data) =>
+export const postArticleComment = (articleNo, data, sessionId) =>
   call(
     `/community/${articleNo}/active/comment`,
     'post',
@@ -98,7 +98,7 @@ export const postArticleComment = (articleNo, data) =>
  * @param {number} commentNo
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const deleteArticleComment = (articleNo, commentNo) =>
+export const deleteArticleComment = (articleNo, commentNo, sessionId) =>
   call(
     `/community/${articleNo}/active/comment/${commentNo}`,
     'delete',
