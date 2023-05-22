@@ -3,7 +3,6 @@
 <mapper namespace="com.hammer.pulsar.dao.ConcernTagDao">
 
     <!--  회원의 고민 태그를 추가하는 SQL  -->
-    <!--  TODO: 서브쿼리로 변경하기  -->
     <insert id="insertConcernTags" parameterType="ConcernUpdateRequest">
         INSERT INTO TB_CONCERN_TAG
         VALUES
@@ -13,7 +12,8 @@
     </insert>
 
     <!--  회원의 고민 태그를 조회하는 SQL  -->
-    <select id="selectTagsByMemberId" parameterType="int">
+    <!--  TODO: 서브쿼리로 변경하기  -->
+    <select id="selectTagsByMemberId" parameterType="int" resultType="Tag">
         SELECT
             T.*
         FROM TB_CONCERN_TAG CT

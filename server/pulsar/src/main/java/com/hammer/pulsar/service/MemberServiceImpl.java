@@ -6,6 +6,7 @@ import com.hammer.pulsar.dto.article.CommentedArticle;
 import com.hammer.pulsar.dto.common.ConcernUpdateRequest;
 import com.hammer.pulsar.dto.common.Tag;
 import com.hammer.pulsar.dto.member.*;
+import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -131,6 +132,22 @@ public class MemberServiceImpl implements MemberService {
         if(memberInfo == null) throw new NoSuchElementException("일치하는 회원이 없습니다.");
         
         return memberInfo;
+    }
+
+    public LoginInfo login(LoginForm form) throws UnauthorizedException {
+        Member memberInfo = memberDao.selectMemberByEmail(form.getEmail());
+
+        if(memberInfo == null || !memberInfo.getPassword().equals(form.getPassword())) {
+            throw new UnauthorizedException("이메일 혹은 비밀번호가 일치하지 않습니다.");
+        }
+
+        LoginInfo loginInfo = new LoginInfo();
+        loginInfo.setMemberNo(memberInfo.getMemberId());
+        loginInfo.setNickname(memberInfo.getNickname());
+        loginInfo.setProfileImg(memberInfo.getProfileImg());
+        loginInfo.setSelectedTag(concernTagDao.selectTagsByMemberId(memberInfo.getMemberId()));
+
+        return loginInfo;
     }
 
     /**

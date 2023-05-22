@@ -2,9 +2,8 @@ package com.hammer.pulsar.service;
 
 import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.CommentedArticle;
-import com.hammer.pulsar.dto.member.Member;
-import com.hammer.pulsar.dto.member.MemberModifyForm;
-import com.hammer.pulsar.dto.member.MemberRegistForm;
+import com.hammer.pulsar.dto.member.*;
+import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -23,6 +22,9 @@ public interface MemberService {
 
     // 선택한 회원의 정보 조회 로직
     public Member getMemberInfo(int memberId) throws NoSuchElementException;
+
+    // 로그인을 수행하는 로직
+    public LoginInfo login(LoginForm form) throws UnauthorizedException;
 
     // 회원 정보 수정 로직
     public String modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile);

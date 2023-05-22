@@ -19,6 +19,9 @@ public interface MemberDao {
     // 회원의 세부 정보를 조회하는 메서드
     public Member selectMemberByMemberId(int memberId);
 
+    // 회원의 세부 정보를 이메일로 조회하는 메서드
+    public Member selectMemberByEmail(String email);
+
     // 프로필 조회를 위한 메서드
     public MemberProfile selectProfileByMemberId(int memberId);
 
