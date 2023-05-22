@@ -4,7 +4,7 @@ export default {
   /**
    * DOCS
    */
-  title: 'RoutineList (루틴 리스트)',
+  title: 'common/RoutineList (루틴 리스트)',
   component: RoutineList,
   render: (args, { argTypes }) => ({
     props: Object.keys(argTypes),

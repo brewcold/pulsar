@@ -4,7 +4,7 @@ export default {
   /**
    * DOCS
    */
-  title: 'CommunityList (게시판 리스트)',
+  title: 'common/CommunityList (게시판 리스트)',
   component: CommunityList,
   render: (args, { argTypes }) => ({
     props: Object.keys(argTypes),

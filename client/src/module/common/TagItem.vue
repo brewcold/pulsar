@@ -53,7 +53,7 @@ export default {
       //고를 수 없는 태그 (결과로만 보여야 하는 태그, 단순히 검색 링크로만 이동하는 역할을 함)
       if (this.selectable === false) {
         return {
-          '--color': '#eca23c',
+          '--color': '#ff8048',
           '--text-color': 'white',
           '--border': 'none',
         };
@@ -69,7 +69,7 @@ export default {
         } else {
           //체크된 경우
           return {
-            '--color': '#cc6431',
+            '--color': '#db3f28',
             '--text-color': 'white',
             '--border': 'none',
           };
