@@ -29,18 +29,13 @@
         )
     </select>
 
-    <!--  회원이 추천한 게시글 목록을 조회하는 SQL  -->
-    <select id="selectLikedByMemberId" parameterType="int" resultMap="PreviewMapper">
+    <!--  회원이 추천한 게시글 번호 목록을 조회하는 SQL  -->
+    <select id="selectLikedByMemberId" parameterType="int" resultType="int">
         SELECT
-            A.*,
-            M.NICKNAME
-        FROM TB_ARTICLE A
-        INNER JOIN TB_MEMBER M
-        ON
-            A.WRITER_ID = M.ID
+            ARTICLE_ID
+        FROM TB_LIKE
         WHERE
-            M.ID = #{memberId}
-        AND A.ID IN (SELECT ARTICLE_ID FROM TB_LIKE WHERE MEMBER_ID = M.ID);
+            MEMBER_ID = #{memberId}
     </select>
 
     <!--  추천 내역을 추가하는 SQL  -->

@@ -289,7 +289,9 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<ArticlePreview> getAllLiked(int memberId) {
-        List<ArticlePreview> previewList = likeDao.selectLikedByMemberId(memberId);
+        List<Integer> likedList = likeDao.selectLikedByMemberId(memberId);
+
+        List<ArticlePreview> previewList = articleDao.selectArticlesByArticleId(likedList);
 
         for(ArticlePreview preview : previewList) {
             preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
