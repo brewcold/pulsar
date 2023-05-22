@@ -4,6 +4,9 @@ import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.CommentedArticle;
 import com.hammer.pulsar.dto.member.*;
 import com.hammer.pulsar.service.MemberService;
+import com.hammer.pulsar.util.AuthUtil;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.UUID;
 
 // 회원 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
@@ -80,17 +85,21 @@ public class MemberRestController {
     // 로그인 API
     // 상세 로직을 정하지 못했음
     @PostMapping("/login")
-    public ResponseEntity<LoginInfo> login(@RequestBody LoginForm form, HttpServletRequest request) {
+    public ResponseEntity<LoginInfo> login(@RequestBody LoginForm form, HttpServletRequest request) throws UnsupportedEncodingException {
         LoginInfo loginInfo = memberService.login(form);
-        request.getSession().setAttribute("loginInfo", loginInfo.getMemberNo());
 
-        return new ResponseEntity<>(loginInfo, HttpStatus.OK);
+        UUID token = AuthUtil.getNewAuthToken();
+
+        return ResponseEntity.ok()
+                .header("Authorization", token.toString())
+                .body(loginInfo);
     }
 
     // 로그아웃 API
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request) {
-        request.getSession().removeAttribute("loginInfo");
+        String token = request.getHeader("Authorization");
+        System.out.println(token);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
