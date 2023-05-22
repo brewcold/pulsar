@@ -9,13 +9,20 @@ const root = `http://localhost:8080`;
 //content-type 헤더를 설정하면 stringify하지 않아도 json으로 알아서 잘 갑니다.
 const NORMAL = {
   headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+  },
+  baseURL: root,
+};
+const IMG = {
+  headers: {
     'Content-Type': 'multipart/form-data',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Credentials': 'true',
   },
   baseURL: root,
 };
-
 //AUTH가 필요한 요청입니다. JWT를 쓸 때 authorization 헤더에,
 //BEARER authentification을 적용하기 위한 자리입니다.
 const AUTH = {
@@ -27,10 +34,19 @@ const AUTH = {
   },
   baseURL: root,
 };
-
+const AUTH_IMG = {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': 'true',
+  },
+  baseURL: root,
+};
 //설정 객체를 가지고 axios instance를 생성합니다.
 const NORMAL_INSTANCE = axios.create(NORMAL);
 const AUTH_INSTANCE = axios.create(AUTH);
+const NORMAL_IMG_INSTANCE = axios.create(IMG);
+const AUTH_IMG_INSTANCE = axios.create(AUTH_IMG);
 // NORMAL_INSTANCE.defaults.withCredentials = true;
 // AUTH_INSTANCE.defaults.withCredentials = true;
 //withCredentials를 설정합니다. 프론트 단에서 인증정보를 담는 경우 이 설정이 없으면
@@ -45,13 +61,17 @@ const AUTH_INSTANCE = axios.create(AUTH);
  * @param {string} URI
  * @param {'get'|'post'|'put'|'delete'} method
  * @param {Object} data
- * @param {'normal'|'auth'} authType
+ * @param {'normal'|'auth'|'normal_img'|'auth_img'} authType
  * @returns `Promise<Object>`
  */
 const call = async (uri, method = 'get', data, authType = 'normal') => {
   //bearer auth가 필요하면 authType에 문자열 'auth'를 입력하면 됩니다.
-  const instance =
-    authType === 'auth' ? AUTH_INSTANCE : NORMAL_INSTANCE;
+  let instance;
+  if (authType === 'auth') instance = AUTH_INSTANCE;
+  else if (authType === 'auth_img') instance = AUTH_IMG_INSTANCE;
+  else if (authType === 'normal_img') instance = NORMAL_IMG_INSTANCE;
+  else instance = NORMAL_INSTANCE;
+
   const URI = root + uri;
   try {
     let result;
