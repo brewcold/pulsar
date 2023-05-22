@@ -2,7 +2,7 @@
   <div id="login_content">
     <!-- 상위 컴포넌트에서 v-model은 하위 컴포넌트에서 emit해 바인딩할 수 있습니다.
          v-model이 하위 컴포넌트에서의 emit + 그 하위 컴포넌트로 pass prop인 것을 이용한 것입니다. -->
-    <h2>로그인</h2>
+    <h2>PULSAR에 오신 것을 환영합니다!</h2>
     <p class="login_content_caption">
       서비스를 이용하려면 로그인해야 합니다.
     </p>
@@ -26,7 +26,9 @@
       :value="'LOGIN'"
       @handle-click="handleClick"
     />
-    <square-button :theme="'white'" :value="'SIGN UP'" />
+    <router-link to="/signup">
+      <square-button :theme="'white'" :value="'SIGN UP'" />
+    </router-link>
   </div>
 </template>
 

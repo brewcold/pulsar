@@ -2,7 +2,9 @@
   <div id="app">
     <!--v-if를 사용한 Router-view 조건부 렌더링-->
 
-    <empty-layout v-if="$route.path === '/'">
+    <empty-layout
+      v-if="$route.path === '/' || $route.path === '/signup'"
+    >
       <router-view />
     </empty-layout>
     <full-layout v-else>
