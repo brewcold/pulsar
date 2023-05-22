@@ -15,13 +15,22 @@ export const getArticleDetail = (articleNo) =>
   call(`/community/${articleNo}/static`); //글 상세보기 - static datas
 
 /**
+ * ### 글을 씁니다
+ * @param {number} articleNo
+ * @param {Object} data
+ * @returns `Promise` with CODE (200, 500, 401, 418)
+ */
+export const postArticle = (data) =>
+  call(`/community`, 'post', data, 'auth_img'); //글 수정하기
+
+/**
  * ### `articleNo`번 글을 수정합니다.
  * @param {number} articleNo
  * @param {Object} data
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
 export const putArticle = (articleNo, data) =>
-  call(`/community/${articleNo}`, 'put', data, 'auth'); //글 수정하기
+  call(`/community/${articleNo}`, 'put', data, 'auth_img'); //글 수정하기
 
 /**
  * ### `articleNo`번 글을 삭제합니다.

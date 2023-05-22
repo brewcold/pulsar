@@ -22,7 +22,7 @@ export const postMemberNicknameDuplicated = (data) =>
  * @returns `Promise` with CODE (201, 500, 418)
  */
 export const postMemberSignUp = (data) =>
-  call(`/member/signup`, 'post', data);
+  call(`/member/signup`, 'post', data, 'normal_img');
 
 /**
  * ### 로그인을 진행합니다.

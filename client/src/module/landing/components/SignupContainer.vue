@@ -13,10 +13,12 @@ export default {
   components: { SignupContent },
   methods: {
     signup(form, file) {
-      const data = {
-        form,
-        file,
-      };
+      const data = new FormData();
+      data.append('profileImg', file);
+      data.append(
+        'form',
+        new Blob([JSON.stringify(form)], { type: 'application/json' })
+      );
       postMemberSignUp(data)
         .then((res) => {
           if (res.status === 201) {
