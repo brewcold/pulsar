@@ -18,6 +18,9 @@ public interface ArticleDao {
     // 선택한 게시글을 조회하는 메서드
     public Article selectArticleByArticleId(int articleId);
 
+    // 선택한 게시글들을 조회하는 메서드
+    public List<ArticlePreview> selectArticlesByArticleId(List<Integer> articlesId);
+
     // 선택한 회원의 게시글 목록을 조회하는 메서드
     public List<ArticlePreview> selectArticleByMemberId(int memberId);
 

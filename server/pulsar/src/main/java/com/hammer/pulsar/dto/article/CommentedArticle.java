@@ -14,6 +14,12 @@ public class CommentedArticle {
     public CommentedArticle() {
     }
 
+    // 게시글 미리보기와 댓글을 인자로 받는 생성자
+    public CommentedArticle(ArticlePreview article, Comment comment) {
+        this.article = article;
+        this.comment = comment;
+    }
+
     // Getters, Setters
     public ArticlePreview getArticle() {
         return article;

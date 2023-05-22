@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.CommentDao">
 
+    <resultMap id="CommentMapper" type="Comment">
+        <result column="ID" property="commentNo" />
+        <result column="ARTICLE_ID" property="articleNo" />
+        <result column="WRITER_ID" property="writerInfo.writerNo" />
+        <result column="NICKNAME" property="writerInfo.writerNickname" />
+        <result column="SRC" property="writerInfo.writerProfileImg" />
+        <result column="CONTENT" property="content" />
+        <result column="REG_DATE" property="createdAt" />
+    </resultMap>
+
     <!--  댓글을 추가하는 SQL  -->
     <insert id="insertComment" parameterType="CommentWriteRequest">
 
@@ -16,9 +26,18 @@
             ARTICLE_ID = #{articleId}
     </select>
 
-    <!--  회원이 작성한 모든 댓글과 게시글을 조회하는 SQL  -->
-    <select id="selectCommentsByMemberId" parameterType="int" resultType="CommentedArticle">
-
+    <!--  회원이 작성한 모든 댓글을 조회하는 SQL  -->
+    <select id="selectCommentsByMemberId" parameterType="int" resultMap="CommentMapper">
+        SELECT
+            C.*,
+            M.NICKNAME,
+            M.SRC
+        FROM TB_COMMENT C
+        INNER JOIN TB_MEMBER M
+        ON
+            C.WRITER_ID = M.ID
+        WHERE
+            WRITER_ID = #{memberId}
     </select>
 
     <!--  댓글을 삭제하는 SQL  -->

@@ -21,7 +21,8 @@
     <!--  페이지네이션, 검색 기능 추가 예정  -->
     <select id="selectArticles" resultType="ArticlePreview">
         SELECT
-            A.*, M.NICKNAME
+            A.*,
+            M.NICKNAME
         FROM TB_ARTICLE A
         INNER JOIN TB_MEMBER M
         ON
@@ -48,6 +49,22 @@
             A.WRITER_ID = M.ID
         WHERE
             WRITER_ID = #{writerId}
+    </select>
+
+    <select id="selectArticlesByArticleId" parameterType="java.util.List" resultMap="PreviewMapper">
+        SELECT
+            A.*,
+            M.NICKNAME
+        FROM TB_ARTICLE A
+        INNER JOIN TB_MEMBER M
+        ON
+            A.WRITER_ID = M.ID
+        WHERE
+            A.ID IN
+            <foreach item="item" index="index" collection="list"
+                               open="(" separator="," close=")" nullable="true">
+                #{item}
+            </foreach>
     </select>
 
     <!--  선택한 게시글을 수정하는 SQL  -->

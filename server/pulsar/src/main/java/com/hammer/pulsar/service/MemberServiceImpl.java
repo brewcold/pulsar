@@ -5,6 +5,7 @@ import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.CommentedArticle;
 import com.hammer.pulsar.dto.common.ConcernUpdateRequest;
 import com.hammer.pulsar.dto.common.Tag;
+import com.hammer.pulsar.dto.interaction.Comment;
 import com.hammer.pulsar.dto.member.*;
 import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -305,7 +306,28 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<CommentedArticle> getAllCommented(int memberId) {
-        return commentDao.selectCommentsByMemberId(memberId);
+        // 최종 조회 결과를 저장하기 위한 리스트
+        List<CommentedArticle> commentedList = new ArrayList<>();
+
+        // 댓글 목록을 가져오기
+        List<Comment> commentList = commentDao.selectCommentsByMemberId(memberId);
+
+        // 댓글들이 작성된 게시글의 미리보기 목록을 가져오기
+        List<ArticlePreview> previewList = articleDao.selectArticlesByArticleId(commentList.stream()
+                .map(Comment::getArticleNo)
+                .collect(Collectors.toList()));
+
+        // 게시글 미리보기에 선택된 태그를 연결하기
+        for(ArticlePreview preview : previewList) {
+            preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
+        }
+
+        // 일치하는 댓글과 게시글 짝 지어서 CommentedArticle의 리스트로 반환
+        for(int i = 0; i < commentList.size(); i++) {
+            commentedList.add(new CommentedArticle(previewList.get(i), commentList.get(i)));
+        }
+
+        return commentedList;
     }
 
 }
