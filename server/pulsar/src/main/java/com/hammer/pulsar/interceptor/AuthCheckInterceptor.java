@@ -14,7 +14,8 @@ public class AuthCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        logger.info("userNo = {}", request.getSession().getAttribute("loginInfo"));
+        logger.info("userNo = {}, sessionId = {}", request.getSession().getAttribute("loginInfo")
+                ,request.getSession().getId());
 
         return true;
     }
