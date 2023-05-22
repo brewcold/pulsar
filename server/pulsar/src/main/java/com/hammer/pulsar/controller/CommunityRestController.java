@@ -126,9 +126,8 @@ public class CommunityRestController {
     // 댓글 쓰기 API
     @PostMapping("/{articleId}/active/comment")
     public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, String content, HttpServletRequest request) {
-        // 로그인한 회원의 아이디를 불러오기
-        // TODO: 로그인 로직은 아직 구현되지 않았으므로 변경 가능함
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         // 댓글 작성에 필요한 데이터를 DTO에 담기
         CommentWriteRequest writeRequest = new CommentWriteRequest();
