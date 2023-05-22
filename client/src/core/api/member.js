@@ -36,8 +36,8 @@ export const postMemberLogIn = (data) =>
  * ### 로그아웃을 진행합니다.
  * @returns `Promise` with CODE (200, 500, 418)
  */
-export const postMemberLogOut = () =>
-  call(`/member/logout`, 'post', [], 'auth');
+export const postMemberLogOut = (sessionId) =>
+  call(`/member/logout`, 'post', [], 'auth', sessionId);
 
 /**
  * ### `memberNo`번 유저 프로필 정보를 가져옵니다.
@@ -53,16 +53,16 @@ export const getMemberProfile = (memberNo) =>
  * @param {Object} data
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const putMemberProfile = (memberNo, data) =>
-  call(`/member/${memberNo}`, 'put', data, 'auth');
+export const putMemberProfile = (memberNo, data, sessionId) =>
+  call(`/member/${memberNo}`, 'put', data, 'auth', sessionId);
 
 /**
  * ### `memberNo`번 유저를 탈퇴시킵니다.
  * @param {number} memberNo
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const deleteMember = (memberNo) =>
-  call(`/member/${memberNo}`, 'delete', [], 'auth');
+export const deleteMember = (memberNo, sessionId) =>
+  call(`/member/${memberNo}`, 'delete', [], 'auth', sessionId);
 
 /**
  * ### `memberNo`번 유저가 쓴 글을 가져옵니다.

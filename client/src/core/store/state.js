@@ -4,4 +4,5 @@ export default {
   nickname: null,
   selectedTag: null,
   profileImg: null,
+  sessionId: null,
 };
