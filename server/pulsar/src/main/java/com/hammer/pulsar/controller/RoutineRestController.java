@@ -1,6 +1,5 @@
 package com.hammer.pulsar.controller;
 
-import com.hammer.pulsar.dto.member.LoginInfo;
 import com.hammer.pulsar.dto.routine.Routine;
 import com.hammer.pulsar.dto.routine.RoutineModifyForm;
 import com.hammer.pulsar.dto.routine.RoutineRegistForm;
@@ -43,10 +42,9 @@ public class RoutineRestController {
     @GetMapping("/{memberId}")
     public ResponseEntity<List<Routine>> showAllRoutines(@PathVariable int memberId, HttpServletRequest request) {
         // 인증 정보 확인
-        String authToken = request.getHeader("Authorization");
-
-        LoginInfo info = UUIDTokenManager.getLoginUserInfo(authToken);
-        if(info.getMemberNo() != memberId) throw new UnauthorizedException();
+        if(!UUIDTokenManager.checkAuth(request.getHeader("Authorization"), memberId)) {
+            throw new UnauthorizedException();
+        }
 
         // 루틴 정보 가져오기
         List<Routine> allRoutine = routineService.getAllRoutines(memberId);
