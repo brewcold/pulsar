@@ -9,4 +9,12 @@ export default {
     state.profileImg = member.profileImg;
     state.sessionId = sessionId;
   },
+  logout() {
+    state.authenticated = false;
+    state.memberNo = null;
+    state.nickname = null;
+    state.selectedTag = null;
+    state.profileImg = null;
+    state.sessionId = null;
+  },
 };

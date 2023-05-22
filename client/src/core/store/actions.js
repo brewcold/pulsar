@@ -5,4 +5,7 @@ export default {
   login({ commit }, member, sessionId) {
     commit('login', member, sessionId);
   },
+  logout({ commit }) {
+    commit('logout');
+  },
 };
