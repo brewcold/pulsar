@@ -17,10 +17,12 @@ export default {
       postMemberLogIn(data)
         .then((res) => {
           //vuex store에 정보 저장
-          console.log(res.data);
-          console.log('로그인이 되었어요');
-          //기본 화면인 루틴으로 리다이렉트시킵니다.
-          this.$router.push('/routines');
+          if (res && res.status < 400) {
+            console.log('로그인에 성공했어요');
+            this.$store.dispatch('login', res.data);
+            //기본 화면인 루틴으로 리다이렉트시킵니다.
+            this.$router.push('/routines');
+          } else console.log('로그인에 실패했어요');
         })
         .catch((err) => err.status);
     },
@@ -32,8 +34,4 @@ export default {
 @import url('../../../assets/css/init.css');
 @import url('../../../assets/css/root.css');
 @import url('../../../assets/css/typography.css');
-
-#login_container {
-  height: 66vh;
-}
 </style>

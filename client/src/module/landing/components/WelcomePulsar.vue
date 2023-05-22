@@ -2,7 +2,6 @@
   <div id="welcome_pulsar">
     <div>
       <img src="../../../assets/images/logo.svg" />
-      <h1 id="welcome_pulsar_title">PULSAR</h1>
     </div>
   </div>
 </template>
@@ -10,19 +9,17 @@
 <style scoped>
 #welcome_pulsar {
   width: 430px;
-  height: 33vh;
   display: flex;
-  justify-content: center;
-  text-align: center;
+  padding-left: 1.5rem;
   align-items: end;
 }
 #welcome_pulsar_title {
-  margin-top: 1rem;
-  padding-right: 1.5rem;
-  font-size: 4rem;
+  margin-top: 0.5rem;
+  padding-right: 1rem;
+  font-size: 2.5rem;
 }
 img {
-  width: 50%;
+  width: 33%;
 }
 </style>
 

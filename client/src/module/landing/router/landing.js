@@ -4,8 +4,7 @@ import SignUp from '../components/SignUp.vue';
 
 export default [
   {
-    path: '/',
-    name: 'landing', //랜딩 페이지 (로그인, 로그아웃, 회원가입)
+    path: '/', //랜딩 페이지 (로그인, 로그아웃, 회원가입)
     component: LandingView,
     children: [
       { path: '', component: LoginContainer },

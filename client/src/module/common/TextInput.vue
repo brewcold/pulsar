@@ -48,12 +48,12 @@ export default {
 input[type='text'],
 input[type='email'],
 input[type='password'] {
-  padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+  padding: 0.75rem;
   border: 1px solid var(--light-color-black);
   border-radius: 6px;
   outline: none;
-  font-size: 1rem;
-  width: calc(100% - 3rem);
+  font-size: 0.9rem;
+  width: calc(100% - 2rem);
 }
 
 input::placeholder {
