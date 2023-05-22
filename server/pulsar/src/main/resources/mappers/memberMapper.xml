@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.MemberDao">
 
+    <!--  회원 조회 쿼리 결과 매퍼  -->
     <resultMap id="MemberMapper" type="Member">
         <result column="ID" property="memberId" />
         <result column="EMAIL" property="email" />
@@ -11,7 +12,7 @@
     </resultMap>
 
     <!--  회원가입을 위한 SQL  -->
-    <insert id="insertMember" parameterType="MemberRegistRequest">
+    <insert id="insertMember" parameterType="MemberRegistRequest" useGeneratedKeys="true" keyProperty="memberId">
         INSERT INTO TB_MEMBER (EMAIL, PASSWORD, NICKNAME, SRC)
         VALUES (#{email}, #{password}, #{nickname}, #{profileImg})
     </insert>

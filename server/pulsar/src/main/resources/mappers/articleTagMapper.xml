@@ -2,9 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.ArticleTagDao">
 
+    <!--  태그 조회 쿼리 결과 매퍼  -->
+    <resultMap id="TagMapper" type="Tag">
+        <result column="ID" property="tagNo" />
+        <result column="TAG_NAME" property="tagName" />
+    </resultMap>
+
     <!--  게시글의 태그 목록을 조회하는 SQL  -->
     <!--  TODO: 서브쿼리로 변경하기  -->
-    <select id="selectTagByArticleId" parameterType="int" resultType="Tag">
+    <select id="selectTagByArticleId" parameterType="int" resultMap="TagMapper">
         SELECT
             T.*
         FROM TB_ARTICLE_TAG AT

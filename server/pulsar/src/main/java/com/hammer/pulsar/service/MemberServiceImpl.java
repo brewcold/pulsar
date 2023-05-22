@@ -5,6 +5,7 @@ import com.hammer.pulsar.dto.article.ArticlePreview;
 import com.hammer.pulsar.dto.article.CommentedArticle;
 import com.hammer.pulsar.dto.common.ConcernUpdateRequest;
 import com.hammer.pulsar.dto.common.Tag;
+import com.hammer.pulsar.dto.interaction.Comment;
 import com.hammer.pulsar.dto.member.*;
 import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,18 +26,20 @@ public class MemberServiceImpl implements MemberService {
     private final LikeDao likeDao;
     private final CommentDao commentDao;
     private final ConcernTagDao concernTagDao;
+    private final ArticleTagDao articleTagDao;
 
     // 업로드한 파일 저장을 위한 서비스
     private final FileManagementService fileManagementService;
 
     @Autowired
     public MemberServiceImpl(MemberDao memberDao, ArticleDao articleDao, LikeDao likeDao, CommentDao commentDao,
-                             ConcernTagDao concernTagDao, FileManagementService fileManagementService) {
+                             ConcernTagDao concernTagDao, ArticleTagDao articleTagDao, FileManagementService fileManagementService) {
         this.memberDao = memberDao;
         this.articleDao = articleDao;
         this.likeDao = likeDao;
         this.commentDao = commentDao;
         this.concernTagDao = concernTagDao;
+        this.articleTagDao = articleTagDao;
         this.fileManagementService = fileManagementService;
     }
 
@@ -62,15 +65,16 @@ public class MemberServiceImpl implements MemberService {
         // 회원 테이블에 저장할 정보만 담기
         MemberRegistRequest memberRegistRequest = new MemberRegistRequest(form, profileImg);
         // 회원 테이블에 정보를 저장하기
-        int memberId = memberDao.insertMember(memberRegistRequest);
+        memberDao.insertMember(memberRegistRequest);
 
         // 고민 테이블에 저장할 정보만 담기
         // 고민 태그는 번호만 추출해서 Request 객체에 저장한다.
         ConcernUpdateRequest concernUpdateRequest =
-                new ConcernUpdateRequest(memberId, form.getSelectedTag().stream().
+                new ConcernUpdateRequest(memberRegistRequest.getMemberId(), form.getSelectedTag().stream().
                         map((Tag::getTagNo)).collect(Collectors.toList()));
+
         // 고민 테이블에 정보를 저장하기
-//        concernDao.insertConcernTags(concernUpdateRequest);
+        concernTagDao.insertConcernTags(concernUpdateRequest);
 
         return true;
     }
@@ -130,7 +134,9 @@ public class MemberServiceImpl implements MemberService {
         Member memberInfo = memberDao.selectMemberByMemberId(memberId);
 
         if(memberInfo == null) throw new NoSuchElementException("일치하는 회원이 없습니다.");
-        
+
+        memberInfo.setSelectedTag(concernTagDao.selectTagsByMemberId(memberId));
+
         return memberInfo;
     }
 
@@ -268,8 +274,15 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<ArticlePreview> getAllWritten(int memberId) {
-        return articleDao.selectArticleByMemberId(memberId);
-    }
+
+        List<ArticlePreview> previewList = articleDao.selectArticleByMemberId(memberId);
+
+        for(ArticlePreview preview : previewList) {
+            preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
+        }
+
+        return previewList;
+     }
 
     /**
      * 선택한 회원이 추천한 모든 게시글 목록을 조회하는 메서드
@@ -279,7 +292,15 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<ArticlePreview> getAllLiked(int memberId) {
-        return likeDao.selectLikedByMemberId(memberId);
+        List<Integer> likedList = likeDao.selectLikedByMemberId(memberId);
+
+        List<ArticlePreview> previewList = articleDao.selectArticlesByArticleId(likedList);
+
+        for(ArticlePreview preview : previewList) {
+            preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
+        }
+
+        return previewList;
     }
 
     /**
@@ -290,7 +311,28 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public List<CommentedArticle> getAllCommented(int memberId) {
-        return commentDao.selectCommentsByMemberId(memberId);
+        // 최종 조회 결과를 저장하기 위한 리스트
+        List<CommentedArticle> commentedList = new ArrayList<>();
+
+        // 댓글 목록을 가져오기
+        List<Comment> commentList = commentDao.selectCommentsByMemberId(memberId);
+
+        // 댓글들이 작성된 게시글의 미리보기 목록을 가져오기
+        List<ArticlePreview> previewList = articleDao.selectArticlesByArticleId(commentList.stream()
+                .map(Comment::getArticleNo)
+                .collect(Collectors.toList()));
+
+        // 게시글 미리보기에 선택된 태그를 연결하기
+        for(ArticlePreview preview : previewList) {
+            preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
+        }
+
+        // 일치하는 댓글과 게시글 짝 지어서 CommentedArticle의 리스트로 반환
+        for(int i = 0; i < commentList.size(); i++) {
+            commentedList.add(new CommentedArticle(previewList.get(i), commentList.get(i)));
+        }
+
+        return commentedList;
     }
 
 }

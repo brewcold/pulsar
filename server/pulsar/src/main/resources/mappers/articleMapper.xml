@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.ArticleDao">
 
+    <!--  게시글 미리보기 조회 쿼리 결과 매퍼  -->
+    <resultMap id="PreviewMapper" type="ArticlePreview">
+        <result column="ID" property="articleNo" />
+        <result column="NICKNAME" property="writerNickname" />
+        <result column="TITLE" property="title" />
+        <result column="REG_DATE" property="createdAt" />
+        <result column="VIEW_CNT" property="viewCnt" />
+        <result column="LIKE_CNT" property="recommendCnt" />
+    </resultMap>
+
     <!--  새로운 게시글을 추가하는 SQL  -->
     <insert id="insertArticle" parameterType="ArticleWriteRequest">
 
@@ -11,8 +21,12 @@
     <!--  페이지네이션, 검색 기능 추가 예정  -->
     <select id="selectArticles" resultType="ArticlePreview">
         SELECT
-            *
-        FROM TB_ARTICLE
+            A.*,
+            M.NICKNAME
+        FROM TB_ARTICLE A
+        INNER JOIN TB_MEMBER M
+        ON
+            A.WRITER_ID = M.ID
     </select>
 
     <!--  선택한 게시글을 상세 조회하는 SQL  -->
@@ -25,12 +39,32 @@
     </select>
 
     <!--  선택한 회원의 게시글 목록을 조회하는 SQL  -->
-    <select id="selectArticleByMemberId" parameterType="int" resultType="ArticlePreview">
+    <select id="selectArticleByMemberId" parameterType="int" resultMap="PreviewMapper">
         SELECT
-            *
-        FROM TB_ARTICLE
+            A.*,
+            M.NICKNAME
+        FROM TB_ARTICLE A
+        INNER JOIN TB_MEMBER M
+        ON
+            A.WRITER_ID = M.ID
         WHERE
             WRITER_ID = #{writerId}
+    </select>
+
+    <select id="selectArticlesByArticleId" parameterType="java.util.List" resultMap="PreviewMapper">
+        SELECT
+            A.*,
+            M.NICKNAME
+        FROM TB_ARTICLE A
+        INNER JOIN TB_MEMBER M
+        ON
+            A.WRITER_ID = M.ID
+        WHERE
+            A.ID IN
+            <foreach item="item" index="index" collection="list"
+                               open="(" separator="," close=")" nullable="true">
+                #{item}
+            </foreach>
     </select>
 
     <!--  선택한 게시글을 수정하는 SQL  -->

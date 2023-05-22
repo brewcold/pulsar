@@ -14,8 +14,8 @@ public interface LikeDao {
     // 회원이 선택한 게시글에 추천한 적있는지 조회하는 메서드
     public boolean selectLikeByMemberId(LikeRequest request);
 
-    // 회원이 추천한 게시글 미리보기 목록을 조회하는 메서드
-    public List<ArticlePreview> selectLikedByMemberId(int memberId);
+    // 회원이 추천한 게시글 번호 목록을 조회하는 메서드
+    public List<Integer> selectLikedByMemberId(int memberId);
 
     // 회원이 선택한 게시글에 추천을 추가하는 메서드
     public boolean insertLike(LikeRequest request);
