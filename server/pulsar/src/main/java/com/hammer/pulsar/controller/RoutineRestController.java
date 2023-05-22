@@ -63,9 +63,7 @@ public class RoutineRestController {
     // 루틴 작성 API
     @PostMapping("/routine")
     public ResponseEntity<Integer> addNewRoutine(RoutineRegistForm form, HttpServletRequest request) {
-        // 로그인 회원의 고유번호
-        // TODO: 회원번호를 가져온 것은 임시코드이므로 로그인 구현시 수정할 것
-        int memberId = (Integer) request.getSession().getAttribute("memberId");
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("AUTHORIZIATION")).getMemberNo();
 
         int routineNo = routineService.addNewRoutine(form, memberId);
 
