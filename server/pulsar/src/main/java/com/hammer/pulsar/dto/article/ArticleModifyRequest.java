@@ -2,6 +2,8 @@ package com.hammer.pulsar.dto.article;
 
 // 게시글 DB에 저장된 게시글 정보를 수정하기 위한 정보를 담은 DTO 클래스
 public class ArticleModifyRequest {
+    // 게시글 번호
+    private int articleId;
     // 게시글 제목
     private String title;
     // 게시글 내용
@@ -11,6 +13,14 @@ public class ArticleModifyRequest {
     public ArticleModifyRequest() {}
 
     // Getters, Setters
+    public int getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -31,6 +41,7 @@ public class ArticleModifyRequest {
     @Override
     public String toString() {
         return "ArticleModifyRequest{" +
+                "articleId='" + articleId + '\'' +
                 "title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';

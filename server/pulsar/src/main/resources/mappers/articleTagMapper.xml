@@ -25,7 +25,7 @@
     <insert id="insertArticleTags" parameterType="ArticleTagUpdateRequest">
         INSERT INTO TB_ARTICLE_TAG
         VALUES
-        <foreach item="articleTagsId" index="index" collection="list" separator="," nullable="true">
+        <foreach item="item" index="index" collection="articleTagsId" separator="," nullable="true">
             (#{articleId}, #{item})
         </foreach>
     </insert>
@@ -36,7 +36,7 @@
         WHERE
             ARTICLE_ID = #{articleId}
             AND
-            <foreach item="articleTagsId" index="index" collection="list"
+            <foreach item="item" index="index" collection="articleTagsId"
                      open="TAG_ID in (" separator="," close=")" nullable="true">
                 #{item}
             </foreach>
