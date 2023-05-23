@@ -75,7 +75,7 @@ public class RoutineRestController {
 
     // 루틴 수정 API
     @PutMapping("/routine/{routineId}")
-    public ResponseEntity<Void> modifyRoutineInfo(@PathVariable int routineId, RoutineModifyForm form, HttpServletRequest request) {
+    public ResponseEntity<Void> modifyRoutineInfo(@PathVariable int routineId, @RequestBody RoutineModifyForm form, HttpServletRequest request) {
         int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         form.setRoutineId(routineId);
