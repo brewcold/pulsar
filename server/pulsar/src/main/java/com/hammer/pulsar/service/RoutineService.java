@@ -22,7 +22,7 @@ public interface RoutineService {
     public Routine getRoutineDetail(int routineId, int memberId);
 
     // 선택한 루틴을 수정하는 로직
-    public void modifyRoutineInfo(RoutineModifyForm form);
+    public void modifyRoutineInfo(RoutineModifyForm form, int memberId);
 
     // 선택한 루틴을 삭제하는 로직
     public void removeRoutine(int routineId);

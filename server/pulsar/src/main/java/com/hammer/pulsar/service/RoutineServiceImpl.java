@@ -88,12 +88,16 @@ public class RoutineServiceImpl implements RoutineService {
 
     /**
      * 선택한 루틴 정보를 수정하는 메서드
+     * 만약 루틴의 작성자와 수정 요청한 memberId가 다르면 401 UNAUTHORIZED
      *
      * @param routine
      */
     @Override
-    public void modifyRoutineInfo(RoutineModifyForm form) {
-        
+    public void modifyRoutineInfo(RoutineModifyForm form, int memberId) {
+        if(routineDao.selectRoutineByRoutineId(form.getRoutineId()).getMemberNo() != memberId) {
+            throw new UnauthorizedException();
+        }
+
         routineDao.updateRoutine(new RoutineModifyRequest(form));
     }
 
