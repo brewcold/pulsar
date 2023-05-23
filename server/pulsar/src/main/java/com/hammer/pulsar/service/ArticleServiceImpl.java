@@ -38,6 +38,14 @@ public class ArticleServiceImpl implements ArticleService {
         // 작성자 정보를 Request에 담는다
         ArticleWriteRequest request = new ArticleWriteRequest();
 
+        System.out.println(form);
+
+        request.setRoutineId(form.getBody().getRoutine().getRoutineNo());
+        request.setTitle(form.getTitle());
+        request.setContent(form.getBody().getContent());
+        request.setWriterId(memberId);
+
+        System.out.println(request);
         // 게시글 테이블에 새로운 게시글을 추가한다.
         int articleId = articleDao.insertArticle(request);
 

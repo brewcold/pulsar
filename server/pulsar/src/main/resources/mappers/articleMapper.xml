@@ -27,7 +27,8 @@
 
     <!--  새로운 게시글을 추가하는 SQL  -->
     <insert id="insertArticle" parameterType="ArticleWriteRequest">
-
+        INSERT INTO TB_ARTICLE (TITLE, WRITER_ID, CONTENT, ROUTINE_ID)
+        VALUES (#{title}, #{writerId}, #{content}, #{routineId})
     </insert>
 
     <!--  게시글 목록을 조회하는 SQL  -->

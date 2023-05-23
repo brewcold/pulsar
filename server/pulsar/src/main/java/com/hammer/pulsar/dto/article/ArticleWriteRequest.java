@@ -7,7 +7,9 @@ public class ArticleWriteRequest {
     // 게시글 내용
     private String content;
     // 작성자 고유번호
-    private String writerId;
+    private int writerId;
+    // 추가한 루틴의 고유번호
+    private Integer routineId;
 
     // 기본 생성자
     public ArticleWriteRequest() {}
@@ -29,12 +31,20 @@ public class ArticleWriteRequest {
         this.content = content;
     }
 
-    public String getWriterId() {
+    public int getWriterId() {
         return writerId;
     }
 
-    public void setWriterId(String writerId) {
+    public void setWriterId(int writerId) {
         this.writerId = writerId;
+    }
+
+    public int getRoutineId() {
+        return routineId;
+    }
+
+    public void setRoutineId(Integer routineId) {
+        this.routineId = routineId;
     }
 
     // toString
@@ -44,6 +54,7 @@ public class ArticleWriteRequest {
                 "title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", writerId='" + writerId + '\'' +
+                ", routineId='" + routineId + '\'' +
                 '}';
     }
 

@@ -13,6 +13,7 @@ import com.hammer.pulsar.service.InteractionService;
 import com.hammer.pulsar.util.UUIDTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,8 +55,9 @@ public class CommunityRestController {
     }
 
     // 글 작성하기 API
-    @PostMapping()
-    public ResponseEntity<Integer> writeArticle(ArticleWriteForm form, MultipartFile[] imgFiles,
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Integer> writeArticle(@RequestPart(value = "form") ArticleWriteForm form,
+                                                @RequestPart(value = "imgs", required = false) MultipartFile[] imgFiles,
                                                 HttpServletRequest request) {
         // 작성자의 회원번호를 조회한다.
         int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
