@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.DayDao">
+
+    <!--  루틴의 요일정보를 추가하는 SQL  -->
+    <insert id="insertRoutineDay" parameterType="DayUpdateRequest">
+        INSERT INTO TB_DAY
+        VALUES (#{routineId}, #{mon}, #{tue}, #{wed}, #{thu}, #{fri}, #{sat}, #{sun})
+    </insert>
+
+    <!--  루틴의 요일정보를 조회하는 SQL  -->
+    <select id="selectRoutineDay" parameterType="int" resultType="list">
+        SELECT
+            MON,
+            TUE,
+            WED,
+            THU,
+            FRI,
+            SAT,
+            SUN
+        FROM TB_DAY
+        WHERE
+            ROUTINE_ID = #{routineId}
+    </select>
+
+    <!--  루틴의 요일정보를 수정하는 SQL  -->
+    <update id="updateRoutineDay" parameterType="DayUpdateRequest">
+        UPDATE TB_DAY
+        SET
+            MON = #{mon},
+            TUE = #{tue},
+            WED = #{wed},
+            THU = #{thu},
+            FRI = #{fri},
+            SAT = #{sat},
+            SUN = #{sun}
+        WHERE
+            ROUTINE_ID = #{routineId}
+    </update>
+
+</mapper>
