@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 // 커뮤니티 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
@@ -87,12 +88,12 @@ public class CommunityRestController {
     // 추천 수 가져오기 API
     @GetMapping("/{articleId}/active/like")
     public ResponseEntity<Like> showLikes(@PathVariable int articleId, HttpServletRequest request) {
-        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
-
         // 추천수를 가져오기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
-        likeRequest.setMemberId(memberId);
         likeRequest.setArticleId(articleId);
+
+        Optional.ofNullable(UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")))
+                .ifPresent(info -> likeRequest.setMemberId(info.getMemberNo()));
 
         // 해당 게시글의 추천수를 가져오기
         Like likes = interactionService.countAllLikes(likeRequest);

@@ -41,7 +41,7 @@ public class InteractionServiceImpl implements InteractionService {
         // 추천 여부 불러오기
         result.setLiked(likeDao.selectLikeByMemberId(request));
         // 총 추천수 불러오기
-        result.setLikes(likeDao.selectLikes(request.getArticleId()));
+        result.setLikes(articleDao.countLikes(request.getArticleId()));
 
         return result;
     }
@@ -62,7 +62,7 @@ public class InteractionServiceImpl implements InteractionService {
 
         // 추천 상태 토글하고 결과 반환
         result.setLiked(toggleStatus(request, liked));
-        result.setLikes(likeDao.selectLikes(request.getArticleId()));
+        result.setLikes(articleDao.countLikes(request.getArticleId()));
 
         return result;
     }

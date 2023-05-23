@@ -72,6 +72,16 @@
 
     </update>
 
+    <!--  게시글의 추천수를 조회하는 SQL  -->
+    <select id="countLikes" parameterType="int" resultType="int">
+        SELECT
+            LIKE_CNT
+        FROM
+            TB_ARTICLE
+        WHERE
+            ID = #{articleId}
+    </select>
+
     <!--  선택한 게시글의 추천수를 1 증가시키는 SQL  -->
     <update id="addLikes" parameterType="int">
         UPDATE TB_ARTICLE
