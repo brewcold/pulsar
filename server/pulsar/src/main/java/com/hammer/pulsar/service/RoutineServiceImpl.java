@@ -1,7 +1,6 @@
 package com.hammer.pulsar.service;
 
 import com.hammer.pulsar.dao.DayDao;
-import com.hammer.pulsar.dao.MemberDao;
 import com.hammer.pulsar.dao.RoutineDao;
 import com.hammer.pulsar.dao.RoutineDetailDao;
 import com.hammer.pulsar.dto.member.MemberProfile;
@@ -93,7 +92,7 @@ public class RoutineServiceImpl implements RoutineService {
         for(Routine routine : routines) {
             // 루틴의 운동 세부계획을 추가
             routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
-            // 루틴 일정정보를 알아보기 쉽게 변환
+            // 루틴 일정정보를 쉽게 변환
             routine.getTime().setRepeatUnit(convertRoutineUnit(routine.getTime().getRepeatUnit()));
             routine.getTime().setRepeatDay(convertRoutineDay(dayDao.selectRoutineDay(routine.getRoutineNo())));
         }
@@ -117,7 +116,7 @@ public class RoutineServiceImpl implements RoutineService {
 
         // 루틴의 운동 세부계획을 추가
         routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routineId));
-        // 루틴 일정정보를 알아보기 쉽게 변환
+        // 루틴 일정정보를 변환
         routine.getTime().setRepeatUnit(convertRoutineUnit(routine.getTime().getRepeatUnit()));
         routine.getTime().setRepeatDay(convertRoutineDay(dayDao.selectRoutineDay(routineId)));
 
@@ -137,7 +136,63 @@ public class RoutineServiceImpl implements RoutineService {
             throw new UnauthorizedException("권한이 없습니다.");
         }
 
+        // 루틴 내용 수정
         routineDao.updateRoutine(new RoutineModifyRequest(form));
+
+        // 루틴 요일정보 수정
+        DayUpdateRequest dayUpdateRequest = convertToDayUpdateRequest(form.getTime().getRepeatDay());
+        dayUpdateRequest.setRoutineId(form.getRoutineId());
+
+        dayDao.updateRoutineDay(dayUpdateRequest);
+
+        ExerciseRegistRequest request = new ExerciseRegistRequest();
+        request.setRoutineId(form.getRoutineId());
+        request.setExerciseList(form.getExerciseList());
+
+        // 루틴 세부 계획 수정
+        updateExerciseList(request);
+    }
+
+    // 루틴의 세부 계획을 교체하는 메서드
+    // TODO: equals, hashcode를 이용해서 변한 것만 수정하도록 바꿔보기
+    private void updateExerciseList(ExerciseRegistRequest request) {
+        routineDetailDao.deleteExercises(request.getRoutineId());
+        routineDetailDao.insertExercises(request);
+    }
+
+    // 클라이언트로부터 입력받은 요일 정보 배열을 쿼리에 필요한 형식으로 변환
+    private DayUpdateRequest convertToDayUpdateRequest(List<String> repeatDay) {
+        DayUpdateRequest request = new DayUpdateRequest();
+
+        for(String day : repeatDay) {
+            switch (day) {
+                case "mon":
+                    request.setMon(true);
+                    break;
+                case "tue":
+                    request.setTue(true);
+                    break;
+                case "wed":
+                    request.setWed(true);
+                    break;
+                case "thu":
+                    request.setThu(true);
+                    break;
+                case "fri":
+                    request.setFri(true);
+                    break;
+                case "sat":
+                    request.setSat(true);
+                    break;
+                case "sun":
+                    request.setSun(true);
+                    break;
+                default:
+                    throw new RuntimeException();
+            }
+        }
+
+        return request;
     }
 
     /**

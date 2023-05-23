@@ -39,7 +39,15 @@
 
     <!--  루틴 수정을 위한 SQL  -->
     <update id="updateRoutine" parameterType="RoutineModifyRequest">
-
+        UPDATE TB_ROUTINE
+        SET
+            TITLE = #{title},
+            REPEAT_UNIT = #{repeatUnit},
+            REPEAT_PERIOD = #{repeatPeriod},
+            START_HOUR = #{startHour},
+            START_MIN = #{startMin}
+        WHERE
+            ID = #{routineId}
     </update>
 
     <!--  루틴 삭제를 위한 SQL  -->
