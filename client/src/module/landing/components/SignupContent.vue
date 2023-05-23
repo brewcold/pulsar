@@ -2,7 +2,7 @@
   <div id="signup_content">
     <!-- 상위 컴포넌트에서 v-model은 하위 컴포넌트에서 emit해 바인딩할 수 있습니다.
          v-model이 하위 컴포넌트에서의 emit + 그 하위 컴포넌트로 pass prop인 것을 이용한 것입니다. -->
-    <h2>PULSAR의 멤버가 되세요!</h2>
+    <h1>PULSAR의 멤버가 되세요!</h1>
     <p id="caption">
       멤버로 가입하시면 모든 서비스를 이용하실 수 있습니다.
     </p>
@@ -29,12 +29,9 @@
         v-model="nickname"
       />
       <!--tag components-->
-      <text-input
-        :input-name="'selectedTag'"
-        :placeholder="'주된 관심사'"
-        :type="'text'"
-        :margin="'3rem'"
+      <tag-form
         v-model="selectedTag"
+        :caption="'운동을 하는 주된 이유가 무엇인가요? (최대 3개 선택)'"
       />
       <!-- <input type="file" @change="setFile" /> -->
       <square-button
@@ -45,7 +42,10 @@
       />
     </form>
     <router-link to="/">
-      <square-button :theme="'white'" :value="'이미 아이디가 있어요'" />
+      <square-button
+        :theme="'white'"
+        :value="'이미 멤버로 가입되어 있어요'"
+      />
     </router-link>
   </div>
 </template>
@@ -59,7 +59,7 @@
   padding: 1.5rem;
 }
 #caption {
-  margin: 1rem 0 2rem 0;
+  margin: 0 0 2rem 0;
 }
 #signup_content_signupBtn {
   margin-bottom: 1rem;
@@ -67,12 +67,13 @@
 </style>
 
 <script>
+import TagForm from '../../common/TagForm.vue';
 import SquareButton from '../../common/SquareButton.vue';
 import TextInput from '../../common/TextInput.vue';
 
 export default {
   name: 'SignupContent',
-  components: { TextInput, SquareButton },
+  components: { TextInput, SquareButton, TagForm },
   data() {
     return {
       //각 커스텀 인풋 컴포넌트에서 받은 입력값을 v-model로 양방향 바인딩합니다.

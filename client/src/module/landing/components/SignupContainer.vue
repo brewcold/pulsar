@@ -22,20 +22,14 @@ export default {
       postMemberSignUp(data)
         .then((res) => {
           if (res.status === 201) {
-            console.log('회원가입이 잘 되었어요');
+            console.log('성공적으로 멤버가 되었어요!');
             this.$router.push('/');
           }
         })
         .catch((err) => {
-          console.log('회원가입에 실패했어요');
+          console.log('회원가입에 실패했어요.');
         });
     },
   },
 };
 </script>
-
-<style scoped>
-@import url('../../../assets/css/init.css');
-@import url('../../../assets/css/root.css');
-@import url('../../../assets/css/typography.css');
-</style>
