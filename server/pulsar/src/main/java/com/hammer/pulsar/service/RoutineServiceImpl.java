@@ -16,14 +16,12 @@ import java.util.NoSuchElementException;
 // 실제 로직이 구현된 RoutineService 인터페이스의 구현체 클래스
 @Service
 public class RoutineServiceImpl implements RoutineService {
-    private final MemberDao memberDao;
     private final RoutineDao routineDao;
     private final RoutineDetailDao routineDetailDao;
     private final DayDao dayDao;
 
     @Autowired
-    public RoutineServiceImpl(MemberDao memberDao, RoutineDao routineDao, RoutineDetailDao routineDetailDao, DayDao dayDao) {
-        this.memberDao = memberDao;
+    public RoutineServiceImpl(RoutineDao routineDao, RoutineDetailDao routineDetailDao, DayDao dayDao) {
         this.routineDao = routineDao;
         this.routineDetailDao = routineDetailDao;
         this.dayDao = dayDao;
@@ -84,7 +82,8 @@ public class RoutineServiceImpl implements RoutineService {
     public Routine getRoutineDetail(int routineId, int memberId) {
         Routine routine = routineDao.selectRoutineByRoutineId(routineId);
 
-        if(routine.getMemberNo() != memberId) throw new UnauthorizedException();
+        if(routine == null) throw new NoSuchElementException("존재하지 않는 루틴입니다.");
+        if(routine.getMemberNo() != memberId) throw new UnauthorizedException("권한이 없습니다.");
 
         routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routineId));
         routine.getTime().setRepeatDay(dayDao.selectRoutineDay(routineId));
@@ -102,7 +101,7 @@ public class RoutineServiceImpl implements RoutineService {
     @Override
     public void modifyRoutineInfo(RoutineModifyForm form, int memberId) {
         if(routineDao.selectRoutineByRoutineId(form.getRoutineId()).getMemberNo() != memberId) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("권한이 없습니다.");
         }
 
         routineDao.updateRoutine(new RoutineModifyRequest(form));
@@ -117,7 +116,7 @@ public class RoutineServiceImpl implements RoutineService {
     @Override
     public void removeRoutine(int routineId, int memberId) {
         if(routineDao.selectRoutineByRoutineId(routineId).getMemberNo() != memberId) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("권한이 없습니다.");
         }
 
         if(routineDao.deleteRoutine(routineId) == 0) throw new NoSuchElementException("존재하지 않는 루틴입니다.");
