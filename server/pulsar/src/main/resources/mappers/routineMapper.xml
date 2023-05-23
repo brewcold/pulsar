@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.RoutineDao">
+
+    <!--  루틴 조회 쿼리 결과 매퍼  -->
     <resultMap id="RoutineMapper" type="Routine">
         <result column="ID" property="routineNo" />
+        <result column="MEMBER_ID" property="memberNo" />
         <result column="TITLE" property="routineTitle" />
         <result column="REPEAT_UNIT" property="time.repeatUnit" />
         <result column="REPEAT_PERIOD" property="time.repeatPeriod" />
@@ -13,7 +16,7 @@
     <!--  루틴 추가를 위한 SQL  -->
     <insert id="insertRoutine" parameterType="RoutineRegistRequest">
         INSERT INTO TB_ROUTINE (MEMBER_ID, TITLE, REPEAT_UNIT, REPEAT_PERIOD, START_HOUR, START_MIN)
-        VALUES (#{writeId}, #{title}, #{repeatUnit}, #{repeatPeriod}, #{startHour}, #{startMin})
+        VALUES (#{writerId}, #{title}, #{repeatUnit}, #{repeatPeriod}, #{startHour}, #{startMin})
     </insert>
 
     <!--  루틴 목록 조회를 위한 SQL  -->
@@ -32,11 +35,6 @@
         FROM TB_ROUTINE
         WHERE
             ID = #{routineId}
-    </select>
-
-    <!--  루틴 작성자 프로필 조회를 위한 SQL  -->
-    <select id="selectProfileByRoutineId" parameterType="int">
-
     </select>
 
     <!--  루틴 수정을 위한 SQL  -->

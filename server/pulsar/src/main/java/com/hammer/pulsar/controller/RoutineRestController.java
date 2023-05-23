@@ -54,8 +54,10 @@ public class RoutineRestController {
 
     // 루틴 상세보기 요청 API
     @GetMapping("/routine/{routineId}")
-    public ResponseEntity<Routine> showRoutine(@PathVariable int routineId) {
-        Routine routine = routineService.getRoutineDetail(routineId);
+    public ResponseEntity<Routine> showRoutine(@PathVariable int routineId, HttpServletRequest request) {
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
+        Routine routine = routineService.getRoutineDetail(routineId, memberId);
 
         return new ResponseEntity<>(routine, HttpStatus.OK);
     }
@@ -73,17 +75,21 @@ public class RoutineRestController {
 
     // 루틴 수정 API
     @PutMapping("/routine/{routineId}")
-    public ResponseEntity<Void> modifyRoutineInfo(@PathVariable int routineId, RoutineModifyForm form) {
+    public ResponseEntity<Void> modifyRoutineInfo(@PathVariable int routineId, RoutineModifyForm form, HttpServletRequest request) {
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
         form.setRoutineId(routineId);
-        routineService.modifyRoutineInfo(form);
+        routineService.modifyRoutineInfo(form, memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 루틴 삭제 API
     @DeleteMapping("/routine/{routineId}")
-    public ResponseEntity<Void> removeRoutine(@PathVariable int routineId) {
-        routineService.removeRoutine(routineId);
+    public ResponseEntity<Void> removeRoutine(@PathVariable int routineId, HttpServletRequest request) {
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
+        routineService.removeRoutine(routineId, memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

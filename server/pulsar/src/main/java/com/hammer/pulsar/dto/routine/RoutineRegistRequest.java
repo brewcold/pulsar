@@ -13,7 +13,7 @@ public class RoutineRegistRequest {
     // 루틴 반복 주기
     private int repeatPeriod;
     // 루틴 요일
-    private List<String> repeatDay;
+    private RoutineDay repeatDay;
     // 루틴 시작 시간
     private int startHour;
     // 루틴 시작 분
@@ -65,11 +65,11 @@ public class RoutineRegistRequest {
         this.repeatPeriod = repeatPeriod;
     }
 
-    public List<String> getRepeatDay() {
+    public RoutineDay getRepeatDay() {
         return repeatDay;
     }
 
-    public void setRepeatDay(List<String> repeatDay) {
+    public void setRepeatDay(RoutineDay repeatDay) {
         this.repeatDay = repeatDay;
     }
 

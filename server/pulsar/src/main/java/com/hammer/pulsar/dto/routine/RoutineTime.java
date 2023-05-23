@@ -1,7 +1,5 @@
 package com.hammer.pulsar.dto.routine;
 
-import java.util.List;
-
 // 루틴의 시간 정보를 저장하고 있는 DTO 클래스
 public class RoutineTime {
     // 시간 정보
@@ -10,7 +8,7 @@ public class RoutineTime {
     // 반복 단위 (day, week, month)
     private String repeatUnit;
     // 요일 (mon, tue, wed, thu, fri, sat, sun)
-    private List<String> repeatDay;
+    private RoutineDay repeatDay;
     // 시작 시간 : 시(24시), 분
     private int startHour;
     private int startMin;
@@ -35,11 +33,11 @@ public class RoutineTime {
         this.repeatUnit = repeatUnit;
     }
 
-    public List<String> getRepeatDay() {
+    public RoutineDay getRepeatDay() {
         return repeatDay;
     }
 
-    public void setRepeatDay(List<String> repeatDay) {
+    public void setRepeatDay(RoutineDay repeatDay) {
         this.repeatDay = repeatDay;
     }
 
