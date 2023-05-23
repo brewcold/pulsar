@@ -88,7 +88,13 @@
 
     <!--  선택한 게시글을 수정하는 SQL  -->
     <update id="updateArticle" parameterType="ArticleModifyRequest">
-
+        UPDATE TB_ARTICLE
+        SET
+            TITLE = #{title},
+            CONTENT = #{content},
+            MODIFY_DATE = NOW()
+        WHERE
+            ID = #{articleId}
     </update>
 
     <!--  게시글의 추천수를 조회하는 SQL  -->

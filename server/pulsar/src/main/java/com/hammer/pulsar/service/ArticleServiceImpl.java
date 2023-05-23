@@ -38,14 +38,11 @@ public class ArticleServiceImpl implements ArticleService {
         // 작성자 정보를 Request에 담는다
         ArticleWriteRequest request = new ArticleWriteRequest();
 
-        System.out.println(form);
-
         request.setRoutineId(form.getBody().getRoutine().getRoutineNo());
         request.setTitle(form.getTitle());
         request.setContent(form.getBody().getContent());
         request.setWriterId(memberId);
 
-        System.out.println(request);
         // 게시글 테이블에 새로운 게시글을 추가한다.
         int articleId = articleDao.insertArticle(request);
 
@@ -116,25 +113,21 @@ public class ArticleServiceImpl implements ArticleService {
         if(saved.getWriterInfo().getWriterNo() != memberId) throw new UnauthorizedException("권한이 없습니다.");
 
         // 기존의 값과 변경된 사항들을 저장한 ArticleModifyRequest를 생성한다.
-        ArticleModifyRequest request = selectModified(form, saved);
+        ArticleModifyRequest request = new ArticleModifyRequest();
+        request.setArticleId(form.getArticleId());
+        request.setTitle(form.getTitle());
+
+        request.setContent(form.getBody().getContent());
 
         // 테이블에 저장된 정보를 업데이트한다.
-        int articleId = articleDao.updateArticle(request);
+        articleDao.updateArticle(request);
 
         // 첨부된 이미지를 추가한다.
-        fileManagementService.uploadArticleImgs(appendedImgFiles, articleId);
+        fileManagementService.uploadArticleImgs(appendedImgFiles, form.getArticleId());
 
+        System.out.println("\n" + form.getTagList());
         // 태그 목록을 수정한다.
-        modifyTagList(form.getTagList(), saved.getArticleNo());
-    }
-    
-    private ArticleModifyRequest selectModified(ArticleModifyForm form, Article saved) {
-        ArticleModifyRequest modified = new ArticleModifyRequest();
-
-        String newTitle = form.getTitle();
-        String newContent = form.getBody().getContent();
-
-        return modified;
+        modifyTagList(form.getTagList(), form.getArticleId());
     }
 
     private void modifyTagList(List<Tag> newTags, int articleId) {
@@ -163,11 +156,18 @@ public class ArticleServiceImpl implements ArticleService {
             }
         }
 
+        System.out.println(appendedTags);
+        System.out.println(savedTagsId);
+
         // 새롭게 추가된 태그 목록들은 DB에 저장하기
-        articleTagDao.insertArticleTags(new ArticleTagUpdateRequest(articleId, appendedTags));
+        if(!appendedTags.isEmpty()) {
+            articleTagDao.insertArticleTags(new ArticleTagUpdateRequest(articleId, appendedTags));
+        }
 
         // Set에 남아있는 태그는 기존 태그 목록에만 존재하는 요소이므로 삭제하기
-        articleTagDao.deleteArticleTags(new ArticleTagUpdateRequest(articleId, new ArrayList<>(savedTagsId)));
+        if(!savedTagsId.isEmpty()) {
+            articleTagDao.deleteArticleTags(new ArticleTagUpdateRequest(articleId, new ArrayList<>(savedTagsId)));
+        }
     }
 
     /**

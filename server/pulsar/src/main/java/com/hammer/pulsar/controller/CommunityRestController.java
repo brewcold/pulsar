@@ -68,10 +68,13 @@ public class CommunityRestController {
     }
 
     // 글 수정하기 API
-    @PutMapping("/{articleId}")
-    public ResponseEntity<Void> modifyArticle(@PathVariable int articleId, ArticleModifyForm form,
-                                              MultipartFile[] imgFiles, HttpServletRequest request) {
+    @PutMapping(value = "/{articleId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<Void> modifyArticle(@PathVariable int articleId,
+                                              @RequestPart(value = "form") ArticleModifyForm form,
+                                              @RequestPart(value = "imgs", required = false) MultipartFile[] imgFiles,
+                                              HttpServletRequest request) {
         int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+        form.setArticleId(articleId);
 
         articleService.modifyArticle(form, imgFiles, memberId);
 

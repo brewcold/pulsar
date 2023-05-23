@@ -36,7 +36,7 @@
         WHERE
             ARTICLE_ID = #{articleId}
             AND
-            <foreach item="articleTagsId" index="index" collection="list"
+            <foreach item="item" index="index" collection="articleTagsId"
                      open="TAG_ID in (" separator="," close=")" nullable="true">
                 #{item}
             </foreach>
