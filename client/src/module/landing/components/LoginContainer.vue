@@ -40,9 +40,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-@import url('../../../assets/css/init.css');
-@import url('../../../assets/css/root.css');
-@import url('../../../assets/css/typography.css');
-</style>

@@ -7,7 +7,7 @@ import call from './axiosConfig';
  */
 export const getRoutines = (memberNo, token) =>
   call(`/routines/${memberNo}`, 'get', [], 'auth', token);
-
+// call(`/routines`, 'get', [], 'auth', token);
 /**
  * ### `routineNo`번 루틴의 상세 정보를 가져옵니다.
  * @param {number} routineNo

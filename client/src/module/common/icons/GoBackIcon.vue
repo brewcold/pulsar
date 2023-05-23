@@ -3,28 +3,26 @@
     <svg
       xmlns="http://www.w3.org/2000/svg"
       height="48"
-      viewBox="0 96 960 960"
+      viewBox="0 -960 960 960"
       width="48"
-      class="nav_item"
+      class="item"
     >
-      <path
-        d="M880 976 720 816H140q-23 0-41.5-18.5T80 756V236q0-23 18.5-41.5T140 176h680q24 0 42 18.5t18 41.5v740ZM140 236v520h605l75 75V236H140Zm0 0v595-595Z"
-      />
+      <path d="M655-80 255-480l400-400 56 57-343 343 343 343-56 57Z" />
     </svg>
   </div>
 </template>
 
 <style scoped>
-@import url('../../../../assets/css/init.css');
-@import url('../../../../assets/css/root.css');
-@import url('../../../../assets/css/typography.css');
-.nav_item {
+div {
+  display: inline;
+}
+.item {
   width: 1.5rem;
   height: 1.5rem;
-  fill: var(--active);
+  fill: var(--light-color-darkgrey);
   cursor: pointer;
 }
-.nav_item:hover {
+.item:hover {
   opacity: 0.75;
 }
 </style>

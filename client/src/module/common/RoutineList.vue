@@ -1,7 +1,7 @@
 <template>
   <div class="routine_list_item">
     <h3>
-      <router-link to="{ '/routines/'+ routineNo }">
+      <router-link :to="'/routines/' + routineNo">
         {{ routineTitle || '정보를 가져오는 데 실패했어요.' }}
       </router-link>
     </h3>
@@ -22,19 +22,28 @@
         }}
       </span>
     </p>
-    <ul class="routine_list_item_exerciseList">
-      <li
-        class="routine_list_item_exerciseList_item"
-        v-for="(
-          { exerciseName, count, duration } = exercise, idx
-        ) in exerciseList"
-        :key="idx"
-      >
-        {{ exerciseName ? exerciseName : ' --- ' }}
-        {{ count ? count + '회' : '' }}
-        {{ duration ? duration + '분' : '' }}
-      </li>
-    </ul>
+    <div v-if="exerciseList?.length">
+      <ul class="routine_list_item_exerciseList">
+        <li
+          class="routine_list_item_exerciseList_item"
+          v-for="(
+            { exerciseName, count, duration } = exercise, idx
+          ) in exerciseList"
+          :key="idx"
+        >
+          {{ exerciseName ? exerciseName : ' --- ' }}
+          {{ count ? count + '회' : '' }}
+          {{ duration ? duration + '분' : '' }}
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      <ul class="routine_list_item_exerciseList">
+        <li class="routine_list_item_exerciseList_item">
+          등록한 운동이 없어요.
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -89,15 +98,17 @@ export default {
   border: 1px solid var(--light-color-lightgrey);
   border-radius: 8px;
   padding: 1rem;
+  margin-bottom: 1rem;
 }
 h3 {
   color: var(--light-color-black);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-bottom: 0.5rem;
 }
 .routine_list_item_meta {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--light-color-darkgrey);
 }
 .routine_list_item_exerciseList {

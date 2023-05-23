@@ -18,7 +18,7 @@
 
 button {
   cursor: pointer;
-  padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+  padding: 0.33rem 0.75rem 0.33rem 0.75rem;
   background: var(--color);
   border: var(--border);
   color: var(--text-color);
@@ -40,7 +40,7 @@ export default {
     handleClick() {
       if (this.selectable === true)
         return this.$emit(
-          'tag-click',
+          'handle-click',
           this.tagNo,
           this.tagName,
           this.selected

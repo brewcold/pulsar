@@ -9,4 +9,7 @@ export default {
   getToken({ token }) {
     return token;
   },
+  getMemberNo({ memberNo }) {
+    return memberNo;
+  },
 };

@@ -5,19 +5,16 @@
       height="48"
       viewBox="0 96 960 960"
       width="48"
-      class="nav_item"
+      class="item"
     >
       <path
-        d="M880 976 720 816H140q-23 0-41.5-18.5T80 756V236q0-23 18.5-41.5T140 176h680q24 0 42 18.5t18 41.5v740ZM140 236v520h605l75 75V236H140Zm0 0v595-595Z"
+        d="m323 851 157-94 157 95-42-178 138-120-182-16-71-168-71 167-182 16 138 120-42 178Zm-90 125 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-355Z"
       />
     </svg>
   </div>
 </template>
 
 <style scoped>
-@import url('../../../../assets/css/init.css');
-@import url('../../../../assets/css/root.css');
-@import url('../../../../assets/css/typography.css');
 .nav_item {
   width: 1.5rem;
   height: 1.5rem;

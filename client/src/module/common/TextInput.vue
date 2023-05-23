@@ -68,7 +68,7 @@ input[type='password'] {
   border-radius: 6px;
   outline: none;
   font-size: 0.9rem;
-  width: calc(100% - 2rem);
+  width: calc(100% - 1.5rem);
 }
 
 input::placeholder {
