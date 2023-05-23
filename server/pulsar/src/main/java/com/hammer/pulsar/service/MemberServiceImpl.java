@@ -7,6 +7,7 @@ import com.hammer.pulsar.dto.common.ConcernUpdateRequest;
 import com.hammer.pulsar.dto.common.Tag;
 import com.hammer.pulsar.dto.interaction.Comment;
 import com.hammer.pulsar.dto.member.*;
+import com.hammer.pulsar.exception.DuplicateValueException;
 import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -165,13 +166,19 @@ public class MemberServiceImpl implements MemberService {
      * @param form
      */
     @Override
-    public String modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile) {
+    public MemberModifyResponse modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile) {
         // DB에 저장된 기존 회원정보를 조회한다.
         Member saved = memberDao.selectMemberByMemberId(form.getMemberId());
         // 기존의 값과 변경된 사항들을 저장한 MemberModifyRequest를 생성한다.
-        MemberModifyRequest request = selectModified(form, saved);
+        MemberModifyRequest request = new MemberModifyRequest();
 
-        if(request == null) return saved.getNickname();
+        if(!form.getNickname().equals(saved.getNickname()) && !isValidNickname(form.getNickname())) {
+            throw new DuplicateValueException("중복된 닉네임입니다.");
+        }
+
+        request.setMemberId(form.getMemberId());
+        request.setNickname(form.getNickname());
+        request.setPassword(form.getPassword());
 
         // 테이블에 저장된 정보를 요청사항에 맞게 수정한다.
         String profileImg = fileManagementService.uploadMemberProfileImg(imgFile);
@@ -183,37 +190,12 @@ public class MemberServiceImpl implements MemberService {
         // 태그 목록을 수정한다.
         modifyTagList(form.getSelectedTag(), saved.getMemberId());
 
-        // 수정 작업 후의 회원의 닉네임을 반환한다.
-        return request.getNickname() == null ?
-                saved.getNickname() :
-                request.getNickname();
-    }
+        // 수정 작업 후의 갱신되어야 하는 정보들을 반환한다.
+        MemberModifyResponse response = new MemberModifyResponse();
+        response.setNickname(request.getNickname());
+        response.setSelectedTag(form.getSelectedTag());
 
-    /**
-     * 사용자로부터 전달받은 값과 DB에 저장된 값들을 비교해 변경이 일어난 값들만 반환한다.
-     * 변경하려는 닉네임이 중복일 경우 null을 반환한다.
-     *
-     * @param form
-     * @param saved
-     * @return
-     */
-    private MemberModifyRequest selectModified(MemberModifyForm form, Member saved) {
-        MemberModifyRequest modified = new MemberModifyRequest();
-
-        String newPassword = form.getPassword();
-        String newNickname = form.getNickname();
-
-        // 비밀번호가 변경되었다면 변경된 비밀번호를 modified에 저장
-        if(!newPassword.equals(saved.getPassword())) modified.setPassword(newPassword);
-        // 닉네임이 변경되었다면 중복 검사 후 modified에 저장
-        if(!newNickname.equals(saved.getNickname())) {
-            // 중복된 닉네임이면 null 반환 -> 예외 던지도록 변경 필요할 듯
-            if(!isValidNickname(newNickname)) return null;
-
-            modified.setNickname(newNickname);
-        }
-
-        return modified;
+        return response;
     }
 
     /**
@@ -248,10 +230,14 @@ public class MemberServiceImpl implements MemberService {
         }
 
         // 새롭게 추가된 태그 목록들은 DB에 저장하기
-        concernTagDao.insertConcernTags(new ConcernUpdateRequest(memberId, appendedTags));
+        if(!appendedTags.isEmpty()) {
+            concernTagDao.insertConcernTags(new ConcernUpdateRequest(memberId, appendedTags));
+        }
 
         // Set에 남아있는 태그는 기존 태그 목록에만 존재하는 요소이므로 삭제하기
-        concernTagDao.deleteConcernTags(new ConcernUpdateRequest(memberId, new ArrayList<>(savedTagsId)));
+        if(!savedTagsId.isEmpty()) {
+            concernTagDao.deleteConcernTags(new ConcernUpdateRequest(memberId, new ArrayList<>(savedTagsId)));
+        }
     }
 
     /**

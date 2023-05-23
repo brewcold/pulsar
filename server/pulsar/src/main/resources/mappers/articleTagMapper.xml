@@ -8,6 +8,15 @@
         <result column="TAG_NAME" property="tagName" />
     </resultMap>
 
+    <!--  게시글에 태그를 추가하는 SQL  -->
+    <insert id="insertArticleTags" parameterType="ArticleTagUpdateRequest">
+        INSERT INTO TB_ARTICLE_TAG
+        VALUES
+        <foreach item="item" index="index" collection="articleTagsId" separator="," nullable="true">
+            (#{articleId}, #{item})
+        </foreach>
+    </insert>
+
     <!--  게시글의 태그 목록을 조회하는 SQL  -->
     <!--  TODO: 서브쿼리로 변경하기  -->
     <select id="selectTagByArticleId" parameterType="int" resultMap="TagMapper">
@@ -21,21 +30,12 @@
             AT.ARTICLE_ID = #{articleId}
     </select>
 
-    <!--  게시글에 태그를 추가하는 SQL  -->
-    <insert id="insertArticleTags" parameterType="ArticleTagUpdateRequest">
-        INSERT INTO TB_ARTICLE_TAG
-        VALUES
-        <foreach item="item" index="index" collection="articleTagsId" separator="," nullable="true">
-            (#{articleId}, #{item})
-        </foreach>
-    </insert>
-
     <!--  게시글에 태그를 삭제하는 SQL  -->
     <delete id="deleteArticleTags" parameterType="ArticleTagUpdateRequest">
         DELETE FROM TB_ARTICLE_TAG
         WHERE
             ARTICLE_ID = #{articleId}
-            AND
+        AND
             <foreach item="item" index="index" collection="articleTagsId"
                      open="TAG_ID in (" separator="," close=")" nullable="true">
                 #{item}
