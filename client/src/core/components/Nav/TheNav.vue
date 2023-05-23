@@ -52,19 +52,15 @@ export default {
   justify-content: center;
   position: fixed;
   bottom: 0;
-  border-top: 1px solid var(--light-color-lightgrey);
+  border-top: 1px solid var(--light-color-grey);
   width: 100%;
-  height: 4rem;
+  height: 3.5rem;
+  background: white;
 }
 #nav_list_container {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
-}
-.nav_item {
-  width: 2.5rem;
-  height: 2.5rem;
-  fill: white;
 }
 </style>
