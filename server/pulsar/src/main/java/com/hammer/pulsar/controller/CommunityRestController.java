@@ -137,7 +137,7 @@ public class CommunityRestController {
 
     // 댓글 쓰기 API
     @PostMapping("/{articleId}/active/comment")
-    public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, String content, HttpServletRequest request) {
+    public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, @RequestBody String content, HttpServletRequest request) {
         // 작성자의 회원번호를 조회한다.
         int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 

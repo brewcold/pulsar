@@ -14,7 +14,8 @@
 
     <!--  댓글을 추가하는 SQL  -->
     <insert id="insertComment" parameterType="CommentWriteRequest">
-
+        INSERT INTO TB_COMMENT (ARTICLE_ID, WRITER_ID, CONTENT)
+        VALUES (#{articleId}, #{writerId}, #{content})
     </insert>
 
     <!--  게시글의 모든 댓글을 조회하는 SQL  -->
