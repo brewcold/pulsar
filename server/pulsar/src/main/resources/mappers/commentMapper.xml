@@ -18,10 +18,15 @@
     </insert>
 
     <!--  게시글의 모든 댓글을 조회하는 SQL  -->
-    <select id="selectCommentsByArticleId" parameterType="int" resultType="Comment">
+    <select id="selectCommentsByArticleId" parameterType="int" resultMap="CommentMapper">
         SELECT
-            *
-        FROM TB_COMMENT
+            C.*,
+            M.NICKNAME,
+            M.SRC
+        FROM TB_COMMENT C
+        INNER JOIN TB_MEMBER M
+        ON
+            C.WRITER_ID = M.ID
         WHERE
             ARTICLE_ID = #{articleId}
     </select>

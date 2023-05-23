@@ -316,20 +316,24 @@ public class MemberServiceImpl implements MemberService {
 
         // 댓글 목록을 가져오기
         List<Comment> commentList = commentDao.selectCommentsByMemberId(memberId);
+        // 댓글을 작성했던 게시글을 저장하는 해시맵 <글번호, 글 미리보기>
+        Map<Integer, ArticlePreview> previewMap = new HashMap<>();
 
         // 댓글들이 작성된 게시글의 미리보기 목록을 가져오기
         List<ArticlePreview> previewList = articleDao.selectArticlesByArticleId(commentList.stream()
                 .map(Comment::getArticleNo)
+                .distinct()
                 .collect(Collectors.toList()));
 
-        // 게시글 미리보기에 선택된 태그를 연결하기
+        // 게시글 미리보기에 선택된 태그를 연결하고 게시글 해시맵에 저장
         for(ArticlePreview preview : previewList) {
             preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
+            previewMap.put(preview.getArticleNo(), preview);
         }
 
         // 일치하는 댓글과 게시글 짝 지어서 CommentedArticle의 리스트로 반환
-        for(int i = 0; i < commentList.size(); i++) {
-            commentedList.add(new CommentedArticle(previewList.get(i), commentList.get(i)));
+        for(Comment comment : commentList) {
+            commentedList.add(new CommentedArticle(previewMap.get(comment.getArticleNo()), comment));
         }
 
         return commentedList;
