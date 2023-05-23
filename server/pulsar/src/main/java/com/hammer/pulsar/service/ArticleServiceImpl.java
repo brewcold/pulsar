@@ -76,6 +76,13 @@ public class ArticleServiceImpl implements ArticleService {
 
         if(article == null) throw new NoSuchElementException("존재하지 않는 게시글입니다.");
 
+        // 조회수 증가
+        articleDao.updateViewCnt(articleId);
+        article.setViewCnt(article.getViewCnt() + 1);
+
+        // 태그 불러오기
+        article.setTagList(articleTagDao.selectTagByArticleId(articleId));
+
         return article;
     }
 
@@ -104,7 +111,7 @@ public class ArticleServiceImpl implements ArticleService {
         fileManagementService.uploadArticleImgs(appendedImgFiles, articleId);
 
         // 태그 목록을 수정한다.
-        modifyTagList(form.getTagList(), saved.getArticleId());
+        modifyTagList(form.getTagList(), saved.getArticleNo());
     }
     
     private ArticleModifyRequest selectModified(ArticleModifyForm form, Article saved) {
@@ -162,7 +169,7 @@ public class ArticleServiceImpl implements ArticleService {
         if(article.getWriterInfo().getWriterNo() != memberId) {
             throw new UnauthorizedException("권한이 없습니다.");
         }
-        
+
         articleDao.deleteArticle(articleId);
     }
 }
