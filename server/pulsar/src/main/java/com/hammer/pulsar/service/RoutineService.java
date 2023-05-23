@@ -25,6 +25,6 @@ public interface RoutineService {
     public void modifyRoutineInfo(RoutineModifyForm form, int memberId);
 
     // 선택한 루틴을 삭제하는 로직
-    public void removeRoutine(int routineId);
+    public void removeRoutine(int routineId, int memberId);
 
 }

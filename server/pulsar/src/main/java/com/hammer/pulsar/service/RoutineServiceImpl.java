@@ -103,11 +103,16 @@ public class RoutineServiceImpl implements RoutineService {
 
     /**
      * 선택한 루틴을 삭제하는 메서드
+     * 만약 루틴의 작성자와 삭제 요청한 memberId가 다르면 401 UNAUTHORIZED
      *
      * @param routineId
      */
     @Override
-    public void removeRoutine(int routineId) {
+    public void removeRoutine(int routineId, int memberId) {
+        if(routineDao.selectRoutineByRoutineId(routineId).getMemberNo() != memberId) {
+            throw new UnauthorizedException();
+        }
+
         if(routineDao.deleteRoutine(routineId) == 0) throw new NoSuchElementException("존재하지 않는 루틴입니다.");
     }
 

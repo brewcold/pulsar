@@ -86,8 +86,10 @@ public class RoutineRestController {
 
     // 루틴 삭제 API
     @DeleteMapping("/routine/{routineId}")
-    public ResponseEntity<Void> removeRoutine(@PathVariable int routineId) {
-        routineService.removeRoutine(routineId);
+    public ResponseEntity<Void> removeRoutine(@PathVariable int routineId, HttpServletRequest request) {
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
+        routineService.removeRoutine(routineId, memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
