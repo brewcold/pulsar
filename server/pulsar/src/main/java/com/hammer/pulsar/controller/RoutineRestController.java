@@ -54,8 +54,10 @@ public class RoutineRestController {
 
     // 루틴 상세보기 요청 API
     @GetMapping("/routine/{routineId}")
-    public ResponseEntity<Routine> showRoutine(@PathVariable int routineId) {
-        Routine routine = routineService.getRoutineDetail(routineId);
+    public ResponseEntity<Routine> showRoutine(@PathVariable int routineId, HttpServletRequest request) {
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
+        Routine routine = routineService.getRoutineDetail(routineId, memberId);
 
         return new ResponseEntity<>(routine, HttpStatus.OK);
     }
