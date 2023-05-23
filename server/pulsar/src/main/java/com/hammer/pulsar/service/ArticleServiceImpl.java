@@ -85,7 +85,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @param appendedImgFiles
      */
     @Override
-    public void modifyArticle(ArticleModifyForm form, MultipartFile[] appendedImgFiles) {
+    public void modifyArticle(ArticleModifyForm form, MultipartFile[] appendedImgFiles, int memberId) {
         //DB에 저장된 게시글 정보를 불러오기
         Article saved = articleDao.selectArticleByArticleId(form.getArticleId());
         // 기존의 값과 변경된 사항들을 저장한 ArticleModifyRequest를 생성한다.
@@ -149,7 +149,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @param articleId
      */
     @Override
-    public void removeArticle(int articleId) {
+    public void removeArticle(int articleId, int memberId) {
         articleDao.deleteArticle(articleId);
     }
 }
