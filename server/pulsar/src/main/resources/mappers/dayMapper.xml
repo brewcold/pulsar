@@ -9,7 +9,7 @@
     </insert>
 
     <!--  루틴의 요일정보를 조회하는 SQL  -->
-    <select id="selectRoutineDay" parameterType="int" resultType="list">
+    <select id="selectRoutineDay" parameterType="int" resultType="RoutineDay">
         SELECT
             MON,
             TUE,

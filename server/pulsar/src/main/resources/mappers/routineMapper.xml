@@ -5,6 +5,7 @@
     <!--  루틴 조회 쿼리 결과 매퍼  -->
     <resultMap id="RoutineMapper" type="Routine">
         <result column="ID" property="routineNo" />
+        <result column="MEMBER_ID" property="memberNo" />
         <result column="TITLE" property="routineTitle" />
         <result column="REPEAT_UNIT" property="time.repeatUnit" />
         <result column="REPEAT_PERIOD" property="time.repeatPeriod" />
@@ -15,7 +16,7 @@
     <!--  루틴 추가를 위한 SQL  -->
     <insert id="insertRoutine" parameterType="RoutineRegistRequest">
         INSERT INTO TB_ROUTINE (MEMBER_ID, TITLE, REPEAT_UNIT, REPEAT_PERIOD, START_HOUR, START_MIN)
-        VALUES (#{writeId}, #{title}, #{repeatUnit}, #{repeatPeriod}, #{startHour}, #{startMin})
+        VALUES (#{writerId}, #{title}, #{repeatUnit}, #{repeatPeriod}, #{startHour}, #{startMin})
     </insert>
 
     <!--  루틴 목록 조회를 위한 SQL  -->
