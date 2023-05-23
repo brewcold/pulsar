@@ -61,7 +61,13 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public List<ArticlePreview> getAllArticles() {
-        return articleDao.selectArticles();
+        List<ArticlePreview> previewList = articleDao.selectArticles();
+
+        for(ArticlePreview preview : previewList) {
+            preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));
+        }
+
+        return previewList;
     }
 
     /**

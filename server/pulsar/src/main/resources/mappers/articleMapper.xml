@@ -32,7 +32,7 @@
 
     <!--  게시글 목록을 조회하는 SQL  -->
     <!--  페이지네이션, 검색 기능 추가 예정  -->
-    <select id="selectArticles" resultType="ArticlePreview">
+    <select id="selectArticles" resultMap="PreviewMapper">
         SELECT
             A.*,
             M.NICKNAME
