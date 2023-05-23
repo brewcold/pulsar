@@ -3,7 +3,6 @@
   <div>
     <about-container />
     <div id="container">
-      <the-header />
       <router-view />
       <the-nav />
     </div>
@@ -11,13 +10,12 @@
 </template>
 
 <script>
-import TheHeader from '../Header/TheHeader.vue';
 import TheNav from '../Nav/TheNav.vue';
 import AboutContainer from '../About/AboutContainer.vue';
 
 export default {
   name: 'FullLayout',
-  components: { TheHeader, TheNav, AboutContainer },
+  components: { TheNav, AboutContainer },
 };
 </script>
 

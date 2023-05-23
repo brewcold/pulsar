@@ -19,8 +19,8 @@
 @import url('../../../../assets/css/root.css');
 @import url('../../../../assets/css/typography.css');
 .nav_item {
-  width: 1.7rem;
-  height: 1.7rem;
+  width: 1.5rem;
+  height: 1.5rem;
   fill: var(--active);
   cursor: pointer;
 }

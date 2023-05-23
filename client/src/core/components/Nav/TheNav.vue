@@ -52,9 +52,9 @@ export default {
   justify-content: center;
   position: fixed;
   bottom: 0;
-  border-top: 1px solid var(--light-color-grey);
+  border-top: 1px solid var(--light-color-lightgrey);
   width: 100%;
-  height: 3.5rem;
+  height: 3rem;
   background: white;
 }
 #nav_list_container {
