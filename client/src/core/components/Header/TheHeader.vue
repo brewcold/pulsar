@@ -3,24 +3,26 @@
 <template>
   <div id="header_container">
     <div id="profile" />
-    <button @click="logout">LOGOUT</button>
+    <round-button @handle-click="logout" :value="'Logout'" />
   </div>
 </template>
 
 <script>
-import { postMemberLogOut } from '@/api/member';
+import { postMemberLogOut } from '../../api/member';
+import RoundButton from '../../../module/common/RoundButton.vue';
 
 export default {
   name: 'TheHeader',
+  components: { RoundButton },
   methods: {
     // 테스트 로그아웃 코드
     logout() {
       try {
-        postMemberLogOut(this.$store.getters.getSessionId);
+        postMemberLogOut(this.$store.getters.getToken);
         this.$store.dispatch('logout');
-        console.log('로그아웃됨');
+        alert('성공적으로 로그아웃했어요.');
       } catch (err) {
-        return console.log(err);
+        return console.log('로그아웃에 실패했어요.');
       }
     },
   },
@@ -34,16 +36,16 @@ export default {
 
 #header_container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   position: sticky;
+  padding: 0 1rem 0 1rem;
   border-bottom: 1px solid var(--light-color-lightgrey);
   background: var(--light-color-white);
-  width: 100%;
+  width: calc(100% - 2rem);
   height: 3.5rem;
 }
 #profile {
-  margin-left: 1rem;
   border: 1px solid var(--light-color-darkgrey);
   border-radius: 2rem;
   width: 2rem;
