@@ -12,6 +12,19 @@
         <result column="LIKE_CNT" property="recommendCnt" />
     </resultMap>
 
+    <!--  게시글 상세보기 조회 쿼리 결과 매퍼  -->
+    <resultMap id="ArticleMapper" type="Article">
+        <result column="ID" property="articleNo" />
+        <result column="TITLE" property="title" />
+        <result column="WRITER_ID" property="writerInfo.writerNo" />
+        <result column="SRC" property="writerInfo.writerImg" />
+        <result column="NICKNAME" property="writerInfo.writerNickname" />
+        <result column="CONTENT" property="body.content" />
+        <result column="REG_DATE" property="createdAt" />
+        <result column="MODIFY_DATE" property="modifiedAt" />
+        <result column="VIEW_CNT" property="viewCnt" />
+    </resultMap>
+
     <!--  새로운 게시글을 추가하는 SQL  -->
     <insert id="insertArticle" parameterType="ArticleWriteRequest">
 
@@ -30,12 +43,17 @@
     </select>
 
     <!--  선택한 게시글을 상세 조회하는 SQL  -->
-    <select id="selectArticleByArticleId" parameterType="int" resultType="Article">
+    <select id="selectArticleByArticleId" parameterType="int" resultMap="ArticleMapper">
         SELECT
-            *
-        FROM TB_ARTICLE
+            A.*,
+            M.NICKNAME,
+            M.SRC
+        FROM TB_ARTICLE A
+        INNER JOIN TB_MEMBER M
+        ON
+            A.WRITER_ID = M.ID
         WHERE
-            ID = #{articleId}
+            A.ID = #{articleId}
     </select>
 
     <!--  선택한 회원의 게시글 목록을 조회하는 SQL  -->
@@ -71,6 +89,16 @@
     <update id="updateArticle" parameterType="ArticleModifyRequest">
 
     </update>
+
+    <!--  게시글의 추천수를 조회하는 SQL  -->
+    <select id="countLikes" parameterType="int" resultType="int">
+        SELECT
+            LIKE_CNT
+        FROM
+            TB_ARTICLE
+        WHERE
+            ID = #{articleId}
+    </select>
 
     <!--  선택한 게시글의 추천수를 1 증가시키는 SQL  -->
     <update id="addLikes" parameterType="int">

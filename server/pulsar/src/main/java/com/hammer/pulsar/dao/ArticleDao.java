@@ -24,7 +24,8 @@ public interface ArticleDao {
     // 선택한 회원의 게시글 목록을 조회하는 메서드
     public List<ArticlePreview> selectArticleByMemberId(int memberId);
 
-    // 검색 조건에 따라 게시글 목록을 조회하는 메서드
+    // 선택한 게시글의 추천수를 조회하는 메서드
+    public int countLikes(int articleId);
 
     // 선택한 게시글을 수정하는 메서드
     public int updateArticle(ArticleModifyRequest request);

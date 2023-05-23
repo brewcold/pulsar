@@ -9,7 +9,7 @@ import java.util.List;
 // DAO에서 받은 값들을 서비스 계층에서 조립하여 저장하는 객체
 public class Article {
     // 게시글 번호
-    private int articleId;
+    private int articleNo;
     // 게시글 제목
     private String title;
     // 작성자 정보
@@ -22,17 +22,19 @@ public class Article {
     private String createdAt;
     // 게시글 수정일
     private String modifiedAt;
+    // 게시글 조회수
+    private int viewCnt;
 
     // 기본 생성자
     public Article() {}
 
     // Getters, Setters
-    public int getArticleId() {
-        return articleId;
+    public int getArticleNo() {
+        return articleNo;
     }
 
-    public void setArticleId(int articleId) {
-        this.articleId = articleId;
+    public void setArticleNo(int articleNo) {
+        this.articleNo = articleNo;
     }
 
     public String getTitle() {
@@ -83,17 +85,26 @@ public class Article {
         this.modifiedAt = modifiedAt;
     }
 
+    public int getViewCnt() {
+        return viewCnt;
+    }
+
+    public void setViewCnt(int viewCnt) {
+        this.viewCnt = viewCnt;
+    }
+
     // toString
     @Override
     public String toString() {
         return "Article{" +
-                "articleId=" + articleId +
+                "articleNo=" + articleNo +
                 ", title='" + title + '\'' +
                 ", writerInfo=" + writerInfo +
                 ", body=" + body +
                 ", tagList=" + tagList +
                 ", createdAt='" + createdAt + '\'' +
                 ", modifiedAt='" + modifiedAt + '\'' +
+                ", viewCnt='" + viewCnt + '\'' +
                 '}';
     }
 

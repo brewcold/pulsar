@@ -21,9 +21,9 @@ public interface ArticleService {
     public Article getArticle(int articleId);
 
     // 선택한 게시글을 수정하는 로직
-    public void modifyArticle(ArticleModifyForm form, MultipartFile[] appendedImgFiles);
+    public void modifyArticle(ArticleModifyForm form, MultipartFile[] appendedImgFiles, int memberId);
 
     // 선택한 게시글을 삭제하는 로직
-    public void removeArticle(int articleId);
+    public void removeArticle(int articleId, int memberId);
 
 }

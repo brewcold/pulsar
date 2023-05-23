@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 // 커뮤니티 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
@@ -67,16 +68,20 @@ public class CommunityRestController {
     // 글 수정하기 API
     @PutMapping("/{articleId}")
     public ResponseEntity<Void> modifyArticle(@PathVariable int articleId, ArticleModifyForm form,
-                                              MultipartFile[] imgFiles) {
-        articleService.modifyArticle(form, imgFiles);
+                                              MultipartFile[] imgFiles, HttpServletRequest request) {
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
+        articleService.modifyArticle(form, imgFiles, memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     // 글 삭제하기 API
     @DeleteMapping("/{articleId}")
-    public ResponseEntity<Void> removeArticle(@PathVariable int articleId) {
-        articleService.removeArticle(articleId);
+    public ResponseEntity<Void> removeArticle(@PathVariable int articleId, HttpServletRequest request) {
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
+        articleService.removeArticle(articleId, memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -89,8 +94,10 @@ public class CommunityRestController {
 
         // 추천수를 가져오기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
-        likeRequest.setMemberId(memberId);
         likeRequest.setArticleId(articleId);
+
+        Optional.ofNullable(UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")))
+                .ifPresent(info -> likeRequest.setMemberId(info.getMemberNo()));
 
         // 해당 게시글의 추천수를 가져오기
         Like likes = interactionService.countAllLikes(likeRequest);
@@ -144,8 +151,10 @@ public class CommunityRestController {
 
     // 댓글 삭제 API
     @DeleteMapping("/{articleId}/active/comment/{commentId}")
-    public ResponseEntity<List<Comment>> removeComment(@PathVariable int articleId, @PathVariable int commentId) {
-        List<Comment> commentList = interactionService.removeComment(articleId, commentId);
+    public ResponseEntity<List<Comment>> removeComment(@PathVariable int articleId, @PathVariable int commentId, HttpServletRequest request) {
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
+        List<Comment> commentList = interactionService.removeComment(articleId, commentId, memberId);
 
         return new ResponseEntity<>(commentList, HttpStatus.OK);
     }

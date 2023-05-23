@@ -12,11 +12,6 @@
         <result column="LIKE_CNT" property="recommendCnt" />
     </resultMap>
 
-    <!--  게시글의 추천수를 조회하는 SQL  -->
-    <select id="selectLikes" parameterType="int" resultType="int">
-
-    </select>
-
     <!--  회원의 게시글 추천 여부를 조회하는 SQL  -->
     <select id="selectLikeByMemberId" parameterType="LikeRequest" resultType="boolean">
         SELECT EXISTS(
@@ -25,7 +20,7 @@
             FROM TB_LIKE
             WHERE
                 ARTICLE_ID = #{articleId}
-                MEMBER_ID = #{memberId}
+            AND MEMBER_ID = #{memberId}
         )
     </select>
 
