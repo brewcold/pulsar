@@ -1,5 +1,6 @@
 package com.hammer.pulsar.dto.routine;
 
+// 루틴의 요일정보 추가, 수정을 위한 DTO 클래스
 public class DayUpdateRequest {
     private int routineId;
     private boolean mon;
@@ -92,5 +93,5 @@ public class DayUpdateRequest {
                 ", sun=" + sun +
                 '}';
     }
-    
+
 }
