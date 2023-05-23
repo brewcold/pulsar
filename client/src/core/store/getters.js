@@ -6,7 +6,7 @@ export default {
   getLoginUser(state) {
     return state;
   },
-  getSessionId({ sessionId }) {
-    return sessionId;
+  getToken({ token }) {
+    return token;
   },
 };
