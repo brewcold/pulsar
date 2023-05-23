@@ -1,5 +1,6 @@
 package com.hammer.pulsar.service;
 
+import com.hammer.pulsar.dao.DayDao;
 import com.hammer.pulsar.dao.MemberDao;
 import com.hammer.pulsar.dao.RoutineDao;
 import com.hammer.pulsar.dao.RoutineDetailDao;
@@ -18,12 +19,14 @@ public class RoutineServiceImpl implements RoutineService {
     private final MemberDao memberDao;
     private final RoutineDao routineDao;
     private final RoutineDetailDao routineDetailDao;
+    private final DayDao dayDao;
 
     @Autowired
-    public RoutineServiceImpl(MemberDao memberDao, RoutineDao routineDao, RoutineDetailDao routineDetailDao) {
+    public RoutineServiceImpl(MemberDao memberDao, RoutineDao routineDao, RoutineDetailDao routineDetailDao, DayDao dayDao) {
         this.memberDao = memberDao;
         this.routineDao = routineDao;
         this.routineDetailDao = routineDetailDao;
+        this.dayDao = dayDao;
     }
 
     /**
@@ -61,8 +64,10 @@ public class RoutineServiceImpl implements RoutineService {
     public List<Routine> getAllRoutines(int memberId) {
         List<Routine> routines = routineDao.selectRoutinesByMemberId(memberId);
 
+        // 불러온 각 루틴마다 운동목록과 루틴요일을 추가하기
         for(Routine routine : routines) {
             routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
+            routine.getTime().setRepeatDay(dayDao.selectRoutineDay(routine.getRoutineNo()));
         }
 
         return routines;
@@ -81,7 +86,8 @@ public class RoutineServiceImpl implements RoutineService {
 
         if(routine.getMemberNo() != memberId) throw new UnauthorizedException();
 
-        routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
+        routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routineId));
+        routine.getTime().setRepeatDay(dayDao.selectRoutineDay(routineId));
 
         return routine;
     }
@@ -90,7 +96,8 @@ public class RoutineServiceImpl implements RoutineService {
      * 선택한 루틴 정보를 수정하는 메서드
      * 만약 루틴의 작성자와 수정 요청한 memberId가 다르면 401 UNAUTHORIZED
      *
-     * @param routine
+     * @param form
+     * @param memberId
      */
     @Override
     public void modifyRoutineInfo(RoutineModifyForm form, int memberId) {
