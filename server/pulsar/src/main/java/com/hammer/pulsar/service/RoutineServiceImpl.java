@@ -1,28 +1,31 @@
 package com.hammer.pulsar.service;
 
+import com.hammer.pulsar.dao.DayDao;
 import com.hammer.pulsar.dao.MemberDao;
 import com.hammer.pulsar.dao.RoutineDao;
 import com.hammer.pulsar.dao.RoutineDetailDao;
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.routine.*;
+import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 // 실제 로직이 구현된 RoutineService 인터페이스의 구현체 클래스
 @Service
 public class RoutineServiceImpl implements RoutineService {
-    private final MemberDao memberDao;
     private final RoutineDao routineDao;
     private final RoutineDetailDao routineDetailDao;
+    private final DayDao dayDao;
 
     @Autowired
-    public RoutineServiceImpl(MemberDao memberDao, RoutineDao routineDao, RoutineDetailDao routineDetailDao) {
-        this.memberDao = memberDao;
+    public RoutineServiceImpl(RoutineDao routineDao, RoutineDetailDao routineDetailDao, DayDao dayDao) {
         this.routineDao = routineDao;
         this.routineDetailDao = routineDetailDao;
+        this.dayDao = dayDao;
     }
 
     /**
@@ -50,6 +53,32 @@ public class RoutineServiceImpl implements RoutineService {
         return routineDao.insertRoutine(request);
     }
 
+    // ("day", "week", "month") -> ("일", "주", "월") 변환하는 메서드
+    private String convertRoutineUnit(String repeatUnit) {
+        if(repeatUnit.equals("day")) {
+            return "일";
+        } else if(repeatUnit.equals("week")) {
+            return "주";
+        } else {
+            return "월";
+        }
+    }
+
+    // 값이 true인 요일을 문자열 리스트에 담아서 반환
+    private List<String> convertRoutineDay(RoutineDay routineDay) {
+        List<String> converted = new ArrayList<>();
+
+        if(routineDay.isSun()) converted.add("일");
+        if(routineDay.isMon()) converted.add("월");
+        if(routineDay.isTue()) converted.add("화");
+        if(routineDay.isWed()) converted.add("수");
+        if(routineDay.isThu()) converted.add("목");
+        if(routineDay.isFri()) converted.add("금");
+        if(routineDay.isSat()) converted.add("토");
+
+        return converted;
+    }
+
     /**
      * 회원의 모든 루틴 목록을 조회하는 메서드
      *
@@ -60,8 +89,13 @@ public class RoutineServiceImpl implements RoutineService {
     public List<Routine> getAllRoutines(int memberId) {
         List<Routine> routines = routineDao.selectRoutinesByMemberId(memberId);
 
+        // 불러온 각 루틴마다 운동목록과 루틴요일을 추가하기
         for(Routine routine : routines) {
+            // 루틴의 운동 세부계획을 추가
             routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
+            // 루틴 일정정보를 알아보기 쉽게 변환
+            routine.getTime().setRepeatUnit(convertRoutineUnit(routine.getTime().getRepeatUnit()));
+            routine.getTime().setRepeatDay(convertRoutineDay(dayDao.selectRoutineDay(routine.getRoutineNo())));
         }
 
         return routines;
@@ -69,36 +103,55 @@ public class RoutineServiceImpl implements RoutineService {
 
     /**
      * 선택한 루틴의 상세 정보를 조회하는 메서드
+     * 만약 루틴의 작성자와 조회 요청한 memberId가 다르면 401 UNAUTHORIZED
      *
      * @param routineId
      * @return
      */
     @Override
-    public Routine getRoutineDetail(int routineId) {
+    public Routine getRoutineDetail(int routineId, int memberId) {
         Routine routine = routineDao.selectRoutineByRoutineId(routineId);
-        routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
+
+        if(routine == null) throw new NoSuchElementException("존재하지 않는 루틴입니다.");
+        if(routine.getMemberNo() != memberId) throw new UnauthorizedException("권한이 없습니다.");
+
+        // 루틴의 운동 세부계획을 추가
+        routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routineId));
+        // 루틴 일정정보를 알아보기 쉽게 변환
+        routine.getTime().setRepeatUnit(convertRoutineUnit(routine.getTime().getRepeatUnit()));
+        routine.getTime().setRepeatDay(convertRoutineDay(dayDao.selectRoutineDay(routineId)));
 
         return routine;
     }
 
     /**
      * 선택한 루틴 정보를 수정하는 메서드
+     * 만약 루틴의 작성자와 수정 요청한 memberId가 다르면 401 UNAUTHORIZED
      *
-     * @param routine
+     * @param form
+     * @param memberId
      */
     @Override
-    public void modifyRoutineInfo(RoutineModifyForm form) {
-        
+    public void modifyRoutineInfo(RoutineModifyForm form, int memberId) {
+        if(routineDao.selectRoutineByRoutineId(form.getRoutineId()).getMemberNo() != memberId) {
+            throw new UnauthorizedException("권한이 없습니다.");
+        }
+
         routineDao.updateRoutine(new RoutineModifyRequest(form));
     }
 
     /**
      * 선택한 루틴을 삭제하는 메서드
+     * 만약 루틴의 작성자와 삭제 요청한 memberId가 다르면 401 UNAUTHORIZED
      *
      * @param routineId
      */
     @Override
-    public void removeRoutine(int routineId) {
+    public void removeRoutine(int routineId, int memberId) {
+        if(routineDao.selectRoutineByRoutineId(routineId).getMemberNo() != memberId) {
+            throw new UnauthorizedException("권한이 없습니다.");
+        }
+
         if(routineDao.deleteRoutine(routineId) == 0) throw new NoSuchElementException("존재하지 않는 루틴입니다.");
     }
 

@@ -5,6 +5,8 @@ import java.util.List;
 // 루틴 정보를 담고 있는 DTO 클래스
 // 루틴 API에서 주고받을 정보
 public class Routine {
+    // 루틴 작성자 번호
+    private int memberNo;
     // 루틴 번호
     private int routineNo;
     // 루틴 이름
@@ -18,6 +20,14 @@ public class Routine {
     public Routine() {}
 
     // Getters, Setters
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
     public int getRoutineNo() {
         return routineNo;
     }
@@ -54,8 +64,9 @@ public class Routine {
     @Override
     public String toString() {
         return "Routine{" +
-                "routineNo=" + routineNo +
-                ", routineTitle=" + routineTitle +
+                "memberNo=" + memberNo +
+                ", routineNo=" + routineNo +
+                ", routineTitle='" + routineTitle + '\'' +
                 ", time=" + time +
                 ", exerciseList=" + exerciseList +
                 '}';

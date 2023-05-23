@@ -25,11 +25,11 @@ const IMG = {
 };
 //AUTH가 필요한 요청입니다. JWT를 쓸 때 authorization 헤더에,
 //BEARER authentification을 적용하기 위한 자리입니다.
-const AUTH = (sessionId) => {
+const AUTH = (token) => {
   return {
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: `${sessionId}`,
+      Authorization: `${token}`,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
       // Authorization: '',
@@ -37,11 +37,11 @@ const AUTH = (sessionId) => {
     baseURL: root,
   };
 };
-const AUTH_IMG = (sessionId) => {
+const AUTH_IMG = (token) => {
   return {
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `${sessionId}`,
+      Authorization: `${token}`,
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
     },
@@ -66,13 +66,13 @@ const call = async (
   method = 'get',
   data,
   authType = 'normal',
-  sessionId
+  token
 ) => {
   //bearer auth가 필요하면 authType에 문자열 'auth'를 입력하면 됩니다.
   let instance;
-  if (authType === 'auth') instance = axios.create(AUTH(sessionId));
+  if (authType === 'auth') instance = axios.create(AUTH(token));
   else if (authType === 'auth_img')
-    instance = axios.create(AUTH_IMG(sessionId));
+    instance = axios.create(AUTH_IMG(token));
   else if (authType === 'normal_img') instance = axios.create(IMG);
   else instance = axios.create(NORMAL);
 

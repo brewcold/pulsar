@@ -21,7 +21,7 @@ export const getArticleDetail = (articleNo) =>
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
 export const postArticle = (data) =>
-  call(`/community`, 'post', data, 'auth_img', sessionId); //글 수정하기
+  call(`/community`, 'post', data, 'auth_img', token); //글 수정하기
 
 /**
  * ### `articleNo`번 글을 수정합니다.
@@ -30,7 +30,7 @@ export const postArticle = (data) =>
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
 export const putArticle = (articleNo, data) =>
-  call(`/community/${articleNo}`, 'put', data, 'auth_img', sessionId); //글 수정하기
+  call(`/community/${articleNo}`, 'put', data, 'auth_img', token); //글 수정하기
 
 /**
  * ### `articleNo`번 글을 삭제합니다.
@@ -38,7 +38,7 @@ export const putArticle = (articleNo, data) =>
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
 export const deleteArticle = (articleNo) =>
-  call(`/community/${articleNo}`, 'delete', [], 'auth', sessionId); //글 삭제하기
+  call(`/community/${articleNo}`, 'delete', [], 'auth', token); //글 삭제하기
 
 /**
  * ### `articleNo`번 글의 좋아요 여부 및 개수를 확인합니다.
@@ -59,7 +59,7 @@ export const postArticleLike = (articleNo) => {
     'post',
     [],
     'auth',
-    sessionId
+    token
   );
 };
 
@@ -74,7 +74,7 @@ export const getArticleComment = (articleNo) =>
     'get',
     [],
     'auth',
-    sessionId
+    token
   ); //글 상세보기 - active data - 댓글 가져오기
 
 /**
@@ -83,13 +83,13 @@ export const getArticleComment = (articleNo) =>
  * @param {Object} data
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const postArticleComment = (articleNo, data, sessionId) =>
+export const postArticleComment = (articleNo, data, token) =>
   call(
     `/community/${articleNo}/active/comment`,
     'post',
     data,
     'auth',
-    sessionId
+    token
   );
 
 /**
@@ -98,11 +98,11 @@ export const postArticleComment = (articleNo, data, sessionId) =>
  * @param {number} commentNo
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const deleteArticleComment = (articleNo, commentNo, sessionId) =>
+export const deleteArticleComment = (articleNo, commentNo, token) =>
   call(
     `/community/${articleNo}/active/comment/${commentNo}`,
     'delete',
     [],
     'auth',
-    sessionId
+    token
   );

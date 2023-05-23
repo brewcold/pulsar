@@ -19,12 +19,12 @@ public interface RoutineService {
     public List<Routine> getAllRoutines(int memberId);
 
     // 선택한 루틴을 상세조회 하는 로직
-    public Routine getRoutineDetail(int routineId);
+    public Routine getRoutineDetail(int routineId, int memberId);
 
     // 선택한 루틴을 수정하는 로직
-    public void modifyRoutineInfo(RoutineModifyForm form);
+    public void modifyRoutineInfo(RoutineModifyForm form, int memberId);
 
     // 선택한 루틴을 삭제하는 로직
-    public void removeRoutine(int routineId);
+    public void removeRoutine(int routineId, int memberId);
 
 }

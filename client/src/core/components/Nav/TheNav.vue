@@ -3,17 +3,41 @@
 <template>
   <nav id="nav_container">
     <div id="nav_list_container">
-      <router-link to="/"> LINK </router-link>
-      <router-link to="/"> LINK </router-link>
-      <router-link to="/"> LINK </router-link>
-      <router-link to="/"> LINK </router-link>
+      <router-link to="/statistics">
+        <statistics-icon :route="route" />
+      </router-link>
+      <router-link to="/routines">
+        <routines-icon :route="route" />
+      </router-link>
+      <router-link to="/community">
+        <community-icon :route="route" />
+      </router-link>
+      <router-link to="/mypage">
+        <mypage-icon :route="route" />
+      </router-link>
     </div>
   </nav>
 </template>
 
 <script>
+import StatisticsIcon from './icons/StatisticsIcon.vue';
+import RoutinesIcon from './icons/RoutinesIcon.vue';
+import CommunityIcon from './icons/CommunityIcon.vue';
+import MypageIcon from './icons/MypageIcon.vue';
+
 export default {
   name: 'TheHeader',
+  components: {
+    StatisticsIcon,
+    RoutinesIcon,
+    CommunityIcon,
+    MypageIcon,
+  },
+  data() {
+    return {
+      route: this.$route.path,
+    };
+  },
 };
 </script>
 
@@ -36,5 +60,11 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+}
+.nav_item {
+  width: 2.5rem;
+  height: 2.5rem;
+  fill: white;
 }
 </style>

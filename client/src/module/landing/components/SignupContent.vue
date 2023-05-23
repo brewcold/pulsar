@@ -36,7 +36,7 @@
         :margin="'3rem'"
         v-model="selectedTag"
       />
-      <input type="file" @change="setFile" />
+      <!-- <input type="file" @change="setFile" /> -->
       <square-button
         :theme="'highlight'"
         :value="'SIGN UP'"
@@ -105,10 +105,10 @@ export default {
       this.selectedTag = [];
       this.profileImg = null;
     },
-    setFile(e) {
-      const file = e.target.files[0];
-      this.profileImg = file;
-    },
+    // setFile(e) {
+    //   const file = e.target.files[0];
+    //   this.profileImg = file;
+    // },
   },
 };
 </script>

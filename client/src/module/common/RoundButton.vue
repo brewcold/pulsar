@@ -53,6 +53,7 @@ button {
   cursor: pointer;
   background-color: var(--color);
   padding: 0.5rem 0.75rem 0.5rem 0.75rem;
+  height: 1.25rem;
   border: var(--border);
   border-radius: 1.5rem;
   color: var(--text);

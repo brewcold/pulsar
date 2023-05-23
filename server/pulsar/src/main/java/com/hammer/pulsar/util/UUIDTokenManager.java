@@ -34,4 +34,11 @@ public class UUIDTokenManager {
         loginInfoMap.remove(authToken);
     }
 
+    // memberId와 토큰 정보가 일치하는지 반환하는 메서드
+    public static boolean checkAuth(String authToken, int memberId) {
+        LoginInfo info = UUIDTokenManager.getLoginUserInfo(authToken);
+
+        return info.getMemberNo() == memberId;
+    }
+
 }

@@ -57,6 +57,7 @@ public class CommunityRestController {
     @PostMapping()
     public ResponseEntity<Integer> writeArticle(ArticleWriteForm form, MultipartFile[] imgFiles,
                                                 HttpServletRequest request) {
+        // 작성자의 회원번호를 조회한다.
         int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         int articleNo = articleService.writeArticle(form, imgFiles, memberId);
@@ -88,6 +89,9 @@ public class CommunityRestController {
     // 추천 수 가져오기 API
     @GetMapping("/{articleId}/active/like")
     public ResponseEntity<Like> showLikes(@PathVariable int articleId, HttpServletRequest request) {
+        // 작성자의 회원번호를 조회한다.
+        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+
         // 추천수를 가져오기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
         likeRequest.setArticleId(articleId);
@@ -104,6 +108,7 @@ public class CommunityRestController {
     // 추천하기 API
     @PostMapping("/{articleId}/active/like")
     public ResponseEntity<Like> toggleLIkeStatus(@PathVariable int articleId, HttpServletRequest request) {
+        // 작성자의 회원번호를 조회한다.
         int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         // 추천하기 위해 필요한 정보를 담기
@@ -128,6 +133,7 @@ public class CommunityRestController {
     // 댓글 쓰기 API
     @PostMapping("/{articleId}/active/comment")
     public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, String content, HttpServletRequest request) {
+        // 작성자의 회원번호를 조회한다.
         int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
 
         // 댓글 작성에 필요한 데이터를 DTO에 담기
