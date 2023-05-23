@@ -125,7 +125,6 @@ public class ArticleServiceImpl implements ArticleService {
         // 첨부된 이미지를 추가한다.
         fileManagementService.uploadArticleImgs(appendedImgFiles, form.getArticleId());
 
-        System.out.println("\n" + form.getTagList());
         // 태그 목록을 수정한다.
         modifyTagList(form.getTagList(), form.getArticleId());
     }
@@ -155,9 +154,6 @@ public class ArticleServiceImpl implements ArticleService {
                 appendedTags.add(tag.getTagNo());
             }
         }
-
-        System.out.println(appendedTags);
-        System.out.println(savedTagsId);
 
         // 새롭게 추가된 태그 목록들은 DB에 저장하기
         if(!appendedTags.isEmpty()) {
