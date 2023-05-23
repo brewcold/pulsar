@@ -10,6 +10,7 @@ import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -52,6 +53,32 @@ public class RoutineServiceImpl implements RoutineService {
         return routineDao.insertRoutine(request);
     }
 
+    // ("day", "week", "month") -> ("일", "주", "월") 변환하는 메서드
+    private String convertRoutineUnit(String repeatUnit) {
+        if(repeatUnit.equals("day")) {
+            return "일";
+        } else if(repeatUnit.equals("week")) {
+            return "주";
+        } else {
+            return "월";
+        }
+    }
+
+    // 값이 true인 요일을 문자열 리스트에 담아서 반환
+    private List<String> convertRoutineDay(RoutineDay routineDay) {
+        List<String> converted = new ArrayList<>();
+
+        if(routineDay.isSun()) converted.add("일");
+        if(routineDay.isMon()) converted.add("월");
+        if(routineDay.isTue()) converted.add("화");
+        if(routineDay.isWed()) converted.add("수");
+        if(routineDay.isThu()) converted.add("목");
+        if(routineDay.isFri()) converted.add("금");
+        if(routineDay.isSat()) converted.add("토");
+
+        return converted;
+    }
+
     /**
      * 회원의 모든 루틴 목록을 조회하는 메서드
      *
@@ -64,8 +91,11 @@ public class RoutineServiceImpl implements RoutineService {
 
         // 불러온 각 루틴마다 운동목록과 루틴요일을 추가하기
         for(Routine routine : routines) {
+            // 루틴의 운동 세부계획을 추가
             routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
-            routine.getTime().setRepeatDay(dayDao.selectRoutineDay(routine.getRoutineNo()));
+            // 루틴 일정정보를 알아보기 쉽게 변환
+            routine.getTime().setRepeatUnit(convertRoutineUnit(routine.getTime().getRepeatUnit()));
+            routine.getTime().setRepeatDay(convertRoutineDay(dayDao.selectRoutineDay(routine.getRoutineNo())));
         }
 
         return routines;
@@ -85,8 +115,11 @@ public class RoutineServiceImpl implements RoutineService {
         if(routine == null) throw new NoSuchElementException("존재하지 않는 루틴입니다.");
         if(routine.getMemberNo() != memberId) throw new UnauthorizedException("권한이 없습니다.");
 
+        // 루틴의 운동 세부계획을 추가
         routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routineId));
-        routine.getTime().setRepeatDay(dayDao.selectRoutineDay(routineId));
+        // 루틴 일정정보를 알아보기 쉽게 변환
+        routine.getTime().setRepeatUnit(convertRoutineUnit(routine.getTime().getRepeatUnit()));
+        routine.getTime().setRepeatDay(convertRoutineDay(dayDao.selectRoutineDay(routineId)));
 
         return routine;
     }
