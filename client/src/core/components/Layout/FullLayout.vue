@@ -28,11 +28,11 @@ export default {
 
 #container {
   position: absolute;
-  border-left: 1px solid var(--light-color-white);
-  border-right: 1px solid var(--light-color-white);
+  border-left: 1px solid var(--light-color-lightgrey);
+  border-right: 1px solid var(--light-color-lightgrey);
   width: 430px;
-  height: fit-content;
-  min-height: 100%;
+  height: 100vh;
+
   /* 메인 컨테이너를 가운데 정렬합니다. */
   left: 50%;
   transform: translateX(-50%);
