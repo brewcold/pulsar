@@ -17,7 +17,7 @@
 @import url('../../assets/css/typography.css');
 
 .square_button_container {
-  width: 100%;
+  width: calc(100% - 2.5rem);
 }
 
 button {
@@ -27,7 +27,7 @@ button {
   border: var(--border);
   border-radius: 8px;
   color: var(--text);
-  width: calc(100% - 3rem);
+  width: 100%;
   font-size: 0.9rem;
   font-family: 'bd', sans-serif;
 }

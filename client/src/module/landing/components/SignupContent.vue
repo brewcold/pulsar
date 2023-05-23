@@ -3,7 +3,7 @@
     <!-- 상위 컴포넌트에서 v-model은 하위 컴포넌트에서 emit해 바인딩할 수 있습니다.
          v-model이 하위 컴포넌트에서의 emit + 그 하위 컴포넌트로 pass prop인 것을 이용한 것입니다. -->
     <h2>PULSAR의 멤버가 되세요!</h2>
-    <p id="signup_content_caption">
+    <p id="caption">
       멤버로 가입하시면 모든 서비스를 이용하실 수 있습니다.
     </p>
     <form @keyup.enter="handleBtn">
@@ -58,7 +58,7 @@
 #signup_content {
   padding: 1.5rem;
 }
-#signup_content_caption {
+#caption {
   margin: 1rem 0 2rem 0;
 }
 #signup_content_signupBtn {

@@ -1,5 +1,5 @@
 <template>
-  <div id="landing_wrapper">
+  <div id="landing_view">
     <welcome-pulsar />
     <router-view />
   </div>
@@ -27,7 +27,7 @@ export default {
 @import url('../../assets/css/root.css');
 @import url('../../assets/css/typography.css');
 
-#landing_wrapper {
+#landing_view {
   display: flex;
   flex-direction: column;
   height: 100vh;
