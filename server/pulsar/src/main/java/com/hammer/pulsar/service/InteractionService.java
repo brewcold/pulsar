@@ -23,6 +23,6 @@ public interface InteractionService {
     public List<Comment> writeComment(CommentWriteRequest request);
 
     // 댓글을 삭제하는 로직
-    public List<Comment> removeComment(int articleId, int commentId);
+    public List<Comment> removeComment(int articleId, int commentId, int memberId);
 
 }
