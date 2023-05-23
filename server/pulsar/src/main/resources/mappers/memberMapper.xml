@@ -58,9 +58,15 @@
     </select>
 
     <!--  회원 정보 수정을 위한 SQL  -->
-<!--    <update id="updateMember" parameterType="MemberModifyRequest">-->
-<!--        UPDATE -->
-<!--    </update>-->
+    <update id="updateMember" parameterType="MemberModifyRequest">
+        UPDATE TB_MEMBER
+        SET
+            PASSWORD = #{password},
+            NICKNAME = #{nickname},
+            SRC = #{profileImg}
+        WHERE
+            ID = #{memberId}
+    </update>
 
     <!--  회원 탈퇴를 위한 SQL  -->
     <delete id="deleteMember" parameterType="int">

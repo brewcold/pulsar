@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hammer.pulsar.dao.ConcernTagDao">
+
+    <!--  태그 조회 쿼리 결과 매퍼  -->
     <resultMap id="TagMapper" type="Tag">
         <result column="ID" property="tagNo" />
         <result column="TAG_NAME" property="tagName" />
@@ -33,12 +35,12 @@
     <delete id="deleteConcernTags" parameterType="ConcernUpdateRequest">
         DELETE FROM TB_CONCERN_TAG
         WHERE
-        CONCERN_ID = #{concernId}
+            MEMBER_ID = #{memberId}
         AND
-        <foreach item="concernTagsId" index="index" collection="list"
-                 open="TAG_ID in (" separator="," close=")" nullable="true">
-            #{item}
-        </foreach>
+            <foreach item="item" index="index" collection="concernTagsId"
+                     open="TAG_ID in (" separator="," close=")" nullable="true">
+                #{item}
+            </foreach>
     </delete>
 
 </mapper>

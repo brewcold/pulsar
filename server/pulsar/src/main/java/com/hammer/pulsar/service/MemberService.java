@@ -27,7 +27,7 @@ public interface MemberService {
     public LoginInfo login(LoginForm form) throws UnauthorizedException;
 
     // 회원 정보 수정 로직
-    public String modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile);
+    public MemberModifyResponse modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile);
 
     // 회원 탈퇴 로직
     public void quitMember(int memberId) throws NoSuchElementException;
