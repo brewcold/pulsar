@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 // 실제 로직이 구현된 ArticleService 인터페이스의 구현체 클래스
@@ -75,7 +72,11 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public Article getArticle(int articleId) {
-        return articleDao.selectArticleByArticleId(articleId);
+        Article article = articleDao.selectArticleByArticleId(articleId);
+
+        if(article == null) throw new NoSuchElementException("존재하지 않는 게시글입니다.");
+
+        return article;
     }
 
     /**
@@ -89,6 +90,8 @@ public class ArticleServiceImpl implements ArticleService {
     public void modifyArticle(ArticleModifyForm form, MultipartFile[] appendedImgFiles, int memberId) {
         //DB에 저장된 게시글 정보를 불러오기
         Article saved = articleDao.selectArticleByArticleId(form.getArticleId());
+
+        if(saved == null) throw new NoSuchElementException("존재하지 않는 게시글입니다.");
         if(saved.getWriterInfo().getWriterNo() != memberId) throw new UnauthorizedException("권한이 없습니다.");
 
         // 기존의 값과 변경된 사항들을 저장한 ArticleModifyRequest를 생성한다.
@@ -153,7 +156,10 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public void removeArticle(int articleId, int memberId) {
-        if(articleDao.selectArticleByArticleId(articleId).getWriterInfo().getWriterNo() != memberId) {
+        Article article = articleDao.selectArticleByArticleId(articleId);
+
+        if(article == null) throw new NoSuchElementException("존재하지 않는 게시글입니다.");
+        if(article.getWriterInfo().getWriterNo() != memberId) {
             throw new UnauthorizedException("권한이 없습니다.");
         }
         
