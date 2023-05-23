@@ -4,6 +4,7 @@ import com.hammer.pulsar.dao.ArticleDao;
 import com.hammer.pulsar.dao.ArticleTagDao;
 import com.hammer.pulsar.dto.article.*;
 import com.hammer.pulsar.dto.common.Tag;
+import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -88,6 +89,8 @@ public class ArticleServiceImpl implements ArticleService {
     public void modifyArticle(ArticleModifyForm form, MultipartFile[] appendedImgFiles, int memberId) {
         //DB에 저장된 게시글 정보를 불러오기
         Article saved = articleDao.selectArticleByArticleId(form.getArticleId());
+        if(saved.getWriterInfo().getWriterNo() != memberId) throw new UnauthorizedException("권한이 없습니다.");
+
         // 기존의 값과 변경된 사항들을 저장한 ArticleModifyRequest를 생성한다.
         ArticleModifyRequest request = selectModified(form, saved);
 
@@ -150,6 +153,10 @@ public class ArticleServiceImpl implements ArticleService {
      */
     @Override
     public void removeArticle(int articleId, int memberId) {
+        if(articleDao.selectArticleByArticleId(articleId).getWriterInfo().getWriterNo() != memberId) {
+            throw new UnauthorizedException("권한이 없습니다.");
+        }
+        
         articleDao.deleteArticle(articleId);
     }
 }
