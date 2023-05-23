@@ -46,6 +46,14 @@
             WRITER_ID = #{memberId}
     </select>
 
+    <select id="selectCommentByCommentId" parameterType="int" resultMap="CommentMapper">
+        SELECT
+            *
+        FROM TB_COMMENT
+        WHERE
+            ID = #{commentId}
+    </select>
+
     <!--  댓글을 삭제하는 SQL  -->
     <delete id="deleteComment" parameterType="int">
         DELETE FROM TB_COMMENT
