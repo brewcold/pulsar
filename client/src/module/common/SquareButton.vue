@@ -54,11 +54,16 @@ export default {
           '--border': '1px solid #333333',
           '--text': 'white',
         };
-      }
-      if (this.theme === 'highlight') {
+      } else if (this.theme === 'point') {
         return {
           '--color': '#ff8048',
           '--border': '1px solid #ff8048',
+          '--text': 'white',
+        };
+      } else if (this.theme === 'highlight') {
+        return {
+          '--color': '#db3f28',
+          '--border': '1px solid #db3f28',
           '--text': 'white',
         };
       } else

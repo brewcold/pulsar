@@ -22,7 +22,7 @@
         v-model="password"
       />
       <square-button
-        :theme="'highlight'"
+        :theme="'point'"
         :value="'LOGIN'"
         @handle-click="handleBtn"
         id="login_content_loginBtn"

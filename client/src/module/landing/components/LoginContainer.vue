@@ -19,10 +19,11 @@ export default {
           //vuex store에 정보 저장
           if (res && res.status < 400) {
             console.log('로그인에 성공했어요');
+
             this.$store.dispatch(
               'login',
-              res.data,
-              res.headers.get('Authorization')
+              res.data.loginInfo,
+              res.data.token
             );
             //기본 화면인 루틴으로 리다이렉트시킵니다.
             this.$router.push('/routines');
