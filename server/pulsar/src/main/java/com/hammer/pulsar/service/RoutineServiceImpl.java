@@ -5,6 +5,7 @@ import com.hammer.pulsar.dao.RoutineDao;
 import com.hammer.pulsar.dao.RoutineDetailDao;
 import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.routine.*;
+import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,13 +70,17 @@ public class RoutineServiceImpl implements RoutineService {
 
     /**
      * 선택한 루틴의 상세 정보를 조회하는 메서드
+     * 만약 루틴의 작성자와 조회 요청한 memberId가 다르면 401 UNAUTHORIZED
      *
      * @param routineId
      * @return
      */
     @Override
-    public Routine getRoutineDetail(int routineId) {
+    public Routine getRoutineDetail(int routineId, int memberId) {
         Routine routine = routineDao.selectRoutineByRoutineId(routineId);
+
+        if(routine.getMemberNo() != memberId) throw new UnauthorizedException();
+
         routine.setExerciseList(routineDetailDao.selectExercisesByRoutineId(routine.getRoutineNo()));
 
         return routine;
