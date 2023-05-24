@@ -29,7 +29,7 @@ const AUTH = (token) => {
   return {
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
-      Authorization: `${token}`,
+      Authorization: `123142124`, //${token}
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': 'true',
       // Authorization: '',
