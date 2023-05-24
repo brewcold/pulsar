@@ -44,19 +44,19 @@ public class ArticleServiceImpl implements ArticleService {
         request.setWriterId(memberId);
 
         // 게시글 테이블에 새로운 게시글을 추가한다.
-        int articleId = articleDao.insertArticle(request);
+        articleDao.insertArticle(request);
 
         // 첨부된 이미지를 추가한다.
-        fileManagementService.uploadArticleImgs(imgFiles, articleId);
+        fileManagementService.uploadArticleImgs(imgFiles, request.getArticleId());
 
         // 선택한 태그를 추가한다.
-        articleTagDao.insertArticleTags(new ArticleTagUpdateRequest(articleId,
+        articleTagDao.insertArticleTags(new ArticleTagUpdateRequest(request.getArticleId(),
                 form.getTagList()
                 .stream()
                 .map(Tag::getTagNo)
                 .collect(Collectors.toList())));
 
-        return articleId;
+        return request.getArticleId();
     }
 
     /**
@@ -65,8 +65,8 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     @Override
-    public List<ArticlePreview> getAllArticles() {
-        List<ArticlePreview> previewList = articleDao.selectArticles();
+    public List<ArticlePreview> getAllArticles(PaginationCriteria criteria) {
+        List<ArticlePreview> previewList = articleDao.selectArticles(criteria);
 
         for(ArticlePreview preview : previewList) {
             preview.setArticleTag(articleTagDao.selectTagByArticleId(preview.getArticleNo()));

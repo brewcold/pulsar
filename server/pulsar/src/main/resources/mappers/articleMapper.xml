@@ -26,21 +26,39 @@
     </resultMap>
 
     <!--  새로운 게시글을 추가하는 SQL  -->
-    <insert id="insertArticle" parameterType="ArticleWriteRequest">
+    <insert id="insertArticle" parameterType="ArticleWriteRequest" useGeneratedKeys="true" keyProperty="articleId">
         INSERT INTO TB_ARTICLE (TITLE, WRITER_ID, CONTENT, ROUTINE_ID)
         VALUES (#{title}, #{writerId}, #{content}, #{routineId})
     </insert>
 
     <!--  게시글 목록을 조회하는 SQL  -->
-    <!--  페이지네이션, 검색 기능 추가 예정  -->
-    <select id="selectArticles" resultMap="PreviewMapper">
+    <select id="selectArticles" parameterType="PaginationCriteria" resultMap="PreviewMapper">
+        <if test="selectedTagId != null">
+            <!--    검색어 태그를 포함하는 게시글의 번호들을 모은 테이블    -->
+            WITH TAG_LIST AS (
+                SELECT
+                    DISTINCT ARTICLE_ID
+                FROM TB_ARTICLE_TAG
+                    WHERE TAG_ID = #{selectedTagId}
+            )
+        </if>
+        <!--    검색조건에 일치하는 게시글을 조회하는 쿼리문    -->
         SELECT
             A.*,
             M.NICKNAME
         FROM TB_ARTICLE A
         INNER JOIN TB_MEMBER M
-        ON
-            A.WRITER_ID = M.ID
+            ON A.WRITER_ID = M.ID
+        <if test="selectedTagId != null">
+            INNER JOIN TAG_LIST
+                ON A.ID = TAG_LIST.ARTICLE_ID
+        </if>
+        <if test="lastArticleId != null">
+            WHERE
+                A.ID &lt; #{lastArticleId}
+        </if>
+        ORDER BY ID DESC
+        LIMIT 10;
     </select>
 
     <!--  선택한 게시글을 상세 조회하는 SQL  -->
