@@ -91,13 +91,11 @@ public class CommunityRestController {
     // 추천 수 가져오기 API
     @GetMapping("/{articleId}/active/like")
     public ResponseEntity<Like> showLikes(@PathVariable int articleId, HttpServletRequest request) {
-        // 작성자의 회원번호를 조회한다.
-        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
-
         // 추천수를 가져오기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
         likeRequest.setArticleId(articleId);
 
+        // 작성자의 회원번호를 조회한다.
         Optional.ofNullable(UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")))
                 .ifPresent(info -> likeRequest.setMemberId(info.getMemberNo()));
 

@@ -31,7 +31,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authCheckInterceptor)
-                .addPathPatterns("/**");
+                // excludePathPatterns 를 제외한 모든 경로에서 로그인 여부를 체크합니다.
+                .addPathPatterns("/**")
+                // 회원가입, 게시글 상세보기, 태그 조회, 운동 조회는 로그인을 체크하지 않습니다.
+                .excludePathPatterns("/member/signup/**", "/community/*/static", "/tag", "/exercise");
     }
 
     @Override
