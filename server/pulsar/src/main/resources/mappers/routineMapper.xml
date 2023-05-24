@@ -14,7 +14,7 @@
     </resultMap>
 
     <!--  루틴 추가를 위한 SQL  -->
-    <insert id="insertRoutine" parameterType="RoutineRegistRequest">
+    <insert id="insertRoutine" parameterType="RoutineRegistRequest" useGeneratedKeys="true" keyProperty="routineNo">
         INSERT INTO TB_ROUTINE (MEMBER_ID, TITLE, REPEAT_UNIT, REPEAT_PERIOD, START_HOUR, START_MIN)
         VALUES (#{writerId}, #{title}, #{repeatUnit}, #{repeatPeriod}, #{startHour}, #{startMin})
     </insert>

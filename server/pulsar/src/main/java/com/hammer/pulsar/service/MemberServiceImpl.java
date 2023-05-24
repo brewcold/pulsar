@@ -131,30 +131,39 @@ public class MemberServiceImpl implements MemberService {
      * @return
      */
     @Override
-    public Member getMemberInfo(int memberId) throws NoSuchElementException {
+    public MemberProfile getMemberInfo(int memberId) throws NoSuchElementException {
         Member memberInfo = memberDao.selectMemberByMemberId(memberId);
 
         if(memberInfo == null) throw new NoSuchElementException("일치하는 회원이 없습니다.");
 
-        memberInfo.setSelectedTag(concernTagDao.selectTagsByMemberId(memberId));
 
-        return memberInfo;
+        MemberProfile memberProfile = new MemberProfile();
+
+        memberProfile.setMemberNo(memberInfo.getMemberId());
+        memberProfile.setEmail(memberInfo.getEmail());
+        memberProfile.setNickname(memberInfo.getNickname());
+        memberProfile.setProfileImg(memberProfile.getProfileImg());
+        memberProfile.setSelectedTag(memberProfile.getSelectedTag());
+        memberProfile.setSelectedTag(concernTagDao.selectTagsByMemberId(memberId));
+
+        return memberProfile;
     }
 
-    public LoginInfo login(LoginForm form) throws UnauthorizedException {
+    public MemberProfile login(LoginForm form) throws UnauthorizedException {
         Member memberInfo = memberDao.selectMemberByEmail(form.getEmail());
 
         if(memberInfo == null || !memberInfo.getPassword().equals(form.getPassword())) {
             throw new UnauthorizedException("이메일 혹은 비밀번호가 일치하지 않습니다.");
         }
 
-        LoginInfo loginInfo = new LoginInfo();
-        loginInfo.setMemberNo(memberInfo.getMemberId());
-        loginInfo.setNickname(memberInfo.getNickname());
-        loginInfo.setProfileImg(memberInfo.getProfileImg());
-        loginInfo.setSelectedTag(concernTagDao.selectTagsByMemberId(memberInfo.getMemberId()));
+        MemberProfile memberProfile = new MemberProfile();
+        memberProfile.setMemberNo(memberInfo.getMemberId());
+        memberProfile.setEmail(memberInfo.getEmail());
+        memberProfile.setNickname(memberInfo.getNickname());
+        memberProfile.setProfileImg(memberInfo.getProfileImg());
+        memberProfile.setSelectedTag(concernTagDao.selectTagsByMemberId(memberInfo.getMemberId()));
 
-        return loginInfo;
+        return memberProfile;
     }
 
     /**

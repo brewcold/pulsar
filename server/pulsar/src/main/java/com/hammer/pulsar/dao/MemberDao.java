@@ -1,8 +1,8 @@
 package com.hammer.pulsar.dao;
 
+import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.member.Member;
 import com.hammer.pulsar.dto.member.MemberModifyRequest;
-import com.hammer.pulsar.dto.member.MemberProfile;
 import com.hammer.pulsar.dto.member.MemberRegistRequest;
 
 // Member 테이블과 통신하기 위한 DAO
@@ -19,7 +19,7 @@ public interface MemberDao {
     // 회원의 세부 정보를 조회하는 메서드
     public Member selectMemberByMemberId(int memberId);
 
-    // 회원의 세부 정보를 이메일로 조회하는 메서드
+    // 로그인을 위해 회원의 세부 정보를 이메일로 조회하는 메서드
     public Member selectMemberByEmail(String email);
 
     // 프로필 조회를 위한 메서드

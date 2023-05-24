@@ -8,6 +8,7 @@ import com.hammer.pulsar.dto.routine.*;
 import com.hammer.pulsar.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +46,20 @@ public class RoutineServiceImpl implements RoutineService {
      * @return
      */
     @Override
+    @Transactional
     public int addNewRoutine(RoutineRegistForm form, int memberId) {
         RoutineRegistRequest request = new RoutineRegistRequest(form);
         request.setWriterId(memberId);
 
-        return routineDao.insertRoutine(request);
+        routineDao.insertRoutine(request);
+
+        // 루틴 요일정보 추가
+        DayUpdateRequest dayUpdateRequest = convertToDayUpdateRequest(form.getTime().getRepeatDay());
+        dayUpdateRequest.setRoutineId(request.getRoutineNo());
+
+        dayDao.insertRoutineDay(dayUpdateRequest);
+
+        return request.getRoutineNo();
     }
 
     // ("day", "week", "month") -> ("일", "주", "월") 변환하는 메서드
@@ -131,6 +141,7 @@ public class RoutineServiceImpl implements RoutineService {
      * @param memberId
      */
     @Override
+    @Transactional
     public void modifyRoutineInfo(RoutineModifyForm form, int memberId) {
         if(routineDao.selectRoutineByRoutineId(form.getRoutineId()).getMemberNo() != memberId) {
             throw new UnauthorizedException("권한이 없습니다.");
@@ -202,6 +213,7 @@ public class RoutineServiceImpl implements RoutineService {
      * @param routineId
      */
     @Override
+    @Transactional
     public void removeRoutine(int routineId, int memberId) {
         if(routineDao.selectRoutineByRoutineId(routineId).getMemberNo() != memberId) {
             throw new UnauthorizedException("권한이 없습니다.");

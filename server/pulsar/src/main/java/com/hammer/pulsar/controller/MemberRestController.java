@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.UUID;
 
 // 회원 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
@@ -87,11 +86,11 @@ public class MemberRestController {
     // TODO: JWT 방식으로 변경하기
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginForm form, HttpServletRequest request) throws UnsupportedEncodingException {
-        LoginInfo loginInfo = memberService.login(form);
+        MemberProfile memberProfile = memberService.login(form);
 
-        String token = UUIDTokenManager.getNewAuthToken(loginInfo);
+        String token = UUIDTokenManager.getNewAuthToken(memberProfile);
 
-        return new ResponseEntity<>(new LoginSuccessResponse(loginInfo, token), HttpStatus.OK);
+        return new ResponseEntity<>(new LoginSuccessResponse(memberProfile, token), HttpStatus.OK);
     }
 
     // 로그아웃 API
@@ -113,8 +112,8 @@ public class MemberRestController {
      *  404 NOT FOUND : 존재하지 않는 회원
      */
     @GetMapping("/{memberId}")
-    public ResponseEntity<Member> showMemberInfo(@PathVariable int memberId) {
-        Member memberInfo = memberService.getMemberInfo(memberId);
+    public ResponseEntity<MemberProfile> showMemberInfo(@PathVariable int memberId) {
+        MemberProfile memberInfo = memberService.getMemberInfo(memberId);
 
         return new ResponseEntity<>(memberInfo, HttpStatus.OK);
     }

@@ -1,6 +1,6 @@
 package com.hammer.pulsar.util;
 
-import com.hammer.pulsar.dto.member.LoginInfo;
+import com.hammer.pulsar.dto.member.MemberProfile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.UUID;
 // JWT를 적용하기 전 임시로 사용할 토큰 관리 클래스
 public class UUIDTokenManager {
     // 로그인한 유저의 정보를 저장하는 맵
-    private static final Map<String, LoginInfo> loginInfoMap = new HashMap<>();
+    private static final Map<String, MemberProfile> loginInfoMap = new HashMap<>();
 
     private UUIDTokenManager() {}
 
@@ -19,11 +19,11 @@ public class UUIDTokenManager {
     }
 
     // 토큰 정보와 일치하는 회원의 정보를 가져오는 메서드
-    public static LoginInfo getLoginUserInfo(String authToken) {
+    public static MemberProfile getLoginUserInfo(String authToken) {
         return loginInfoMap.get(authToken);
     }
 
-    public static String getNewAuthToken(LoginInfo info) {
+    public static String getNewAuthToken(MemberProfile info) {
         String newToken = UUID.randomUUID().toString();
 
         loginInfoMap.put(newToken, info);
@@ -36,7 +36,7 @@ public class UUIDTokenManager {
 
     // memberId와 토큰 정보가 일치하는지 반환하는 메서드
     public static boolean checkAuth(String authToken, int memberId) {
-        LoginInfo info = UUIDTokenManager.getLoginUserInfo(authToken);
+        MemberProfile info = UUIDTokenManager.getLoginUserInfo(authToken);
 
         return info.getMemberNo() == memberId;
     }

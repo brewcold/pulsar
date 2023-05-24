@@ -12,8 +12,6 @@ public class RoutineModifyRequest {
     private String repeatUnit;
     // 루틴 반복 주기
     private int repeatPeriod;
-    // 루틴 요일
-    private List<String> repeatDay;
     // 루틴 시작 시간
     private int startHour;
     // 루틴 시작 분
@@ -29,7 +27,6 @@ public class RoutineModifyRequest {
         this.title = form.getRoutineTitle();
         this.repeatUnit = form.getTime().getRepeatUnit();
         this.repeatPeriod = form.getTime().getRepeatPeriod();
-        this.repeatDay = form.getTime().getRepeatDay();
         this.startHour = form.getTime().getStartHour();
         this.startMin = form.getTime().getStartMin();
     }
@@ -67,14 +64,6 @@ public class RoutineModifyRequest {
         this.repeatPeriod = repeatPeriod;
     }
 
-    public List<String> getRepeatDay() {
-        return repeatDay;
-    }
-
-    public void setRepeatDay(List<String> repeatDay) {
-        this.repeatDay = repeatDay;
-    }
-
     public int getStartHour() {
         return startHour;
     }
@@ -99,7 +88,6 @@ public class RoutineModifyRequest {
                 ", title='" + title + '\'' +
                 ", repeatUnit='" + repeatUnit + '\'' +
                 ", repeatPeriod=" + repeatPeriod +
-                ", repeatDay=" + repeatDay +
                 ", startHour=" + startHour +
                 ", startMin=" + startMin +
                 '}';
