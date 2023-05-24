@@ -8,7 +8,6 @@ import com.hammer.pulsar.dto.interaction.LikeRequest;
 import com.hammer.pulsar.service.ArticleService;
 import com.hammer.pulsar.service.InteractionService;
 import com.hammer.pulsar.util.MemoryAuthManager;
-import com.hammer.pulsar.util.UUIDTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 // 커뮤니티 관련 API 요청을 처리할 REST 컨트롤러
 @RestController
@@ -97,8 +95,7 @@ public class CommunityRestController {
         likeRequest.setArticleId(articleId);
 
         // 작성자의 회원번호를 조회한다.
-        Optional.ofNullable(UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")))
-                .ifPresent(info -> likeRequest.setMemberId(info.getMemberNo()));
+        int memberId = MemoryAuthManager.getLoginMember();
 
         // 해당 게시글의 추천수를 가져오기
         Like likes = interactionService.countAllLikes(likeRequest);

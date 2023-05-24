@@ -2,7 +2,6 @@ package com.hammer.pulsar.interceptor;
 
 import com.hammer.pulsar.exception.UnauthorizedException;
 import com.hammer.pulsar.util.MemoryAuthManager;
-import com.hammer.pulsar.util.UUIDTokenManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
