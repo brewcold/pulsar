@@ -37,6 +37,7 @@ h3 {
 }
 p {
   margin: 0 0.5rem 0 0.5rem;
+  line-height: 1.5;
 }
 svg {
   width: 1em;
