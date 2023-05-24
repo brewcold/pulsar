@@ -57,7 +57,8 @@ public class CommunityRestController {
                                                 @RequestPart(value = "imgs", required = false) MultipartFile[] imgFiles,
                                                 HttpServletRequest request) {
         // 작성자의 회원번호를 조회한다.
-        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+        int memberId = 1;
 
         int articleNo = articleService.writeArticle(form, imgFiles, memberId);
 
@@ -81,7 +82,8 @@ public class CommunityRestController {
     // 글 삭제하기 API
     @DeleteMapping("/{articleId}")
     public ResponseEntity<Void> removeArticle(@PathVariable int articleId, HttpServletRequest request) {
-        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+        int memberId = 1;
 
         articleService.removeArticle(articleId, memberId);
 
@@ -109,7 +111,8 @@ public class CommunityRestController {
     @PostMapping("/{articleId}/active/like")
     public ResponseEntity<Like> toggleLIkeStatus(@PathVariable int articleId, HttpServletRequest request) {
         // 작성자의 회원번호를 조회한다.
-        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+        int memberId = 1;
 
         // 추천하기 위해 필요한 정보를 담기
         LikeRequest likeRequest = new LikeRequest();
@@ -134,7 +137,8 @@ public class CommunityRestController {
     @PostMapping("/{articleId}/active/comment")
     public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, @RequestBody String content, HttpServletRequest request) {
         // 작성자의 회원번호를 조회한다.
-        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+        int memberId = 1;
 
         // 댓글 작성에 필요한 데이터를 DTO에 담기
         CommentWriteRequest writeRequest = new CommentWriteRequest();
@@ -152,7 +156,8 @@ public class CommunityRestController {
     // 댓글 삭제 API
     @DeleteMapping("/{articleId}/active/comment/{commentId}")
     public ResponseEntity<List<Comment>> removeComment(@PathVariable int articleId, @PathVariable int commentId, HttpServletRequest request) {
-        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+        int memberId = 1;
 
         List<Comment> commentList = interactionService.removeComment(articleId, commentId, memberId);
 

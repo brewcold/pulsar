@@ -125,9 +125,9 @@ public class MemberRestController {
                                                  @RequestPart(value = "form") MemberModifyForm form,
                                                  @RequestPart(value = "imgFile", required = false) MultipartFile imgFile,
                                                  HttpServletRequest request) {
-        int loginMember = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
-
-        if(loginMember != memberId) throw new UnauthorizedException("권한이 없습니다.");
+//        int loginMember = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
+//
+//        if(loginMember != memberId) throw new UnauthorizedException("권한이 없습니다.");
 
         form.setMemberId(memberId);
         MemberModifyResponse response = memberService.modifyMemberInfo(form, imgFile);
