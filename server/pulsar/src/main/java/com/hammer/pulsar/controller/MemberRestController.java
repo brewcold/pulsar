@@ -6,7 +6,7 @@ import com.hammer.pulsar.dto.common.LoginSuccessResponse;
 import com.hammer.pulsar.dto.member.*;
 import com.hammer.pulsar.exception.UnauthorizedException;
 import com.hammer.pulsar.service.MemberService;
-import com.hammer.pulsar.util.UUIDTokenManager;
+import com.hammer.pulsar.util.MemoryAuthManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -63,7 +63,7 @@ public class MemberRestController {
     public ResponseEntity<Void> checkValidEmail(@RequestBody String email) {
         return memberService.checkDuplicateEmail(email) ?
                 new ResponseEntity<>(HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.CONFLICT) ;
+                new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 
     /**
@@ -85,12 +85,12 @@ public class MemberRestController {
     // JWT 이전까지는 UUID 형식의 토큰과 로그인 정보를 반환합니다.
     // TODO: JWT 방식으로 변경하기
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginForm form, HttpServletRequest request) throws UnsupportedEncodingException {
+    public ResponseEntity<?> login(@RequestBody LoginForm form, HttpServletRequest request) {
         MemberProfile memberProfile = memberService.login(form);
 
-        String token = UUIDTokenManager.getNewAuthToken(memberProfile);
+        MemoryAuthManager.setLoginMember(memberProfile.getMemberNo());
 
-        return new ResponseEntity<>(new LoginSuccessResponse(memberProfile, token), HttpStatus.OK);
+        return new ResponseEntity<>(memberProfile, HttpStatus.OK);
     }
 
     // 로그아웃 API
@@ -98,7 +98,7 @@ public class MemberRestController {
     public ResponseEntity<Void> logout(HttpServletRequest request) {
         String authToken = request.getHeader("Authorization");
 
-        UUIDTokenManager.removeAuthToken(authToken);
+        MemoryAuthManager.removeLoginMember();
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -125,9 +125,8 @@ public class MemberRestController {
                                                  @RequestPart(value = "form") MemberModifyForm form,
                                                  @RequestPart(value = "imgFile", required = false) MultipartFile imgFile,
                                                  HttpServletRequest request) {
-//        int loginMember = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
-//
-//        if(loginMember != memberId) throw new UnauthorizedException("권한이 없습니다.");
+        int loginMember = MemoryAuthManager.getLoginMember();
+        if(loginMember != memberId) throw new UnauthorizedException("권한이 없습니다.");
 
         form.setMemberId(memberId);
         MemberModifyResponse response = memberService.modifyMemberInfo(form, imgFile);
@@ -144,7 +143,10 @@ public class MemberRestController {
      *  404 NOT FOUND : 존재하지 않는 회원
      */
     @PostMapping("/{memberId}/quit")
-    public ResponseEntity<Void> quitMember(@PathVariable int memberId) {
+    public ResponseEntity<Void> quitMember(@PathVariable int memberId, HttpServletRequest request) {
+        int loginMember = MemoryAuthManager.getLoginMember();
+        if(loginMember != memberId) throw new UnauthorizedException("권한이 없습니다.");
+
         memberService.quitMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.OK);

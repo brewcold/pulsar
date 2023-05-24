@@ -5,7 +5,7 @@ import com.hammer.pulsar.dto.routine.RoutineModifyForm;
 import com.hammer.pulsar.dto.routine.RoutineRegistForm;
 import com.hammer.pulsar.exception.UnauthorizedException;
 import com.hammer.pulsar.service.RoutineService;
-import com.hammer.pulsar.util.UUIDTokenManager;
+import com.hammer.pulsar.util.MemoryAuthManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +42,9 @@ public class RoutineRestController {
     @GetMapping("/{memberId}")
     public ResponseEntity<List<Routine>> showAllRoutines(@PathVariable int memberId, HttpServletRequest request) {
         // 인증 정보 확인
-//        if(!UUIDTokenManager.checkAuth(request.getHeader("Authorization"), memberId)) {
-//            throw new UnauthorizedException();
-//        }
+        if(MemoryAuthManager.getLoginMember() != memberId) {
+            throw new UnauthorizedException();
+        }
         // 루틴 정보 가져오기
         List<Routine> allRoutine = routineService.getAllRoutines(memberId);
 
@@ -54,8 +54,7 @@ public class RoutineRestController {
     // 루틴 상세보기 요청 API
     @GetMapping("/routine/{routineId}")
     public ResponseEntity<Routine> showRoutine(@PathVariable int routineId, HttpServletRequest request) {
-//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
-        int memberId = 1;
+        int memberId = MemoryAuthManager.getLoginMember();
 
         Routine routine = routineService.getRoutineDetail(routineId, memberId);
 
@@ -65,8 +64,7 @@ public class RoutineRestController {
     // 루틴 작성 API
     @PostMapping("/routine")
     public ResponseEntity<Integer> addNewRoutine(@RequestBody RoutineRegistForm form, HttpServletRequest request) {
-//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
-        int memberId = 1;
+        int memberId = MemoryAuthManager.getLoginMember();
 
         int routineNo = routineService.addNewRoutine(form, memberId);
 
@@ -77,8 +75,7 @@ public class RoutineRestController {
     // 루틴 수정 API
     @PutMapping("/routine/{routineId}")
     public ResponseEntity<Void> modifyRoutineInfo(@PathVariable int routineId, @RequestBody RoutineModifyForm form, HttpServletRequest request) {
-//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
-        int memberId = 1;
+        int memberId = MemoryAuthManager.getLoginMember();
 
         form.setRoutineId(routineId);
         routineService.modifyRoutineInfo(form, memberId);
@@ -89,8 +86,7 @@ public class RoutineRestController {
     // 루틴 삭제 API
     @DeleteMapping("/routine/{routineId}")
     public ResponseEntity<Void> removeRoutine(@PathVariable int routineId, HttpServletRequest request) {
-//        int memberId = UUIDTokenManager.getLoginUserInfo(request.getHeader("Authorization")).getMemberNo();
-        int memberId = 1;
+        int memberId = MemoryAuthManager.getLoginMember();
 
         routineService.removeRoutine(routineId, memberId);
 
