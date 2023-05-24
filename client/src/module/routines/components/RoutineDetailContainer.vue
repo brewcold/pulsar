@@ -9,7 +9,7 @@ import RoutineDetailContent from './RoutineDetailContent.vue';
 import { getRoutineDetail } from '../../../core/api/routine';
 import { mapGetters } from 'vuex';
 export default {
-  name: '',
+  name: 'RoutineDetailContainer',
   components: { RoutineDetailContent },
   created() {
     this.getRoutine();
