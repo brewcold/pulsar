@@ -29,6 +29,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     /**
      * 사용자가 작성한 게시글 정보에 작성자의 회원번호를 추가한 Request를 만들어 테이블에 정보를 추가하는 메서드
+     * TODO: 게시글에 루틴 추가 기능 구현하기
      *
      * @param form
      * @return
@@ -100,6 +101,7 @@ public class ArticleServiceImpl implements ArticleService {
     /**
      * 게시글을 수정하는 메서드
      * 이미지는 첨부만 가능하다.
+     * TODO: 게시글에 포함된 루틴을 수정하는 기능 구현하기
      *
      * @param form
      * @param appendedImgFiles
