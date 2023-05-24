@@ -1,24 +1,18 @@
 <template>
-  <div class="square_button_container">
-    <button
-      type="button"
-      class="btn"
-      :style="styles"
-      @click="handleClick"
-    >
-      {{ value ? value : 'example' }}
-    </button>
-  </div>
+  <button
+    type="button"
+    class="btn"
+    :style="styles"
+    @click="handleClick"
+  >
+    {{ value ? value : 'example' }}
+  </button>
 </template>
 
 <style scoped>
 @import url('../../assets/css/init.css');
 @import url('../../assets/css/root.css');
 @import url('../../assets/css/typography.css');
-
-.square_button_container {
-  width: calc(100% - 2.5rem);
-}
 
 button {
   cursor: pointer;

@@ -26,7 +26,7 @@ import CommunityIcon from './icons/CommunityIcon.vue';
 import MypageIcon from './icons/MypageIcon.vue';
 
 export default {
-  name: 'TheHeader',
+  name: 'TheNav',
   components: {
     StatisticsIcon,
     RoutinesIcon,

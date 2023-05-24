@@ -57,7 +57,7 @@ export default {
 
 #tagform {
   min-width: calc(100% - 2rem);
-  height: 4rem;
+  /* height: 4rem; */
   display: flex;
   align-items: flex-start;
   overflow-x: auto;

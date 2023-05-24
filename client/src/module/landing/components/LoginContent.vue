@@ -2,8 +2,11 @@
   <div id="login_content">
     <!-- 상위 컴포넌트에서 v-model은 하위 컴포넌트에서 emit해 바인딩할 수 있습니다.
          v-model이 하위 컴포넌트에서의 emit + 그 하위 컴포넌트로 pass prop인 것을 이용한 것입니다. -->
-    <h1>PULSAR에 오신 것을 환영합니다!</h1>
-    <p id="caption">서비스를 이용하려면 로그인해야 합니다.</p>
+    <h1>환영합니다!</h1>
+    <p id="caption">
+      운동 루틴 관리 서비스 PULSAR입니다!<br />
+      로그인하시면 모든 서비스를 이용하실 수 있어요.
+    </p>
     <form @keyup.enter="handleBtn">
       <text-input
         :input-name="'Email'"

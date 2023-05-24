@@ -1,6 +1,17 @@
 <template>
   <div id="routine_list_container">
-    <RoutineListContent :routines="routineList" />
+    <RoutineListContent
+      :routines="routineList"
+      @modal-toggle="modalToggle"
+    />
+    <ModalView
+      v-if="displayModal"
+      :modal-type="'routine'"
+      :modal-title="'루틴 추가하기'"
+      :modal-caption="'루틴을 추가합니다.'"
+      @modal-routine-submit="addRoutine"
+      @modal-toggle="modalToggle"
+    />
   </div>
 </template>
 
@@ -12,15 +23,17 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getRoutines } from '../../../core/api/routine';
+import { getRoutines, postRoutine } from '../../../core/api/routine';
 import RoutineListContent from './RoutineListContent.vue';
+import ModalView from '../../../module/common/ModalView.vue';
 
 export default {
   name: '',
-  components: { RoutineListContent },
+  components: { RoutineListContent, ModalView },
 
   data() {
     return {
+      displayModal: false,
       routineList: null,
       // {
       //   routineNo: 1,
@@ -40,9 +53,19 @@ export default {
   },
   methods: {
     getRoutineList() {
-      getRoutines(this.getMemberNo, this.getToken)
+      getRoutines(this.getMemberNo, this.$store.getters.getToken)
         .then((res) => (this.routineList = res.data))
         .catch((err) => [err]);
+    },
+    addRoutine(data) {
+      postRoutine(data, this.$store.getters.getToken)
+        .then((res) => console.log('성공'))
+        .catch((err) => console.log('실패'));
+      this.getRoutineList();
+      return modalToggle();
+    },
+    modalToggle() {
+      this.displayModal = !this.displayModal;
     },
   },
   watch: {
