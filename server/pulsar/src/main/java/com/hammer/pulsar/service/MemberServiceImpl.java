@@ -110,7 +110,7 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public boolean checkDuplicateEmail(String email) {
-        return isValidEmail(email);
+        return isValidEmail(removeQuotation(email));
     }
 
     /**
@@ -121,7 +121,17 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public boolean checkDuplicateNickname(String nickname) {
-        return isValidNickname(nickname);
+        return isValidNickname(removeQuotation(nickname));
+    }
+
+    // 문자열 양 옆의 " 문자를 제거하는 메서드
+    private String removeQuotation(String data) {
+        if(data == null || data.length() == 0) return null;
+
+        int start = data.charAt(0) == '"' ? 1 : 0;
+        int end = data.charAt(data.length() - 1) == '"' ? data.length() - 1 : data.length();
+
+        return data.substring(start, end);
     }
 
     /**
