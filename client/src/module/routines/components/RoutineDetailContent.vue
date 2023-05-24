@@ -1,6 +1,6 @@
 <template>
-  <div id="routine_detail_content">
-    <div id="routine_detail_menu">
+  <div id="detail_content">
+    <div id="detail_menu">
       <router-link to="/routines">
         <go-back-icon />
       </router-link>
@@ -9,15 +9,15 @@
     <h1>
       {{ routine ? routine?.title : '죄송합니다.' }}
     </h1>
-    <p id="routine_detail_caption">
+    <p id="detail_caption">
       {{
         routine
           ? '루틴 상세 정보'
           : '서버로부터 정보를 가져오지 못했어요.'
       }}
     </p>
-    <div id="routine_detail_content_detailWrapper">
-      <div id="routine_detail_content_time">
+    <div id="detail_content_detailWrapper">
+      <div id="detail_content_time">
         <h3>반복 주기</h3>
         <p>
           {{
@@ -35,8 +35,8 @@
           }}
         </p>
       </div>
-      <div id="routine_detail_content_exercise_list">
-        <div id="routine_detail_content_exercise_list_title">
+      <div id="detail_content_exercise_list">
+        <div id="detail_content_exercise_list_title">
           <h3>운동 목록</h3>
           <round-button
             :value="'+ ADD'"
@@ -56,7 +56,7 @@
           <p>운동 목록이 없어요.</p>
         </div>
       </div>
-      <div id="routine_delete">
+      <div id="delete">
         <square-button
           :value="'루틴 삭제하기'"
           @handle-click="$emit('delete-routine')"
@@ -84,10 +84,10 @@ export default {
 @import url('../../../assets/css/root.css');
 @import url('../../../assets/css/typography.css');
 
-#routine_detail_content {
+#detail_content {
   padding: 0 1.5rem 1rem 1.5rem;
 }
-#routine_detail_menu {
+#detail_menu {
   margin: 1.5rem 0 0.5rem 0;
 }
 #go_back_container {
@@ -98,22 +98,22 @@ export default {
   width: 2.5rem;
   height: 2.5rem;
 }
-#routine_detail_caption {
+#detail_caption {
   margin: 0 0 1rem 0;
 }
-#routine_detail_content_detailWrapper {
+#detail_content_detailWrapper {
   margin-top: 2rem;
 }
-#routine_detail_content_exercise_list {
+#detail_content_exercise_list {
   margin-top: 2rem;
 }
-#routine_detail_content_exercise_list_title {
+#detail_content_exercise_list_title {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
 }
-#routine_detail_content_exercise_list_title h3 {
+#detail_content_exercise_list_title h3 {
   margin: 0;
 }
 </style>
