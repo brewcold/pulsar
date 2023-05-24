@@ -1,9 +1,6 @@
 package com.hammer.pulsar.service;
 
-import com.hammer.pulsar.dto.article.Article;
-import com.hammer.pulsar.dto.article.ArticleModifyForm;
-import com.hammer.pulsar.dto.article.ArticlePreview;
-import com.hammer.pulsar.dto.article.ArticleWriteForm;
+import com.hammer.pulsar.dto.article.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -15,7 +12,7 @@ public interface ArticleService {
     public int writeArticle(ArticleWriteForm form, MultipartFile[] imgFiles, int memberId);
 
     // 게시판에 등록된 글 목록을 보여주는 로직
-    public List<ArticlePreview> getAllArticles();
+    public List<ArticlePreview> getAllArticles(PaginationCriteria criteria);
 
     // 선택한 게시글의 상세 정보를 보여주는 로직
     public Article getArticle(int articleId);

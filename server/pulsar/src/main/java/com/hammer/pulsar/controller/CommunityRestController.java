@@ -1,9 +1,6 @@
 package com.hammer.pulsar.controller;
 
-import com.hammer.pulsar.dto.article.Article;
-import com.hammer.pulsar.dto.article.ArticleModifyForm;
-import com.hammer.pulsar.dto.article.ArticlePreview;
-import com.hammer.pulsar.dto.article.ArticleWriteForm;
+import com.hammer.pulsar.dto.article.*;
 import com.hammer.pulsar.dto.interaction.Comment;
 import com.hammer.pulsar.dto.interaction.CommentWriteRequest;
 import com.hammer.pulsar.dto.interaction.Like;
@@ -40,8 +37,8 @@ public class CommunityRestController {
 
     // 게시글 목록 조회 API
     @GetMapping()
-    public ResponseEntity<List<ArticlePreview>> showAllArticles() {
-        List<ArticlePreview> articleList = articleService.getAllArticles();
+    public ResponseEntity<List<ArticlePreview>> showAllArticles(@RequestBody(required = false) PaginationCriteria criteria) {
+        List<ArticlePreview> articleList = articleService.getAllArticles(criteria);
 
         return new ResponseEntity<>(articleList, HttpStatus.OK);
     }

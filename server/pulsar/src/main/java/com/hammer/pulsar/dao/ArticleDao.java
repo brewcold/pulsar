@@ -1,9 +1,6 @@
 package com.hammer.pulsar.dao;
 
-import com.hammer.pulsar.dto.article.Article;
-import com.hammer.pulsar.dto.article.ArticleModifyRequest;
-import com.hammer.pulsar.dto.article.ArticlePreview;
-import com.hammer.pulsar.dto.article.ArticleWriteRequest;
+import com.hammer.pulsar.dto.article.*;
 
 import java.util.List;
 
@@ -13,7 +10,7 @@ public interface ArticleDao {
     public int insertArticle(ArticleWriteRequest request);
 
     // 게시글 목록을 조회하는 메서드
-    public List<ArticlePreview> selectArticles();
+    public List<ArticlePreview> selectArticles(PaginationCriteria criteria);
 
     // 선택한 게시글을 조회하는 메서드
     public Article selectArticleByArticleId(int articleId);

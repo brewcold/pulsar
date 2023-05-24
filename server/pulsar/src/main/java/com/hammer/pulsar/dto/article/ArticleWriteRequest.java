@@ -2,6 +2,8 @@ package com.hammer.pulsar.dto.article;
 
 // 게시글 DB에 새로운 게시글 정보를 추가하기 위한 DTO 클래스
 public class ArticleWriteRequest {
+    // 게시글의 고유번호
+    private int articleId;
     // 게시글 제목
     private String title;
     // 게시글 내용
@@ -15,6 +17,14 @@ public class ArticleWriteRequest {
     public ArticleWriteRequest() {}
 
     // Getters, Setters
+    public int getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(int articleId) {
+        this.articleId = articleId;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -51,10 +61,11 @@ public class ArticleWriteRequest {
     @Override
     public String toString() {
         return "ArticleWriteRequest{" +
-                "title='" + title + '\'' +
+                "articleId=" + articleId +
+                ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", writerId='" + writerId + '\'' +
-                ", routineId='" + routineId + '\'' +
+                ", writerId=" + writerId +
+                ", routineId=" + routineId +
                 '}';
     }
 
