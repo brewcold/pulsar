@@ -35,7 +35,7 @@
       />
       <!-- <input type="file" @change="setFile" /> -->
       <square-button
-        :theme="'highlight'"
+        :theme="'point'"
         :value="'SIGN UP'"
         @handle-click="handleBtn"
         id="signup_content_signupBtn"
