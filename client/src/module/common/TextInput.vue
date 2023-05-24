@@ -3,13 +3,25 @@
     <div class="text_input_container_label">
       <label :html-for="inputName" />
     </div>
-    <div class="text_input_container_input">
+    <div
+      v-if="inputType === 'textarea'"
+      class="text_input_container_textarea"
+    >
+      <textarea
+        :id="inputName"
+        :value="value"
+        :placeholder="placeholder"
+        @input="$emit('input', $event.target.value)"
+      >
+      </textarea>
+    </div>
+    <div v-else class="text_input_container_input">
       <input
         :id="inputName"
         :type="inputType"
         :placeholder="placeholder"
         :value="value"
-        @keyup="$emit('input', $event.target.value)"
+        @input="$emit('input', $event.target.value)"
       />
       <p class="caption">{{ caption }}</p>
     </div>
@@ -68,10 +80,22 @@ input[type='password'] {
   border-radius: 6px;
   outline: none;
   font-size: 0.9rem;
-  width: calc(100% - 1.5rem);
+  width: 100%;
 }
-
-input::placeholder {
+textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--light-color-black);
+  border-radius: 6px;
+  outline: none;
+  font-size: 0.9rem;
+  width: 100%;
+  height: 15rem;
+  resize: none;
+  line-height: 1.65;
+  font-family: 'nm';
+}
+input::placeholder,
+textarea::placeholder {
   color: var(--light-color-grey);
 }
 .caption {

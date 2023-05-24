@@ -1,7 +1,7 @@
 <template>
   <div class="community_list_item">
     <h3>
-      <router-link to="{ '/community/'+ articleNo }">
+      <router-link :to="'/community/' + articleNo">
         {{ title || '정보를 가져오는 데 실패했어요.' }}
       </router-link>
     </h3>
@@ -20,26 +20,16 @@
       </span>
     </p>
     <div class="community_list_item_tags">
-      <router-link
-        v-for="({ tagNo, tagName } = tag, idx) in articleTag"
-        :key="idx"
-      >
-        <tag-item
-          :tagNo="tagNo"
-          :tagName="tagName"
-          :selectable="false"
-          :selected="true"
-        />
-      </router-link>
+      <tag-form :selected-tag="articleTag" />
     </div>
   </div>
 </template>
 
 <script>
-import TagItem from './TagItem.vue';
+import TagForm from './TagForm.vue';
 export default {
   name: 'CommunityList',
-  components: { TagItem },
+  components: { TagForm },
   props: {
     articleNo: Number,
     writerNickname: String,
@@ -61,15 +51,17 @@ export default {
   border: 1px solid var(--light-color-lightgrey);
   border-radius: 8px;
   padding: 1rem;
+  margin-bottom: 1rem;
 }
 h3 {
   color: var(--light-color-black);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-bottom: 0.5rem;
 }
 .community_list_item p {
-  margin-top: 0.25rem;
+  margin-left: 0;
 }
 .community_list_item_writerNickname,
 .community_list_item_createdAt,
