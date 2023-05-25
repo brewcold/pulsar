@@ -37,9 +37,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/member/signup/**", "/community/*/static", "/tag", "/exercise");
     }
 
+    // 시연을 위해 임시로 모든 경로 및 메서드에 대해서 CORS Mapping을 설정합니다.
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*");
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("GET", "POSt", "PUT", "DELETE", "HEAD");
     }
 
 }
