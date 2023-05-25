@@ -11,7 +11,7 @@
         :id="inputName"
         :value="value"
         :placeholder="placeholder"
-        @input="$emit('input', $event.target.value)"
+        @input="$emit('handle-input', $event.target.value)"
       >
       </textarea>
     </div>
@@ -37,6 +37,7 @@ export default {
       type: String,
       default: 'text',
     },
+    height: String,
     placeholder: String,
     caption: String,
     value: String,
@@ -51,6 +52,7 @@ export default {
     styles() {
       return {
         '--margin': this.margin,
+        '--height': this.height,
         '--display': this.caption ? 'block' : 'none',
         '--caption-color':
           //중첩 삼항연산자입니다. inputType이 password이고 비밀번호가 valid하다면...
@@ -90,6 +92,7 @@ textarea {
   font-size: 0.9rem;
   width: 100%;
   height: 15rem;
+  height: var(--height);
   resize: none;
   line-height: 1.65;
   font-family: 'nm';
