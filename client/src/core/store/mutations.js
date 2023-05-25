@@ -9,7 +9,7 @@ export default {
     state.profileImg = member.profileImg;
     state.token = token;
   },
-  logout() {
+  logout(state) {
     state.authenticated = false;
     state.memberNo = null;
     state.nickname = null;
