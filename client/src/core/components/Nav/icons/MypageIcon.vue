@@ -36,7 +36,7 @@ export default {
   computed: {
     styles() {
       return {
-        '--active': this.active ? '#666666' : '#cccccc',
+        '--active': this.active ? '#ff8048' : '#cccccc',
       };
     },
     active() {
