@@ -34,7 +34,7 @@ export default {
 @import url('../../assets/css/typography.css');
 
 .comment_list_container {
-  border: 1px solid var(--light-color-lightgrey);
+  border: 1px solid var(--light-color-grey);
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
