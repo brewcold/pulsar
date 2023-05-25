@@ -56,10 +56,9 @@ export default {
         .catch((err) => console.log(err));
     },
     comment() {
-      postArticleComment(
-        this.$route.params.articleNo,
-        this.commentContent
-      )
+      postArticleComment(this.$route.params.articleNo, {
+        comment: this.commentContent,
+      })
         .then((res) => (this.commentList = res.data))
         .catch((err) => console.log(err));
     },
