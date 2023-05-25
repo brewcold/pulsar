@@ -10,8 +10,6 @@ public class Exercise {
     private int count;
     // 운동 1회 당 시간
     private int duration;
-    // 운동 순서
-    private int order;
 
     // 기본 생성자
     public Exercise() {}
@@ -49,14 +47,6 @@ public class Exercise {
         this.duration = duration;
     }
 
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
-    }
-
     // toString
     @Override
     public String toString() {
@@ -65,7 +55,6 @@ public class Exercise {
                 ", exerciseName='" + exerciseName + '\'' +
                 ", count=" + count +
                 ", duration=" + duration +
-                ", order=" + order +
                 '}';
     }
 

@@ -1,7 +1,7 @@
 package com.hammer.pulsar.interceptor;
 
 import com.hammer.pulsar.exception.UnauthorizedException;
-import com.hammer.pulsar.util.UUIDTokenManager;
+import com.hammer.pulsar.util.MemoryAuthManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -28,30 +28,25 @@ public class AuthCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String authToken = request.getHeader("Authorization");
+        int loginMember = MemoryAuthManager.getLoginMember();
 
         String httpMethod = request.getMethod();
         String requestUri = request.getRequestURI();
 
-        logger.info("Authorization = {}, method = {}, uri = {}", authToken, httpMethod, requestUri);
+        logger.info("method = {}, uri = {}", httpMethod, requestUri);
 
         // 회원이 접근할 수 없는 경로로 접근했을 경우 차단
-        if(isMember(authToken) && !isPermittedRequestToMember(requestUri)) {
+        if(loginMember != 0 && !isPermittedRequestToMember(requestUri)) {
             throw new UnauthorizedException("잘못된 요청입니다.");
         }
 
         // 비회원이 접근할 수 없는 경로로 접근했을 경우 차단
-        if(!isMember(authToken) && !isPermittedRequestToStranger(httpMethod, requestUri)) {
+        if(loginMember == 0 && !isPermittedRequestToStranger(httpMethod, requestUri)) {
             throw new UnauthorizedException("로그인이 필요한 기능입니다.");
         }
 
         // 그 외의 경우에는 허용
         return true;
-    }
-
-    // 로그인상태이면 true를 반환하는 메서드
-    private boolean isMember(String authToken) {
-        return UUIDTokenManager.checkLogin(authToken);
     }
 
     // 회원이 접근할 수 있는 경로이면 true를 반환하는 메서드

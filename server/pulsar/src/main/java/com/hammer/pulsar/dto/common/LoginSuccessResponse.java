@@ -1,28 +1,28 @@
 package com.hammer.pulsar.dto.common;
 
-import com.hammer.pulsar.dto.member.LoginInfo;
+import com.hammer.pulsar.dto.member.MemberProfile;
 
 // JWT 사용 이전까지 로그인 성공 시 반환할 응답
 public class LoginSuccessResponse {
-    private LoginInfo loginInfo;
+    private MemberProfile memberProfile;
     private String token;
 
     // 기본 생성자
     public LoginSuccessResponse() {}
 
     // 생성자
-    public LoginSuccessResponse(LoginInfo loginInfo, String token) {
-        this.loginInfo = loginInfo;
+    public LoginSuccessResponse(MemberProfile memberProfile, String token) {
+        this.memberProfile = memberProfile;
         this.token = token;
     }
 
     // Getters, Setters
-    public LoginInfo getLoginInfo() {
-        return loginInfo;
+    public MemberProfile getLoginInfo() {
+        return memberProfile;
     }
 
-    public void setLoginInfo(LoginInfo loginInfo) {
-        this.loginInfo = loginInfo;
+    public void setLoginInfo(MemberProfile memberProfile) {
+        this.memberProfile = memberProfile;
     }
 
     public String getToken() {
@@ -37,7 +37,7 @@ public class LoginSuccessResponse {
     @Override
     public String toString() {
         return "LoginSuccessResponse{" +
-                "loginInfo=" + loginInfo +
+                "loginInfo=" + memberProfile +
                 ", token='" + token + '\'' +
                 '}';
     }

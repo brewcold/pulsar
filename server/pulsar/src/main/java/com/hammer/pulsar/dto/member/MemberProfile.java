@@ -4,19 +4,34 @@ import com.hammer.pulsar.dto.common.Tag;
 
 import java.util.List;
 
-// 회원의 프로필 정보를 담고 있는 DTO 클래스
+// 로그인 성공 시 클라이언트에 보내줄 로그인 정보를 담은 DTO 클래스
 public class MemberProfile {
-    // 회원의 닉네임
+    private int memberNo;
+    private String email;
     private String nickname;
-    // 회원의 프로필 이미지 경로
     private String profileImg;
-    // 회원의 고민 태그 목록
     private List<Tag> selectedTag;
 
     // 기본 생성자
     public MemberProfile() {}
 
     // Getters, Setters
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getNickname() {
         return nickname;
     }
@@ -44,8 +59,9 @@ public class MemberProfile {
     // toString
     @Override
     public String toString() {
-        return "MemberProfile{" +
-                "nickname='" + nickname + '\'' +
+        return "LoginInfo{" +
+                "memberNo=" + memberNo +
+                ", nickname='" + nickname + '\'' +
                 ", profileImg='" + profileImg + '\'' +
                 ", selectedTag=" + selectedTag +
                 '}';

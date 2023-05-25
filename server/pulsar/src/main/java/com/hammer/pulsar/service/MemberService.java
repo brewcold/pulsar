@@ -21,10 +21,10 @@ public interface MemberService {
     public boolean checkDuplicateNickname(String nickname);
 
     // 선택한 회원의 정보 조회 로직
-    public Member getMemberInfo(int memberId) throws NoSuchElementException;
+    public MemberProfile getMemberInfo(int memberId) throws NoSuchElementException;
 
     // 로그인을 수행하는 로직
-    public LoginInfo login(LoginForm form) throws UnauthorizedException;
+    public MemberProfile login(LoginForm form) throws UnauthorizedException;
 
     // 회원 정보 수정 로직
     public MemberModifyResponse modifyMemberInfo(MemberModifyForm form, MultipartFile imgFile);

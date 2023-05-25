@@ -4,6 +4,7 @@ import java.util.List;
 
 // 루틴 테이블에 새로운 루틴을 추가하기 위한 DTO 클래스
 public class RoutineRegistRequest {
+    private int routineNo;
     // 루틴 제목
     private String title;
     // 루틴 작성자 고유번호
@@ -33,6 +34,14 @@ public class RoutineRegistRequest {
     }
 
     // Getters, Setters
+    public int getRoutineNo() {
+        return routineNo;
+    }
+
+    public void setRoutineNo(int routineNo) {
+        this.routineNo = routineNo;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -93,9 +102,10 @@ public class RoutineRegistRequest {
     @Override
     public String toString() {
         return "RoutineRegistRequest{" +
-                "title='" + title + '\'' +
+                "routineNo=" + routineNo +
+                ", title='" + title + '\'' +
                 ", writerId=" + writerId +
-                ", repeatUnit=" + repeatUnit +
+                ", repeatUnit='" + repeatUnit + '\'' +
                 ", repeatPeriod=" + repeatPeriod +
                 ", repeatDay=" + repeatDay +
                 ", startHour=" + startHour +
