@@ -59,10 +59,9 @@ export default {
     },
     addRoutine(data) {
       postRoutine(data, this.$store.getters.getToken)
-        .then((res) => console.log('성공'))
+        .then((res) => this.getRoutineList())
         .catch((err) => console.log('실패'));
-      this.getRoutineList();
-      return modalToggle();
+      return this.modalToggle();
     },
     modalToggle() {
       this.displayModal = !this.displayModal;

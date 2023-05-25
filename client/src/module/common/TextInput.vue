@@ -21,7 +21,15 @@
         :type="inputType"
         :placeholder="placeholder"
         :value="value"
-        @input="$emit('input', $event.target.value)"
+        :valueNum="valueNum"
+        @input="
+          $emit(
+            'input',
+            inputType === 'number'
+              ? $event.target.valueNum
+              : $event.target.value
+          )
+        "
       />
       <p class="caption">{{ caption }}</p>
     </div>
@@ -29,6 +37,8 @@
 </template>
 
 <script>
+import { any } from 'prop-types';
+
 export default {
   name: 'TextInput',
   props: {
@@ -40,7 +50,8 @@ export default {
     height: String,
     placeholder: String,
     caption: String,
-    value: String,
+    value: any,
+    valueNum: Number,
     margin: String,
   },
   computed: {
@@ -76,7 +87,8 @@ export default {
 }
 input[type='text'],
 input[type='email'],
-input[type='password'] {
+input[type='password'],
+input[type='number'] {
   padding: 0.75rem;
   border: 1px solid var(--light-color-black);
   border-radius: 6px;
@@ -86,7 +98,7 @@ input[type='password'] {
 }
 textarea {
   padding: 0.75rem;
-  border: 1px solid var(--light-color-black);
+  border: 2px solid var(--light-color-black);
   border-radius: 6px;
   outline: none;
   font-size: 0.9rem;

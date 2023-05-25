@@ -17,9 +17,9 @@ div {
   display: inline;
 }
 .item {
-  width: 1.5rem;
-  height: 1.5rem;
-  fill: var(--light-color-darkgrey);
+  width: 2.25rem;
+  height: 2.25rem;
+  fill: var(--light-color-black);
   cursor: pointer;
 }
 .item:hover {

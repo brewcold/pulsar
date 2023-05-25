@@ -9,9 +9,7 @@
       <span>
         {{
           time
-            ? time.repeatPeriod +
-              time.repeatUnit +
-              '마다 ' +
+            ? '매주 ' +
               time.repeatDay +
               '요일 ' +
               time.startHour +
@@ -95,7 +93,7 @@ export default {
 @import url('../../assets/css/typography.css');
 
 .routine_list_item {
-  border: 1px solid var(--light-color-lightgrey);
+  border: 1px solid var(--light-color-grey);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -105,20 +103,21 @@ h3 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 .routine_list_item_meta {
+  margin-left: 0;
   font-size: 0.9rem;
   color: var(--light-color-darkgrey);
 }
 .routine_list_item_exerciseList {
   margin-top: 0.5rem;
-  margin-left: 1.5rem;
+  margin-left: 1rem;
 }
 .routine_list_item_exerciseList_item {
   font-size: 0.8rem;
   margin-top: 0.25rem;
   color: var(--light-color-darkgrey);
-  list-style-type: disc;
+  list-style-type: decimal;
 }
 </style>

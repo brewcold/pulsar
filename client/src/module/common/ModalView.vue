@@ -4,37 +4,73 @@
     <div id="modal_container">
       <div>
         <h1 id="modal_title">{{ modalTitle }}</h1>
-        <p id="modal_caption">{{ modalCaption }}</p>
+        <p id="modal_caption"></p>
         <div id="modal_contents_container">
           <div v-if="modalType === 'routine'">
             <form>
-              <div class="modal_text_input_container">
-                <span class="modal_text_input_label">매</span>
-                <text-input
-                  :input-type="'text'"
-                  :margin="'1rem'"
-                  v-model="time.repeatPeriod"
-                />
-              </div>
-              <div>
-                <p>반복 주기</p>
-                <TagForm />
-              </div>
-              <div>
-                <p>반복 단위</p>
-                <TagForm />
-              </div>
-              <text-input
-                :input-type="'text'"
-                v-model="time.startHour"
-              />
-              시
+              <h3>루틴 이름</h3>
               <text-input
                 :input-type="'text'"
                 :margin="'1rem'"
-                v-model="time.startMin"
+                v-model="routineTitle"
+                @input="setRoutineTitle"
               />
-              분에 시작
+              <div class="input_repeat">
+                <h3>반복 주기</h3>
+                <div class="input_unit_item">
+                  <text-input
+                    :input-type="'text'"
+                    :margin="'0.5rem'"
+                    v-model="time.repeatPeriod"
+                    @input="setRepeatPeriod"
+                  />
+                  <p></p>
+                  <TagForm
+                    v-model="time.repeatUnit"
+                    :selectable="true"
+                    :tags="[
+                      { tagNo: 1, tagName: '주' },
+                      // { tagNo: 2, tagName: '주' },
+                    ]"
+                    :plural="false"
+                    @tagform="setRepeatUnit"
+                  />
+                </div>
+                <div v-if="time.repeatUnit !== '일'">
+                  <TagForm
+                    v-model="time.repeatDay"
+                    :selectable="true"
+                    :tags="[
+                      { tagNo: 1, tagName: '일' },
+                      { tagNo: 2, tagName: '월' },
+                      { tagNo: 3, tagName: '화' },
+                      { tagNo: 4, tagName: '수' },
+                      { tagNo: 5, tagName: '목' },
+                      { tagNo: 6, tagName: '금' },
+                      { tagNo: 7, tagName: '토' },
+                    ]"
+                    :plural="false"
+                    @tagform="setRepeatDay"
+                  />
+                </div>
+              </div>
+              <h3>시작 시간</h3>
+              <div class="input_unit">
+                <div class="input_unit_item">
+                  <text-input
+                    :input-type="'text'"
+                    v-model="time.startHour"
+                  />
+                  <p>시</p>
+                </div>
+                <div class="input_unit_item">
+                  <text-input
+                    :input-type="'text'"
+                    v-model="time.startMin"
+                  />
+                  <p>분</p>
+                </div>
+              </div>
               <square-button
                 class="modal_btn"
                 @handle-click="modalRoutineSubmit"
@@ -57,17 +93,23 @@
                 :plural="false"
                 @tagform="setExercise"
               />
-              <text-input
-                :input-type="'text'"
-                v-model="exercise.count"
-                :margin="'1rem'"
-              />
-              회
-              <text-input
-                :input-type="'text'"
-                v-model="exercise.duration"
-              />
-              분
+              <div class="input_unit">
+                <div class="input_unit_item">
+                  <text-input
+                    :input-type="'text'"
+                    v-model="exercise.count"
+                  />
+                  <p>회</p>
+                </div>
+                <div class="input_unit_item">
+                  <text-input
+                    :input-type="'text'"
+                    v-model="exercise.duration"
+                  />
+                  <p>분</p>
+                </div>
+              </div>
+
               <square-button
                 class="modal_btn"
                 @handle-click="modalExerciseSubmit"
@@ -90,10 +132,19 @@
             <text-input
               :input-type="'textarea'"
               :placeholder="'내용'"
-              :height="'15rem'"
+              :height="'13rem'"
               v-model="community.body.content"
             />
-            //TODO: 태그 폼 삽입
+            <div id="tagFormContainer">
+              <tag-form
+                v-model="community.tagList"
+                :selectable="true"
+                :tags="tags"
+                :caption="'글의 주제를 선택하세요.'"
+                :plural="false"
+                @tagform="setTagList"
+              />
+            </div>
             <square-button
               class="modal_btn"
               @handle-click="modalCommunitySubmit"
@@ -138,7 +189,7 @@ export default {
       display: false,
       routineTitle: '',
       time: {
-        repeatPeriod: '0',
+        repeatPeriod: '1',
         repeatUnit: '',
         repeatDay: [],
         startHour: '0',
@@ -161,7 +212,7 @@ export default {
   },
   methods: {
     modalRoutineSubmit() {
-      const data = this.time;
+      const data = { routineTitle: this.routineTitle, time: this.time };
       this.$emit('modal-routine-submit', data);
     },
     modalExerciseSubmit() {
@@ -183,6 +234,21 @@ export default {
     },
     modalClose() {
       this.$emit('modal-toggle');
+    },
+    setRoutineTitle(data) {
+      this.routineTitle = data;
+    },
+    setRepeatUnit(data) {
+      this.time.repeatUnit = data[0].tagName;
+    },
+    setRepeatPeriod(data) {
+      this.time.repeatPeriod = data;
+    },
+    setRepeatDay(data) {
+      this.time.repeatDay.push(data[0].tagName);
+    },
+    setTagList(data) {
+      this.community.tagList.push(data[0]);
     },
   },
 };
@@ -221,7 +287,23 @@ export default {
   box-shadow: 0px 0px 6px var(--light-color-black);
   z-index: 9;
 }
-
+#tagFormContainer {
+  margin-top: 1rem;
+}
+.input_repeat {
+  margin-bottom: 1rem;
+}
+.input_unit {
+  display: flex;
+}
+.input_unit p {
+  margin-left: 0.5rem;
+  margin-right: 2rem;
+}
+.input_unit_item {
+  display: flex;
+  align-items: center;
+}
 #modal_contents_container div {
   width: 100%;
 }
@@ -229,7 +311,7 @@ export default {
   margin: 0;
 }
 .modal_btn {
-  margin-top: 2rem;
+  margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
 </style>
