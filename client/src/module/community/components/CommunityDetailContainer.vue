@@ -57,7 +57,7 @@ export default {
     },
     comment() {
       postArticleComment(this.$route.params.articleNo, {
-        comment: this.commentContent,
+        content: this.commentContent,
       })
         .then((res) => (this.commentList = res.data))
         .catch((err) => console.log(err));

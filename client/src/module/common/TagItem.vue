@@ -1,14 +1,12 @@
 <template>
-  <router-link to="/">
-    <button
-      type="button"
-      class="tagItem"
-      @click="handleClick"
-      :style="styles"
-    >
-      {{ tagName ? tagName : 'sample' }}
-    </button>
-  </router-link>
+  <button
+    type="button"
+    class="tagItem"
+    @click="handleClick"
+    :style="styles"
+  >
+    {{ tagName ? tagName : 'sample' }}
+  </button>
 </template>
 
 <style scoped>
@@ -36,16 +34,20 @@ export default {
     tagNo: Number,
     tagName: String,
   },
+  data() {
+    return {
+      selectable_selected: false,
+    };
+  },
   methods: {
-    handleClick() {
-      if (this.selectable === true)
-        return this.$emit(
-          'handle-click',
-          this.tagNo,
-          this.tagName,
-          this.selected
-        );
-      else null;
+    handleClick(event) {
+      this.selectable_selected = !this.selectable_selected;
+      this.$emit(
+        'tag-click',
+        this.tagNo,
+        this.tagName,
+        this.selectable_selected
+      );
     },
   },
   computed: {
@@ -55,12 +57,12 @@ export default {
         return {
           '--color': '#ff8048',
           '--text-color': 'white',
-          '--border': 'none',
+          '--border': '1px solid #ff8048',
         };
       } else {
         //고를 수 있는 태그 (결과로 보이지 않고, 글 작성이나 회원가입 시 클릭했을 때 보여야 하는 태그)
         //그 중 아직 체크되지 않은 경우
-        if (this.selected === false) {
+        if (this.selectable_selected === false) {
           return {
             '--color': 'white',
             '--text-color': '#333333',
@@ -71,7 +73,7 @@ export default {
           return {
             '--color': '#db3f28',
             '--text-color': 'white',
-            '--border': 'none',
+            '--border': '1px solid #db3f28',
           };
         }
       }

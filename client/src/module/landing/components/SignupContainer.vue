@@ -14,8 +14,11 @@ export default {
   components: { SignupContent },
   data() {
     return {
-      concerns: [],
+      concerns: null,
     };
+  },
+  created() {
+    this.getTags();
   },
   methods: {
     getTags() {

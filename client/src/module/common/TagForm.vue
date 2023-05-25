@@ -10,7 +10,7 @@
         :tagName="tagName"
         :selectable="selectable"
         :selected="selected"
-        @handle-click="selectTag"
+        @tag-click="selectTag"
       />
     </div>
     <!--선택된 태그를 불러올 때-->
@@ -21,7 +21,7 @@
         :tagNo="tagNo"
         :tagName="tagName"
         :selected="selected"
-        @handle-click="selectTag"
+        @tagClick="selectTag"
       />
     </div>
   </div>
@@ -41,17 +41,21 @@ export default {
   data() {
     return {
       selectable_selectedTag: [],
+      selected: null,
     };
   },
   methods: {
     selectTag(tagNo, tagName, selected) {
-      if (!this.selectable) {
+      if (this.selectable) {
         if (selected)
           //태그를 골랐을 때
-          this.selectable_selectedTag.push({
-            tagNo: tagNo,
-            tagName: tagName,
-          });
+          this.selectable_selectedTag = [
+            ...this.selectable_selectedTag,
+            {
+              tagNo: tagNo,
+              tagName: tagName,
+            },
+          ];
         //태그를 다시 눌러 뺐을 때
         else
           this.selectable_selectedTag =
@@ -59,6 +63,7 @@ export default {
               (item, idx) => item.tagNo !== tagNo
             );
       }
+      this.$emit('tagform', this.selectable_selectedTag);
     },
   },
   components: { TagItem },
@@ -71,14 +76,16 @@ export default {
 @import url('../../assets/css/typography.css');
 
 #tagform {
-  min-width: calc(100% - 2rem);
+  min-width: 100%;
   /* height: 4rem; */
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
   overflow-x: auto;
   overflow-y: hidden;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  margin-bottom: 1rem;
 }
 #tagform::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/

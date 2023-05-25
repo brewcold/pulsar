@@ -33,7 +33,8 @@
         v-model="selectedTag"
         :selectable="true"
         :tags="concerns"
-        :caption="'운동을 하는 주된 이유가 무엇인가요? (최대 3개 선택)'"
+        :caption="'운동에 대한 가장 큰 고민이 무엇인가요?'"
+        @tagform="setConcerns"
       />
       <!-- <input type="file" @change="setFile" /> -->
       <square-button
@@ -108,6 +109,9 @@ export default {
       this.nickname = '';
       this.selectedTag = [];
       this.profileImg = null;
+    },
+    setConcerns(concerns) {
+      this.selectedTag = concerns;
     },
     // setFile(e) {
     //   const file = e.target.files[0];

@@ -1,6 +1,6 @@
 <template>
   <div class="exercise_list_container">
-    <div v-if="exerciseList?.length" class="exercise_list_item">
+    <div v-if="exercise" class="exercise_list_item">
       <h3>
         {{ exercise.exerciseName ? exercise.exerciseName : ' --- ' }}
       </h3>
