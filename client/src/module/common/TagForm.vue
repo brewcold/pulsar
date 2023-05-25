@@ -9,7 +9,7 @@
         :tagNo="tagNo"
         :tagName="tagName"
         :selectable="selectable"
-        :selected="selected()"
+        :selected="selected"
         @handle-click="selectTag"
       />
     </div>
