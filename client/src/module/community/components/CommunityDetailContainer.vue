@@ -4,7 +4,7 @@
       :article="article"
       :comment-list="commentList"
       @modal-toggle="modalToggle"
-      @handle-input="handleInput"
+      @input="handleInput"
       @comment="comment"
       @delete-article="removeArticle"
     />
@@ -57,11 +57,18 @@ export default {
         .catch((err) => console.log(err));
     },
     comment() {
-      postArticleComment(this.$route.params.articleNo, {
-        content: this.commentContent,
-      })
-        .then((res) => (this.commentList = res.data))
-        .catch((err) => console.log(err));
+      if (
+        this.commentContent === null ||
+        this.commentContent.trim().length === 0
+      ) {
+        alert('내용을 입력하세요!');
+      } else {
+        postArticleComment(this.$route.params.articleNo, {
+          content: this.commentContent,
+        })
+          .then((res) => (this.commentList = res.data))
+          .catch((err) => console.log(err));
+      }
     },
     removeArticle() {
       deleteArticle(this.$route.params.articleNo);
