@@ -9,7 +9,7 @@
         :tagNo="tagNo"
         :tagName="tagName"
         :selectable="selectable"
-        :selected="selectedTag"
+        :selected="selected"
         @handle-click="selectTag"
       />
     </div>
@@ -20,7 +20,7 @@
         :key="idx"
         :tagNo="tagNo"
         :tagName="tagName"
-        :selectedTag="selectedTag"
+        :selected="selected"
         @handle-click="selectTag"
       />
     </div>
@@ -38,12 +38,27 @@ export default {
     selectedTag: Array,
     caption: String,
   },
+  data() {
+    return {
+      selectable_selectedTag: [],
+    };
+  },
   methods: {
-    selectTag() {
-      if (!this.selectable)
-        return;
-        //prop의 selected를 true로 만들어줘야함...
-      else;
+    selectTag(tagNo, tagName, selected) {
+      if (!this.selectable) {
+        if (selected)
+          //태그를 골랐을 때
+          this.selectable_selectedTag.push({
+            tagNo: tagNo,
+            tagName: tagName,
+          });
+        //태그를 다시 눌러 뺐을 때
+        else
+          this.selectable_selectedTag =
+            this.selectable_selectedTag.filter(
+              (item, idx) => item.tagNo !== tagNo
+            );
+      }
     },
   },
   components: { TagItem },
