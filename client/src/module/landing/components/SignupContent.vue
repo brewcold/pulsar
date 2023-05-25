@@ -31,7 +31,10 @@
       <!--tag components-->
       <tag-form
         v-model="selectedTag"
-        :caption="'운동을 하는 주된 이유가 무엇인가요? (최대 3개 선택)'"
+        :selectable="true"
+        :tags="concerns"
+        :caption="'운동에 대한 가장 큰 고민이 무엇인가요?'"
+        @tagform="setConcerns"
       />
       <!-- <input type="file" @change="setFile" /> -->
       <square-button
@@ -74,6 +77,7 @@ import TextInput from '../../common/TextInput.vue';
 export default {
   name: 'SignupContent',
   components: { TextInput, SquareButton, TagForm },
+  props: { concerns: Array },
   data() {
     return {
       //각 커스텀 인풋 컴포넌트에서 받은 입력값을 v-model로 양방향 바인딩합니다.
@@ -105,6 +109,9 @@ export default {
       this.nickname = '';
       this.selectedTag = [];
       this.profileImg = null;
+    },
+    setConcerns(concerns) {
+      this.selectedTag = concerns;
     },
     // setFile(e) {
     //   const file = e.target.files[0];

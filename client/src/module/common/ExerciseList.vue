@@ -1,11 +1,12 @@
 <template>
   <div class="exercise_list_container">
-    <div v-if="exerciseList?.length" class="exercise_list_item">
-      <h3>
-        {{ exercise.exerciseName ? exercise.exerciseName : ' --- ' }}
-      </h3>
+    <div v-if="exercise" class="exercise_list_item">
       <p>
+        <strong>
+          {{ exercise.exerciseName ? exercise.exerciseName : ' --- ' }}
+        </strong>
         {{ exercise.count ? exercise.count + '회' : '' }}
+        {{ exercise.count && exercise.duration ? ' / ' : '' }}
         {{ exercise.duration ? exercise.duration + '분' : '' }}
       </p>
     </div>
@@ -30,9 +31,9 @@ export default {
 @import url('../../assets/css/typography.css');
 
 .exercise_list_container {
-  border: 1px solid var(--light-color-lightgrey);
+  border: 1px solid var(--light-color-grey);
   border-radius: 8px;
-  padding: 1rem;
+  padding: 0.75rem;
   margin-bottom: 1rem;
 }
 h3 {

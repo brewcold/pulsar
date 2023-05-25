@@ -51,20 +51,23 @@ public class CommunityRestController {
     }
 
     // 글 작성하기 API
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<Integer> writeArticle(@RequestPart(value = "form") ArticleWriteForm form,
-                                                @RequestPart(value = "imgs", required = false) MultipartFile[] imgFiles,
+//    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping()
+    public ResponseEntity<Integer> writeArticle(@RequestBody ArticleWriteForm form,
+//                                                @RequestPart(value = "imgs", required = false) MultipartFile[] imgFiles,
                                                 HttpServletRequest request) {
         // 작성자의 회원번호를 조회한다.
         int memberId = MemoryAuthManager.getLoginMember();
 
-        int articleNo = articleService.writeArticle(form, imgFiles, memberId);
+//        int articleNo = articleService.writeArticle(form, imgFiles, memberId);
+        int articleNo = articleService.writeArticle(form, null, memberId);
 
         return new ResponseEntity<>(articleNo, HttpStatus.OK);
     }
 
     // 글 수정하기 API
-    @PutMapping(value = "/{articleId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @PutMapping(value = "/{articleId}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PutMapping("/{articleId}")
     public ResponseEntity<Void> modifyArticle(@PathVariable int articleId,
                                               @RequestPart(value = "form") ArticleModifyForm form,
                                               @RequestPart(value = "imgs", required = false) MultipartFile[] imgFiles,
@@ -135,13 +138,11 @@ public class CommunityRestController {
         int memberId = MemoryAuthManager.getLoginMember();
 
         // 댓글 작성에 필요한 데이터를 DTO에 담기
-        CommentWriteRequest writeRequest = new CommentWriteRequest();
-
-        writeRequest.setWriterId(memberId);
-        writeRequest.setArticleId(articleId);
+        commentWriteRequest.setWriterId(memberId);
+        commentWriteRequest.setArticleId(articleId);
 
         // 댓글을 작성하고 댓글 목록을 다시 가져오기
-        List<Comment> commentList = interactionService.writeComment(writeRequest);
+        List<Comment> commentList = interactionService.writeComment(commentWriteRequest);
 
         return new ResponseEntity<>(commentList, HttpStatus.OK);
     }

@@ -9,6 +9,7 @@
       :modal-type="'routine-exercise'"
       :modal-title="'운동 추가하기'"
       :modal-caption="'운동을 추가합니다.'"
+      :tags="exercise"
       @modal-exercise-submit="addExercise"
       @modal-toggle="modalToggle"
     />
@@ -18,8 +19,12 @@
 <script>
 import RoutineDetailContent from './RoutineDetailContent.vue';
 import ModalView from '../../common/ModalView.vue';
-import { getRoutineDetail } from '../../../core/api/routine';
+import {
+  getRoutineDetail,
+  putRoutine,
+} from '../../../core/api/routine';
 import { mapGetters } from 'vuex';
+import { getExercise } from '../../../core/api/tag';
 export default {
   name: 'RoutineDetailContainer',
   components: { RoutineDetailContent, ModalView },
@@ -30,6 +35,7 @@ export default {
     return {
       routine: null,
       displayModal: false,
+      exercise: null,
     };
   },
   methods: {
@@ -39,9 +45,20 @@ export default {
         this.getToken
       ).then((res) => (this.routine = res.data));
     },
-    addExercise() {},
+    getExerciseTags() {
+      getExercise().then((res) => {
+        this.exercise = res.data;
+      });
+    },
+    addExercise(exercise) {
+      this.routine.exerciseList.push(exercise);
+      putRoutine(this.$route.params.routineNo, this.routine).then(
+        (res) => this.modalToggle()
+      );
+    },
     modalToggle() {
       this.displayModal = !this.displayModal;
+      if (this.displayModal) this.getExerciseTags();
     },
   },
   watch: {

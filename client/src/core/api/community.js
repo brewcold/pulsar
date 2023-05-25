@@ -21,7 +21,7 @@ export const getArticleDetail = (articleNo) =>
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
 export const postArticle = (data) =>
-  call(`/community`, 'post', data, 'auth_img'); //글 수정하기
+  call(`/community`, 'post', data, 'auth'); //글 수정하기
 
 /**
  * ### `articleNo`번 글을 수정합니다.

@@ -42,7 +42,7 @@ export default {
   color: var(--light-color-darkgrey);
   background: white;
   cursor: pointer;
-  height: 2.75rem;
+  height: 3rem;
   width: 3rem;
   font-size: 1.25rem;
 }

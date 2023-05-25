@@ -13,10 +13,10 @@
     </p>
     <p>
       <span class="community_list_item_recommendCnt">
-        {{ recommendCnt ? recommendCnt : '0' }} Likes /</span
+        {{ recommendCnt ? recommendCnt : '0' }} Likes</span
       >
       <span class="community_list_item_viewCnt">
-        {{ viewCnt ? viewCnt : '0' }} Views
+        / {{ viewCnt ? viewCnt : '0' }} Views
       </span>
     </p>
     <div class="community_list_item_tags">
@@ -48,9 +48,9 @@ export default {
 @import url('../../assets/css/typography.css');
 
 .community_list_item {
-  border: 1px solid var(--light-color-lightgrey);
+  border: 1px solid var(--light-color-grey);
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
   margin-bottom: 1rem;
 }
 h3 {
@@ -68,9 +68,10 @@ h3 {
 .community_list_item_viewCnt,
 .community_list_item_recommendCnt {
   font-size: 0.85rem;
-  color: var(--light-color-darkgrey);
+  line-height: 1;
+  color: var(--light-color-grey);
 }
-.community_list_item_tags {
-  margin-top: 0.5rem;
+.community_list_item_recommendCnt {
+  color: var(--light-color-point);
 }
 </style>

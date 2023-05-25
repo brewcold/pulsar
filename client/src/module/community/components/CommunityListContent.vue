@@ -9,7 +9,7 @@
 
     <square-button
       :value="'글 작성'"
-      :theme="'black'"
+      :theme="'point'"
       @handle-click="$emit('modal-toggle')"
     />
 
@@ -48,7 +48,7 @@ import SquareButton from '../../../module/common/SquareButton.vue';
 import CommunityList from '../../../module/common/CommunityList.vue';
 
 export default {
-  name: '',
+  name: 'CommunityListContent',
   components: { CommunityList, SquareButton },
   props: {
     articles: Array,
@@ -70,7 +70,7 @@ export default {
 }
 #logo {
   width: 2.25rem;
-  height: 2.5rem;
+  height: 2.25rem;
 }
 #btn_container {
   width: 100%;

@@ -30,6 +30,7 @@
             C.WRITER_ID = M.ID
         WHERE
             ARTICLE_ID = #{articleId}
+        ORDER BY REG_DATE DESC
     </select>
 
     <!--  회원이 작성한 모든 댓글을 조회하는 SQL  -->

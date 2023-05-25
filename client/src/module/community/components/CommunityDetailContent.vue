@@ -6,22 +6,29 @@
       </router-link>
     </div>
 
-    <h1>COMMUNITY</h1>
-    <div id="detail_content_container">
-      <h3>
-        {{ article ? article?.title : '죄송합니다.' }}
-      </h3>
-      <span>
-        {{ article?.writerInfo.writerNickname }}님이
-        {{ article?.createdAt }}에 작성
-      </span>
-      <p id="content">
-        {{
-          article
-            ? article.body.content
-            : '서버로부터 정보를 가져오지 못했어요.'
-        }}
-      </p>
+    <h1>{{ article ? article?.title : '죄송합니다.' }}</h1>
+    <p id="writerInfo">
+      {{ article?.writerInfo.writerNickname }}님이
+      {{ article?.createdAt }}에 작성
+    </p>
+    <p id="content">
+      {{
+        article
+          ? article.body.content
+          : '서버로부터 정보를 가져오지 못했어요.'
+      }}
+    </p>
+
+    <div id="update">
+      <square-button
+        :value="'글 삭제하기'"
+        @handle-click="$emit('delete-article')"
+      />
+      <div id="space" />
+      <square-button
+        :value="'글 수정하기'"
+        @handle-click="$emit('update-article')"
+      />
     </div>
     <div id="detail_content_detailWrapper">
       <div id="detail_content_comment_list">
@@ -32,15 +39,16 @@
             <text-input
               :input-type="'textarea'"
               :placeholder="'댓글을 입력하세요.'"
-              @handle-input="handleInput"
+              @input="handleInput"
               :margin="'1rem'"
               :height="'5rem'"
+              v-model="commentContent"
             />
             <square-button
               :value="'댓글 작성'"
               :theme="'point'"
-              @keyup.enter="$emit('comment')"
-              @handle-click="$emit('comment')"
+              @keyup.enter="handleComment"
+              @handle-click="handleComment"
             />
           </div>
           <div id="detail_content_comment_list">
@@ -51,16 +59,10 @@
                 :comment="c"
               />
             </div>
-            <div v-else>
+            <div v-else id="alternative">
               <p>아직 댓글이 없어요.</p>
             </div>
           </div>
-        </div>
-        <div id="delete">
-          <square-button
-            :value="'글 삭제하기'"
-            @handle-click="$emit('delete-article')"
-          />
         </div>
       </div>
     </div>
@@ -84,9 +86,18 @@ export default {
     article: Object,
     commentList: Array,
   },
+  data() {
+    return {
+      commentContent: '',
+    };
+  },
   methods: {
     handleInput(data) {
-      this.$emit('handle-input', data);
+      this.$emit('input', data);
+    },
+    handleComment() {
+      this.$emit('comment');
+      this.commentContent = '';
     },
   },
 };
@@ -108,27 +119,48 @@ export default {
   padding: 1rem;
   border-radius: 8px;
 }
+
+#space {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+#update {
+  margin-top: 8rem;
+
+  display: flex;
+}
 h3 {
   margin-bottom: 0.5rem;
 }
-span {
-  font-size: 0.8rem;
+#writerInfo {
+  margin-top: 0.5rem;
+  margin-left: 0.1rem;
+  font-size: 0.9rem;
   color: var(--light-color-darkgrey);
 }
 p {
   margin: 0;
 }
 #content {
-  margin-top: 0.5rem;
+  margin-top: 1.5rem;
   border-radius: 8px;
+  font-size: 1.1rem;
 }
 #go_back_container {
   display: flex;
   align-items: center;
 }
+#logo_container {
+  margin: 1.5rem 0 0.25rem 0;
+}
 #logo {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+#alternative {
+  margin-top: 2rem;
+  text-align: center;
+  color: var(--light-color-grey);
 }
 #detail_caption {
   margin: 0 0 1rem 0;

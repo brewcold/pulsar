@@ -1,5 +1,5 @@
 <template>
-  <div id="community_view">
+  <div id="community_view" ref="listContainer">
     <router-view />
   </div>
 </template>
@@ -10,9 +10,22 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    this.$refs.listContainer.addEventListener(
+      'scroll',
+      this.infiniteScroll
+    );
+  },
+  beforeUnmount() {
+    this.$refs.listContainer.removeEventListener(
+      'scroll',
+      this.infiniteScroll
+    );
+  },
   methods: {
-    staticDataCall() {
-      return Promise.all([]).then((res) => res.data);
+    infiniteScroll() {
+      const target = this.$refs.listContainer;
+      console.log(target.scrollTop);
     },
   },
 };
@@ -22,14 +35,4 @@ export default {
 @import url('../../assets/css/init.css');
 @import url('../../assets/css/root.css');
 @import url('../../assets/css/typography.css');
-
-#community_view {
-  height: 100vh;
-  overflow-y: auto;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-#community_view::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
-}
 </style>

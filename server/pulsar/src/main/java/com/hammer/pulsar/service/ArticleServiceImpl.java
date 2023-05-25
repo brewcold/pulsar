@@ -39,7 +39,9 @@ public class ArticleServiceImpl implements ArticleService {
         // 작성자 정보를 Request에 담는다
         ArticleWriteRequest request = new ArticleWriteRequest();
 
-        request.setRoutineId(form.getBody().getRoutine().getRoutineNo());
+        // Body가 null일 경우 NPE 발생
+        if(form.getBody().getRoutine() != null)
+            request.setRoutineId(form.getBody().getRoutine().getRoutineNo());
         request.setTitle(form.getTitle());
         request.setContent(form.getBody().getContent());
         request.setWriterId(memberId);
@@ -51,11 +53,13 @@ public class ArticleServiceImpl implements ArticleService {
         fileManagementService.uploadArticleImgs(imgFiles, request.getArticleId());
 
         // 선택한 태그를 추가한다.
-        articleTagDao.insertArticleTags(new ArticleTagUpdateRequest(request.getArticleId(),
-                form.getTagList()
-                .stream()
-                .map(Tag::getTagNo)
-                .collect(Collectors.toList())));
+        // 태그가 empty일 경우 예외 발생방지
+        if(!form.getTagList().isEmpty())
+            articleTagDao.insertArticleTags(new ArticleTagUpdateRequest(request.getArticleId(),
+                    form.getTagList()
+                    .stream()
+                    .map(Tag::getTagNo)
+                    .collect(Collectors.toList())));
 
         return request.getArticleId();
     }
@@ -93,7 +97,10 @@ public class ArticleServiceImpl implements ArticleService {
         article.setViewCnt(article.getViewCnt() + 1);
 
         // 태그 불러오기
-        article.setTagList(articleTagDao.selectTagByArticleId(articleId));
+        List<Tag> selected = articleTagDao.selectTagByArticleId(articleId);
+        // 태그가 empty일 경우 예외 발생방지
+        if(!selected.isEmpty())
+            article.setTagList(selected);
 
         return article;
     }
@@ -134,6 +141,8 @@ public class ArticleServiceImpl implements ArticleService {
     private void modifyTagList(List<Tag> newTags, int articleId) {
         // 현재 게시글의 태그 목록들을 모두 불러온다.
         List<Tag> savedTags = articleTagDao.selectTagByArticleId(articleId);
+        // 태그가 empty일 경우 예외 발생방지
+        if(savedTags.isEmpty()) return;
 
         /*
             기존의 태그와 새로운 태그 목록을 비교한다.
