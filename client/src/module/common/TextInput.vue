@@ -11,7 +11,7 @@
         :id="inputName"
         :value="value"
         :placeholder="placeholder"
-        @input="$emit('handle-input', $event.target.value)"
+        @input="$emit('input', $event.target.value)"
       >
       </textarea>
     </div>

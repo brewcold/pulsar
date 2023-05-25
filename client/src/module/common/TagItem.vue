@@ -29,10 +29,12 @@ button {
 export default {
   name: 'TagItem',
   props: {
-    selected: Boolean,
+    selected: Array,
     selectable: Boolean,
+    'selectable-selected': Boolean,
     tagNo: Number,
     tagName: String,
+    idx: Number,
   },
   data() {
     return {
@@ -42,11 +44,13 @@ export default {
   methods: {
     handleClick(event) {
       this.selectable_selected = !this.selectable_selected;
+      //TODO: 여기서 emit 한번 제대로 하면 선택 상태의 양방향 바인딩 될듯
       this.$emit(
         'tag-click',
         this.tagNo,
         this.tagName,
-        this.selectable_selected
+        this.selectable_selected,
+        this.idx
       );
     },
   },

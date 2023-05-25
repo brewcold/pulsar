@@ -25,6 +25,7 @@ export default {
               res.data
               // res.data.token
             );
+
             //기본 화면인 루틴으로 리다이렉트시킵니다.
             this.$router.push('/routines');
           } else if (res && res.status < 500)
