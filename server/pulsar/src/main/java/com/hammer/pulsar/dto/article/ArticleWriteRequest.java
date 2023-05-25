@@ -49,7 +49,7 @@ public class ArticleWriteRequest {
         this.writerId = writerId;
     }
 
-    public int getRoutineId() {
+    public Integer getRoutineId() {
         return routineId;
     }
 

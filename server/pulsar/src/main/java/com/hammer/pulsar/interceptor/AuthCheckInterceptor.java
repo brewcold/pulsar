@@ -34,16 +34,16 @@ public class AuthCheckInterceptor implements HandlerInterceptor {
         String requestUri = request.getRequestURI();
 
         logger.info("method = {}, uri = {}", httpMethod, requestUri);
-
-        // 회원이 접근할 수 없는 경로로 접근했을 경우 차단
-        if(loginMember != 0 && !isPermittedRequestToMember(requestUri)) {
-            throw new UnauthorizedException("잘못된 요청입니다.");
-        }
-
-        // 비회원이 접근할 수 없는 경로로 접근했을 경우 차단
-        if(loginMember == 0 && !isPermittedRequestToStranger(httpMethod, requestUri)) {
-            throw new UnauthorizedException("로그인이 필요한 기능입니다.");
-        }
+//
+//        // 회원이 접근할 수 없는 경로로 접근했을 경우 차단
+//        if(loginMember != 0 && !isPermittedRequestToMember(requestUri)) {
+//            throw new UnauthorizedException("잘못된 요청입니다.");
+//        }
+//
+//        // 비회원이 접근할 수 없는 경로로 접근했을 경우 차단
+//        if(loginMember == 0 && !isPermittedRequestToStranger(httpMethod, requestUri)) {
+//            throw new UnauthorizedException("로그인이 필요한 기능입니다.");
+//        }
 
         // 그 외의 경우에는 허용
         return true;

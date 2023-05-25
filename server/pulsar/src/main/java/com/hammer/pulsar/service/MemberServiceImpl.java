@@ -70,12 +70,15 @@ public class MemberServiceImpl implements MemberService {
 
         // 고민 테이블에 저장할 정보만 담기
         // 고민 태그는 번호만 추출해서 Request 객체에 저장한다.
-        ConcernUpdateRequest concernUpdateRequest =
-                new ConcernUpdateRequest(memberRegistRequest.getMemberId(), form.getSelectedTag().stream().
-                        map((Tag::getTagNo)).collect(Collectors.toList()));
+        // 태그가 empty일 경우 예외 발생방지
+        if(!form.getSelectedTag().isEmpty()) {
+            ConcernUpdateRequest concernUpdateRequest =
+                    new ConcernUpdateRequest(memberRegistRequest.getMemberId(), form.getSelectedTag().stream().
+                            map((Tag::getTagNo)).collect(Collectors.toList()));
 
-        // 고민 테이블에 정보를 저장하기
-        concernTagDao.insertConcernTags(concernUpdateRequest);
+            // 고민 테이블에 정보를 저장하기
+            concernTagDao.insertConcernTags(concernUpdateRequest);
+        }
 
         return true;
     }
@@ -225,6 +228,9 @@ public class MemberServiceImpl implements MemberService {
     private void modifyTagList(List<Tag> newTags, int memberId) {
         // 현재 회원이 선택한 고민 태그 목록들을 모두 불러온다.
         List<Tag> savedTags = concernTagDao.selectTagsByMemberId(memberId);
+
+        // 태그가 empty일 경우 예외 발생방지
+        if(savedTags.isEmpty()) return;
 
         /*
             기존의 고민과 새로운 고민 태그 목록을 비교한다.
