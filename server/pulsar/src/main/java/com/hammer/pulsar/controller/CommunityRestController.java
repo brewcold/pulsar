@@ -130,7 +130,7 @@ public class CommunityRestController {
 
     // 댓글 쓰기 API
     @PostMapping("/{articleId}/active/comment")
-    public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, @RequestBody String content, HttpServletRequest request) {
+    public ResponseEntity<List<Comment>> writeComment(@PathVariable int articleId, @RequestBody CommentWriteRequest commentWriteRequest, HttpServletRequest request) {
         // 작성자의 회원번호를 조회한다.
         int memberId = MemoryAuthManager.getLoginMember();
 
@@ -139,7 +139,6 @@ public class CommunityRestController {
 
         writeRequest.setWriterId(memberId);
         writeRequest.setArticleId(articleId);
-        writeRequest.setContent(content);
 
         // 댓글을 작성하고 댓글 목록을 다시 가져오기
         List<Comment> commentList = interactionService.writeComment(writeRequest);
