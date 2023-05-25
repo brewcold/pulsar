@@ -67,7 +67,7 @@ export default {
         .then((res) => console.log('성공'))
         .catch((err) => console.log('실패'));
       this.getArticles();
-      return modalToggle();
+      this.modalToggle();
     },
     modalToggle() {
       this.displayModal = !this.displayModal;
