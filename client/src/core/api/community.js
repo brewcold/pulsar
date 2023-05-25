@@ -21,7 +21,7 @@ export const getArticleDetail = (articleNo) =>
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
 export const postArticle = (data) =>
-  call(`/community`, 'post', data, 'auth_img', token); //글 수정하기
+  call(`/community`, 'post', data, 'auth_img'); //글 수정하기
 
 /**
  * ### `articleNo`번 글을 수정합니다.
@@ -30,7 +30,7 @@ export const postArticle = (data) =>
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
 export const putArticle = (articleNo, data) =>
-  call(`/community/${articleNo}`, 'put', data, 'auth_img', token); //글 수정하기
+  call(`/community/${articleNo}`, 'put', data, 'auth_img'); //글 수정하기
 
 /**
  * ### `articleNo`번 글을 삭제합니다.
@@ -38,7 +38,7 @@ export const putArticle = (articleNo, data) =>
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
 export const deleteArticle = (articleNo) =>
-  call(`/community/${articleNo}`, 'delete', [], 'auth', token); //글 삭제하기
+  call(`/community/${articleNo}`, 'delete', [], 'auth'); //글 삭제하기
 
 /**
  * ### `articleNo`번 글의 좋아요 여부 및 개수를 확인합니다.
@@ -54,13 +54,7 @@ export const getArticleLike = (articleNo) =>
  * @returns `Promise` with CODE (200, 500, 404, 401)
  */
 export const postArticleLike = (articleNo) => {
-  call(
-    `/community/${articleNo}/active/like`,
-    'post',
-    [],
-    'auth',
-    token
-  );
+  call(`/community/${articleNo}/active/like`, 'post', [], 'auth');
 };
 
 /**
@@ -69,13 +63,7 @@ export const postArticleLike = (articleNo) => {
  * @returns `Promise` with CODE (200, 500, 404)
  */
 export const getArticleComment = (articleNo) =>
-  call(
-    `/community/${articleNo}/active/comment`,
-    'get',
-    [],
-    'auth',
-    token
-  ); //글 상세보기 - active data - 댓글 가져오기
+  call(`/community/${articleNo}/active/comment`, 'get', [], 'auth'); //글 상세보기 - active data - 댓글 가져오기
 
 /**
  * ### `articleNo`번 글에 댓글을 작성합니다.
@@ -83,14 +71,8 @@ export const getArticleComment = (articleNo) =>
  * @param {Object} data
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const postArticleComment = (articleNo, data, token) =>
-  call(
-    `/community/${articleNo}/active/comment`,
-    'post',
-    data,
-    'auth',
-    token
-  );
+export const postArticleComment = (articleNo, data) =>
+  call(`/community/${articleNo}/active/comment`, 'post', data, 'auth');
 
 /**
  * ### `articleNo`번 글의 `commentNo`번 댓글을 삭제합니다.
@@ -98,11 +80,10 @@ export const postArticleComment = (articleNo, data, token) =>
  * @param {number} commentNo
  * @returns `Promise` with CODE (200, 500, 401, 418)
  */
-export const deleteArticleComment = (articleNo, commentNo, token) =>
+export const deleteArticleComment = (articleNo, commentNo) =>
   call(
     `/community/${articleNo}/active/comment/${commentNo}`,
     'delete',
     [],
-    'auth',
-    token
+    'auth'
   );
