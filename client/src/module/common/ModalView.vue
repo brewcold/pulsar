@@ -49,17 +49,28 @@
           </div>
           <div v-if="modalType === 'routine-exercise'">
             <form>
-              <TagForm />
-              <text-input :margin="'1rem'" />
+              <tag-form
+                v-model="exercise.exerciseName"
+                :selectable="true"
+                :tags="tags"
+                :caption="'추가할 운동을 선택하세요.'"
+                :plural="false"
+                @tagform="setExercise"
+              />
               <text-input
                 :input-type="'text'"
-                v-model="repeat"
+                v-model="exercise.count"
                 :margin="'1rem'"
               />
-              회 <text-input :input-type="'text'" v-model="minute" /> 분
+              회
+              <text-input
+                :input-type="'text'"
+                v-model="exercise.duration"
+              />
+              분
               <square-button
                 class="modal_btn"
-                @handle-click="modalRoutineSubmit"
+                @handle-click="modalExerciseSubmit"
                 :theme="'point'"
                 :value="'운동 추가하기'"
               />
@@ -82,7 +93,7 @@
               :height="'15rem'"
               v-model="community.body.content"
             />
-
+            //TODO: 태그 폼 삽입
             <square-button
               class="modal_btn"
               @handle-click="modalCommunitySubmit"
@@ -120,6 +131,7 @@ export default {
     modalTitle: String,
     modalType: String,
     modalCaption: String,
+    tags: Array,
   },
   data() {
     return {
@@ -132,12 +144,11 @@ export default {
         startHour: '0',
         startMin: '0',
       },
-      exerciseList: [],
       exercise: {
-        routineNo: 0,
+        exerciseNo: '',
         exerciseName: '',
-        count: 0,
-        duration: 0,
+        count: '0',
+        duration: '0',
       },
       community: {
         title: '',
@@ -145,7 +156,6 @@ export default {
           content: '',
         },
         tagList: [],
-        imgs: [],
       },
     };
   },
@@ -155,12 +165,21 @@ export default {
       this.$emit('modal-routine-submit', data);
     },
     modalExerciseSubmit() {
-      const data = null;
+      const data = {
+        exerciseNo: Number(this.exercise.exerciseNo),
+        exerciseName: this.exercise.exerciseName,
+        count: Number(this.exercise.count),
+        duration: Number(this.exercise.duration),
+      };
       this.$emit('modal-exercise-submit', data);
     },
     modalCommunitySubmit() {
-      const data = null;
+      const data = this.community;
       this.$emit('modal-community-submit', data);
+    },
+    setExercise(data) {
+      this.exercise.exerciseNo = Number(data[0].tagNo);
+      this.exercise.exerciseName = data[0].tagName;
     },
     modalClose() {
       this.$emit('modal-toggle');

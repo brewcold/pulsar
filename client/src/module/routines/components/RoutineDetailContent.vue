@@ -11,30 +11,20 @@
     </h1>
     <p id="detail_caption">
       {{
-        routine
-          ? '루틴 상세 정보'
-          : '서버로부터 정보를 가져오지 못했어요.'
+        routine?.time
+          ? routine.time.repeatPeriod +
+            routine.time.repeatUnit +
+            '마다 ' +
+            routine.time.repeatDay +
+            '요일 ' +
+            routine.time.startHour +
+            '시 ' +
+            routine.time.startMin +
+            '분에 시작'
+          : '정보를 가져오는 데 실패했어요.'
       }}
     </p>
     <div id="detail_content_detailWrapper">
-      <div id="detail_content_time">
-        <h3>반복 주기</h3>
-        <p>
-          {{
-            routine?.time
-              ? routine.time.repeatPeriod +
-                routine.time.repeatUnit +
-                '마다 ' +
-                routine.time.repeatDay +
-                '요일 ' +
-                routine.time.startHour +
-                '시 ' +
-                routine.time.startMin +
-                '분에 시작'
-              : '정보를 가져오는 데 실패했어요.'
-          }}
-        </p>
-      </div>
       <div id="detail_content_exercise_list">
         <div id="detail_content_exercise_list_title">
           <h3>운동 목록</h3>
@@ -70,9 +60,10 @@
 import GoBackIcon from '../../common/icons/GoBackIcon.vue';
 import ExerciseList from '../../common/ExerciseList.vue';
 import RoundButton from '../../common/RoundButton.vue';
+import SquareButton from '../../common/SquareButton.vue';
 export default {
-  name: '',
-  components: { GoBackIcon, ExerciseList, RoundButton },
+  name: 'RoutineDetailContent',
+  components: { GoBackIcon, ExerciseList, RoundButton, SquareButton },
   props: {
     routine: Object,
   },

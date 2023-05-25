@@ -13,7 +13,7 @@
       :modal-type="'community'"
       :modal-title="'글 수정하기'"
       :modal-caption="'작성한 글을 수정합니다.'"
-      @modal-exercise-submit="updateArticle"
+      @modal-community-submit="updateArticle"
       @modal-toggle="modalToggle"
     />
   </div>
@@ -28,6 +28,7 @@ import {
   getArticleComment,
   postArticleComment,
   deleteArticle,
+  putArticle,
 } from '../../../core/api/community';
 export default {
   name: 'CommunityDetailContainer',
