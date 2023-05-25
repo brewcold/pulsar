@@ -79,6 +79,7 @@
             <text-input
               :input-type="'textarea'"
               :placeholder="'내용'"
+              :height="'15rem'"
               v-model="community.body.content"
             />
 
@@ -196,7 +197,7 @@ export default {
   left: 1rem;
   background-color: white;
   border-radius: 8px;
-  padding: 1.25rem;
+  padding: 2rem;
   width: 398px;
   box-shadow: 0px 0px 6px var(--light-color-black);
   z-index: 9;

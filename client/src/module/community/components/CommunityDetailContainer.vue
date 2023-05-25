@@ -1,8 +1,12 @@
 <template>
   <div id="detail_container">
     <community-detail-content
-      :routine="routine"
+      :article="article"
+      :comment-list="commentList"
       @modal-toggle="modalToggle"
+      @handle-input="handleInput"
+      @comment="comment"
+      @delete-article="removeArticle"
     />
     <modal-view
       v-if="displayModal"
@@ -18,39 +22,67 @@
 <script>
 import CommunityDetailContent from './CommunityDetailContent.vue';
 import ModalView from '../../common/ModalView.vue';
-import { getRoutineDetail } from '../../../core/api/routine';
 import { mapGetters } from 'vuex';
+import {
+  getArticleDetail,
+  getArticleComment,
+  postArticleComment,
+  deleteArticle,
+} from '../../../core/api/community';
 export default {
   name: 'CommunityDetailContainer',
   components: { CommunityDetailContent, ModalView },
   created() {
-    this.getRoutine();
+    this.getArticle();
+    this.getComments();
   },
   data() {
     return {
-      routine: null,
+      article: null,
+      commentList: null,
       displayModal: false,
+      commentContent: null,
     };
   },
   methods: {
-    getRoutine() {
-      getRoutineDetail(
-        this.$route.params.routineNo,
-        this.getToken
-      ).then((res) => (this.routine = res.data));
+    getArticle() {
+      getArticleDetail(this.$route.params.articleNo)
+        .then((res) => (this.article = res.data))
+        .catch((err) => console.log(err));
     },
-    addExercise() {},
+    getComments() {
+      getArticleComment(this.$route.params.articleNo)
+        .then((res) => (this.commentList = res.data))
+        .catch((err) => console.log(err));
+    },
+    comment() {
+      postArticleComment(
+        this.$route.params.articleNo,
+        this.commentContent
+      )
+        .then((res) => (this.commentList = res.data))
+        .catch((err) => console.log(err));
+    },
+    removeArticle() {
+      deleteArticle(this.$route.params.articleNo);
+    },
+    handleInput(data) {
+      this.commentContent = data;
+    },
     modalToggle() {
       this.displayModal = !this.displayModal;
     },
   },
   watch: {
-    routine(data) {
-      this.routine = data;
+    article(data) {
+      this.article = data;
+    },
+    commentList(data) {
+      this.commentList = data;
     },
   },
   computed: {
-    ...mapGetters(['getMemberNo', 'getToken']),
+    ...mapGetters(['getMemberNo']),
   },
 };
 </script>

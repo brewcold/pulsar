@@ -10,12 +10,12 @@ export default [
     children: [
       { path: '', component: CommunityListContainer },
       {
-        path: ':id', //상세보기
-        component: CommunityDetailContainer,
-      },
-      {
         path: 'search', //글 검색 결과
         component: CommunitySearchResult,
+      },
+      {
+        path: ':articleNo', //상세보기
+        component: CommunityDetailContainer,
       },
     ],
   },
