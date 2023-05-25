@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.RoutineDao">
+
+    <!--  루틴 조회 쿼리 결과 매퍼  -->
+    <resultMap id="RoutineMapper" type="Routine">
+        <result column="ID" property="routineNo" />
+        <result column="MEMBER_ID" property="memberNo" />
+        <result column="TITLE" property="routineTitle" />
+        <result column="REPEAT_UNIT" property="time.repeatUnit" />
+        <result column="REPEAT_PERIOD" property="time.repeatPeriod" />
+        <result column="START_HOUR" property="time.startHour" />
+        <result column="START_MIN" property="time.startMin" />
+    </resultMap>
+
+    <!--  루틴 추가를 위한 SQL  -->
+    <insert id="insertRoutine" parameterType="RoutineRegistRequest" useGeneratedKeys="true" keyProperty="routineNo">
+        INSERT INTO TB_ROUTINE (MEMBER_ID, TITLE, REPEAT_UNIT, REPEAT_PERIOD, START_HOUR, START_MIN)
+        VALUES (#{writerId}, #{title}, #{repeatUnit}, #{repeatPeriod}, #{startHour}, #{startMin})
+    </insert>
+
+    <!--  루틴 목록 조회를 위한 SQL  -->
+    <select id="selectRoutinesByMemberId" parameterType="int" resultMap="RoutineMapper">
+        SELECT
+            *
+        FROM TB_ROUTINE
+        WHERE
+            MEMBER_ID = #{memberId}
+    </select>
+
+    <!--  루틴 상세 정보 조회를 위한 SQL  -->
+    <select id="selectRoutineByRoutineId" parameterType="int" resultMap="RoutineMapper">
+        SELECT
+            *
+        FROM TB_ROUTINE
+        WHERE
+            ID = #{routineId}
+    </select>
+
+    <!--  루틴 수정을 위한 SQL  -->
+    <update id="updateRoutine" parameterType="RoutineModifyRequest">
+        UPDATE TB_ROUTINE
+        SET
+            TITLE = #{title},
+            REPEAT_UNIT = #{repeatUnit},
+            REPEAT_PERIOD = #{repeatPeriod},
+            START_HOUR = #{startHour},
+            START_MIN = #{startMin}
+        WHERE
+            ID = #{routineId}
+    </update>
+
+    <!--  루틴 삭제를 위한 SQL  -->
+    <delete id="deleteRoutine" parameterType="int">
+        DELETE FROM TB_ROUTINE
+        WHERE ID = #{routineId}
+    </delete>
+
+</mapper>

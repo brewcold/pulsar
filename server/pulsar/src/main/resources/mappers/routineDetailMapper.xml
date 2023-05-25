@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.RoutineDetailDao">
+
+    <!--  운동 세부정보 조회 쿼리 결과 매퍼  -->
+    <resultMap id="ExerciseMap" type="Exercise">
+        <result column="EXERCISE_ID" property="exerciseNo"/>
+        <result column="EXERCISE_NAME" property="exerciseName"/>
+        <result column="DURATION" property="duration"/>
+        <result column="COUNT" property="count"/>
+    </resultMap>
+
+    <!--  루틴에 운동 계획을 추가하는 SQL  -->
+    <insert id="insertExercises" parameterType="ExerciseRegistRequest">
+        INSERT INTO TB_ROUTINE_DETAIL (ROUTINE_ID, EXERCISE_ID, DURATION, COUNT)
+        VALUES
+        <foreach item="exercise" index="index" collection="exerciseList" separator="," nullable="true">
+            (#{routineId}, #{exercise.exerciseNo}, #{exercise.duration}, #{exercise.count})
+        </foreach>
+    </insert>
+
+    <select id="selectExercisesByRoutineId" parameterType="int" resultMap="ExerciseMap">
+        SELECT
+            D.*, E.EXERCISE_NAME
+        FROM TB_ROUTINE_DETAIL D
+        INNER JOIN TB_EXERCISE E
+        ON
+            D.EXERCISE_ID = E.ID
+        WHERE
+            ROUTINE_ID = #{routineId}
+    </select>
+
+    <delete id="deleteExercises" parameterType="int">
+        DELETE FROM TB_ROUTINE_DETAIL
+        WHERE
+            ROUTINE_ID = #{routineId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.ConcernTagDao">
+
+    <!--  태그 조회 쿼리 결과 매퍼  -->
+    <resultMap id="TagMapper" type="Tag">
+        <result column="ID" property="tagNo" />
+        <result column="TAG_NAME" property="tagName" />
+    </resultMap>
+
+    <!--  회원의 고민 태그를 추가하는 SQL  -->
+    <insert id="insertConcernTags" parameterType="ConcernUpdateRequest">
+        INSERT INTO TB_CONCERN_TAG
+        VALUES
+        <foreach item="item" index="index" collection="concernTagsId" separator="," nullable="true">
+            (#{memberId}, #{item})
+        </foreach>
+    </insert>
+
+    <!--  회원의 고민 태그를 조회하는 SQL  -->
+    <!--  TODO: 서브쿼리로 변경하기  -->
+    <select id="selectTagsByMemberId" parameterType="int" resultMap="TagMapper">
+        SELECT
+            T.*
+        FROM TB_CONCERN_TAG CT
+        INNER JOIN TB_TAG_INFO T
+        ON
+            T.ID = CT.TAG_ID
+        WHERE
+            CT.MEMBER_ID = #{memberId}
+    </select>
+
+
+    <!--  회원의 고민 태그를 삭제하는 SQL  -->
+    <delete id="deleteConcernTags" parameterType="ConcernUpdateRequest">
+        DELETE FROM TB_CONCERN_TAG
+        WHERE
+            MEMBER_ID = #{memberId}
+        AND
+            <foreach item="item" index="index" collection="concernTagsId"
+                     open="TAG_ID in (" separator="," close=")" nullable="true">
+                #{item}
+            </foreach>
+    </delete>
+
+</mapper>

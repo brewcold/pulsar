@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hammer.pulsar.dao.ExerciseDao">
+
+    <!--  태그 조회 쿼리 결과 매퍼  -->
+    <resultMap id="TagMapper" type="Tag">
+        <result column="ID" property="tagNo" />
+        <result column="EXERCISE_NAME" property="tagName" />
+    </resultMap>
+
+    <!--  모든 태그 정보를 불러오는 SQL  -->
+    <select id="selectAllExerciseTags" resultMap="TagMapper">
+        SELECT
+            *
+        FROM TB_EXERCISE
+    </select>
+
+</mapper>
