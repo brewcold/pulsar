@@ -138,13 +138,11 @@ public class CommunityRestController {
         int memberId = MemoryAuthManager.getLoginMember();
 
         // 댓글 작성에 필요한 데이터를 DTO에 담기
-        CommentWriteRequest writeRequest = new CommentWriteRequest();
-
-        writeRequest.setWriterId(memberId);
-        writeRequest.setArticleId(articleId);
+        commentWriteRequest.setWriterId(memberId);
+        commentWriteRequest.setArticleId(articleId);
 
         // 댓글을 작성하고 댓글 목록을 다시 가져오기
-        List<Comment> commentList = interactionService.writeComment(writeRequest);
+        List<Comment> commentList = interactionService.writeComment(commentWriteRequest);
 
         return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
