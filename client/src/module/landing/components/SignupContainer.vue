@@ -1,17 +1,28 @@
 <template>
   <div id="signup_container">
-    <signup-content @signup="signup" />
+    <signup-content @signup="signup" :concerns="concerns" />
   </div>
 </template>
 
 <script>
 import SignupContent from './SignupContent.vue';
 import { postMemberSignUp } from '../../../core/api/member';
+import { getTag } from '../../../core/api/tag';
 
 export default {
   name: 'SignupContainer',
   components: { SignupContent },
+  data() {
+    return {
+      concerns: [],
+    };
+  },
   methods: {
+    getTags() {
+      getTag()
+        .then((res) => (this.concerns = res.data))
+        .catch((err) => console.log(err));
+    },
     signup(form, file) {
       const data = new FormData();
       data.append('profileImg', file);
@@ -19,6 +30,7 @@ export default {
         'form',
         new Blob([JSON.stringify(form)], { type: 'application/json' })
       );
+
       postMemberSignUp(data)
         .then((res) => {
           if (res.status === 201) {
