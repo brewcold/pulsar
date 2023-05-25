@@ -1,6 +1,7 @@
 <template>
   <div id="tagform_container">
     <!--전체 태그를 불러올 때-->
+
     <div id="tagform_caption">
       <span v-if="caption?.length > 0" id="caption">{{ caption }}</span>
     </div>
@@ -28,6 +29,7 @@
           @tagClick="selectTag"
         />
       </div>
+
     </div>
   </div>
 </template>
@@ -47,6 +49,7 @@ export default {
   data() {
     return {
       selectable_selectedTag: [],
+
       selectedArr: new Array(this.tags.length).fill(false),
     };
   },
@@ -78,6 +81,7 @@ export default {
             ];
           }
         }
+
         //태그를 다시 눌러 뺐을 때
         else {
           this.selectable_selectedTag =
@@ -103,6 +107,7 @@ export default {
 #tagform {
   min-width: 100%;
   /* height: 4rem; */
+
   overflow-x: auto;
   overflow-y: hidden;
   -ms-overflow-style: none; /* IE and Edge */

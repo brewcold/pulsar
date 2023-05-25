@@ -41,16 +41,20 @@ export default {
       selectable_selected: false,
     };
   },
+  data() {
+    return {
+      selectable_selected: false,
+    };
+  },
   methods: {
     handleClick(event) {
       this.selectable_selected = !this.selectable_selected;
+
       //TODO: 여기서 emit 한번 제대로 하면 선택 상태의 양방향 바인딩 될듯
-      this.$emit(
-        'tag-click',
-        this.tagNo,
-        this.tagName,
+
         this.selectable_selected,
         this.idx
+
       );
     },
   },
