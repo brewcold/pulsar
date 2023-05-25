@@ -9,27 +9,25 @@
     <div id="tagform">
       <div v-if="tags?.length > 0" id="tagform_list_container">
         <TagItem
-          v-for="({ tagNo, tagName } = tag, idx) in tags"
-          :key="idx"
+          v-for="{ tagNo, tagName } = tag in tags"
+          :key="tagNo"
           :tagNo="tagNo"
           :tagName="tagName"
           :selectable="selectable"
+          :selectable_selected="Boolean(selectedArr[tagNo])"
           @tag-click="selectTag"
         />
       </div>
       <!--선택된 태그를 불러올 때-->
       <div v-else id="tagform_list_container">
         <TagItem
-          v-for="({ tagNo, tagName } = tag, i) in selectedTag"
-          :key="i"
-          :idx="i"
+          v-for="{ tagNo, tagName } = tag in selectedTag"
+          :key="tagNo"
           :tagNo="tagNo"
           :tagName="tagName"
-          v-model="selectedArr[i]"
-          @tagClick="selectTag"
+          @tag-click="selectTag"
         />
       </div>
-
     </div>
   </div>
 </template>
@@ -48,49 +46,30 @@ export default {
   },
   data() {
     return {
-      selectable_selectedTag: [],
-
-      selectedArr: new Array(this.tags.length).fill(false),
+      selectableSelectedTag: [],
+      selectedArr: [],
     };
   },
   methods: {
-    selectTag(tagNo, tagName, selected, idx) {
+    selectTag(tagNo, tagName, selectable_selected) {
       if (this.selectable) {
-        if (selected) {
-          if (this.plural) {
+        if (!this.plural) {
+          //하나만 선택할 수 있을 때
+          if (selectable_selected) {
             //태그를 골랐을 때
-            this.selectable_selectedTag = [
-              ...this.selectable_selectedTag,
-              {
-                tagNo: tagNo,
-                tagName: tagName,
-              },
-            ];
-          } else {
-            //지금 고른거 말고 다른 태그 선택 해제 되어야함
-            // this.selectable_selectedTag.forEach((tag, i) => {
-            //   //지금 올라온 Idx가 아니면 false, 올라왔으면 true
-            //   if (idx === i) this.selectedArr[idx] = true;
-            //   else this.selectedArr[idx] = false;
-            // });
-            this.selectable_selectedTag = [
+            this.selectableSelectedTag = [
+              // ...this.selectableSelectedTag,
               {
                 tagNo: tagNo,
                 tagName: tagName,
               },
             ];
           }
+          this.selectedArr = [];
+          this.selectedArr[tagNo] = !this.selectedArr[tagNo];
         }
-
-        //태그를 다시 눌러 뺐을 때
-        else {
-          this.selectable_selectedTag =
-            this.selectable_selectedTag.filter(
-              (item, idx) => item.tagNo !== tagNo
-            );
-        }
+        this.$emit('tagform', this.selectableSelectedTag);
       }
-      this.$emit('tagform', this.selectable_selectedTag);
     },
   },
   components: { TagItem },

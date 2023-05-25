@@ -5,11 +5,14 @@
     </div>
 
     <h1>ROUTINES</h1>
-    <p id="list_caption">내 운동 루틴이에요.</p>
+    <p id="list_caption">
+      {{ this.$store.getters.getLoginUser.nickname }}
+      님의 운동 루틴이에요.
+    </p>
 
     <square-button
       :value="'새 루틴 만들기'"
-      :theme="'black'"
+      :theme="'point'"
       @handle-click="$emit('modal-toggle')"
     />
 
@@ -61,7 +64,7 @@ export default {
 }
 #logo {
   width: 2.25rem;
-  height: 2.5rem;
+  height: 2.25rem;
 }
 #btn_container {
   width: 100%;
